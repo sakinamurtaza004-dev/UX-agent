@@ -5,9 +5,12 @@
   <link rel="stylesheet" href="popup.css" />
 </head>
 <body>
-  <h1>UX Audit Buddy</h1>
-  <button id="scan">Scan this page</button>
-  <pre id="out">Click the button to scan.</pre>
+  <header>
+    <h1>UX Audit Buddy</h1>
+    <button id="scan">Scan this page</button>
+  </header>
+  <div id="status">Click "Scan this page" to audit the site you're viewing.</div>
+  <main id="report" hidden></main>
   <script src="popup.js"></script>
 </body>
 </html>

@@ -9,5 +9,5 @@ Chrome extension (Manifest V3) that audits any web page for UX issues, strengths
 
 ## Progress
 - [x] Step 1: project skeleton (manifest, popup, content script, service worker)
-- [ ] Step 2: rule-based UX checks
+- [x] Step 2: rule-based UX checks (19 checks, scoring, issue list)
 - [ ] Step 3: UX laws & regulations knowledge base with citations
