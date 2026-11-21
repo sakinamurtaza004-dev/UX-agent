@@ -44,3 +44,7 @@ a { color: var(--brand); }
 .about b { display: block; color: var(--muted); text-transform: uppercase; margin-bottom: 2px; }
 .refbox b.sub { display: block; margin-top: 8px; }
 .note-inline.ctx { border-left-color: var(--brand); }
+.vd { font-size: 10px; font-weight: 700; border-radius: 4px; padding: 1px 6px; color: #fff; flex: none; white-space: nowrap; }
+.vd.followed { background: var(--pass); } .vd.partly { background: var(--medium); } .vd.not { background: var(--high); }
+.vd.na { background: #71717a; } .vd.unmeasured { background: #52525b; }
+.uxsum { font-size: 13px; font-weight: 600; margin: 4px 0; }

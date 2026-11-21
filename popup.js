@@ -111,6 +111,35 @@ function renderIssue(c, appl, profile) {
   );
 }
 
+// UX laws scorecard: one card per law, with the measured evidence.
+function renderUxLaws(laws) {
+  const box = el("div", {});
+  const count = (v) => laws.filter((l) => l.verdict === v).length;
+  box.append(el("h2", { text: "UX laws & heuristics scorecard" }));
+  box.append(el("div", { class: "uxsum", text:
+    `${count("followed")} followed · ${count("partly")} partly · ${count("not")} not followed · ${count("na")} not enough to judge · ${count("unmeasured")} need human/AI review` }));
+  box.append(el("div", { class: "caveat", text:
+    "UX laws are psychology principles, not legal rules. Each verdict is a measurable stand-in (a proxy) and the cut-offs are our rules of thumb, explained in every card. They don't affect the score." }));
+
+  laws.forEach((l) => {
+    const body = el("div", { class: "body" });
+    const ev = el("ul");
+    l.evidence.forEach((e) => ev.append(el("li", { text: e })));
+    body.append(el("p", {}, el("b", { text: l.verdict === "unmeasured" ? "Why we can't measure it" : "What we measured" }), ev));
+    if (l.verdict !== "unmeasured") body.append(el("p", {}, el("b", { text: "How we judged it" }), document.createTextNode(l.how)));
+    if (l.fix && (l.verdict === "not" || l.verdict === "partly")) body.append(el("p", {}, el("b", { text: "How to improve" }), document.createTextNode(l.fix)));
+    body.append(el("p", {}, el("b", { text: "What the law says" }), document.createTextNode(l.summary + " "), link(`${l.source || "Source"}`, l.url)));
+    if (l.caveat) body.append(el("p", { class: "caveat", text: "Caution: " + l.caveat }));
+    box.append(el("details", {},
+      el("summary", {},
+        el("span", { class: `vd ${l.verdict}`, text: VERDICT_LABEL[l.verdict] }),
+        el("span", { text: l.name }),
+        l.partial ? el("span", { class: "count", text: "partial" }) : null),
+      body));
+  });
+  return box;
+}
+
 // "Which rules apply to this site?": one card per regulation.
 function renderApplicability(appl) {
   const box = el("div", {});
@@ -165,6 +194,7 @@ function render(result) {
 
   const profile = result.profile;
   const appl = assessApplicability(profile, result.checks);
+  const laws = assessUxLaws(result.ux, profile, result.checks);
 
   const catChips = el("div", { class: "cats" });
   Object.entries(result.categoryScores).forEach(([name, s]) =>
@@ -187,6 +217,11 @@ function render(result) {
     el("b", { text: "About this site (detected)" }),
     el("div", { text: about.length ? about.join(" · ") : "Not enough signals to classify this page." })));
 
+  const lc = (v) => laws.filter((l) => l.verdict === v).length;
+  root.append(el("div", { class: "about" },
+    el("b", { text: "UX laws at a glance" }),
+    el("div", { text: `${lc("followed")} followed · ${lc("partly")} partly · ${lc("not")} not followed (details below)` })));
+
   const order = { high: 0, medium: 1, low: 2 };
   const failed = result.checks.filter((c) => c.status === "fail").sort((a, b) => order[a.severity] - order[b.severity]);
   const passed = result.checks.filter((c) => c.status === "pass");
@@ -200,6 +235,7 @@ function render(result) {
   passed.forEach((c) => ul.append(el("li", { text: c.title })));
   root.append(ul);
 
+  root.append(renderUxLaws(laws));
   root.append(renderApplicability(appl));
 
   root.append(el("div", { class: "note", text:

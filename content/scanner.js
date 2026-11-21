@@ -15,6 +15,13 @@
 
   // ---------- helpers ----------
   const textOf = (el) => (el.textContent || "").replace(/\s+/g, " ").trim();
+  // A link counts as "inside a sentence" (exempt from the minimum target size)
+  // only if it is inline AND the text around it is a real sentence, not a row of links.
+  const inSentence = (a) => {
+    if (getComputedStyle(a).display !== "inline" || !a.parentElement) return false;
+    const around = [...a.parentElement.childNodes].filter((n) => n.nodeType === 3).map((n) => n.nodeValue).join(" ");
+    return (around.trim().match(/\S+/g) || []).length >= 6;
+  };
 
   const isVisible = (el) => {
     const r = el.getBoundingClientRect();
@@ -308,7 +315,7 @@
     offenders: [...document.querySelectorAll("button, [role='button'], input:not([type='hidden']), select, a[href]")].filter((el) => {
       if (!isVisible(el) || el.matches(":disabled")) return false;
       // Links sitting inside a sentence are exempt from the size rule.
-      if (el.tagName === "A" && getComputedStyle(el).display === "inline") return false;
+      if (el.tagName === "A" && inSentence(el)) return false;
       const r = el.getBoundingClientRect();
       return Math.min(r.width, r.height) < 24;
     }),
@@ -327,7 +334,8 @@
     const aboveFold = [...document.querySelectorAll("a[href], button, [role='button'], input[type='submit']")].filter((el) => {
       if (!isVisible(el)) return false;
       const r = el.getBoundingClientRect();
-      return r.top >= 0 && r.top < vh && ctaWords.test(textOf(el) || el.value || el.getAttribute("aria-label") || "");
+      // Use page position, not scroll position, so it doesn't matter where the user has scrolled.
+      return r.top + window.scrollY < vh && r.bottom + window.scrollY > 0 && ctaWords.test(textOf(el) || el.value || el.getAttribute("aria-label") || "");
     });
     addCheck({
       id: "cta",
@@ -604,6 +612,113 @@
     return { host, lang, gov: { is: isGov, country: govCountry }, regions, ecommerce, subscription, platform, data, pageKind, pageKindWhy };
   })();
 
+  // =====================================================================
+  // UX METRICS (feeds the UX laws scorecard)
+  // Raw measurements only. knowledge/uxlaws.js decides what they mean.
+  // "Above the fold" uses page position, so scrolling doesn't change it.
+  // =====================================================================
+  const ux = (() => {
+    const vw = window.innerWidth, vh = window.innerHeight, sy = window.scrollY;
+    const rect = (el) => el.getBoundingClientRect();
+    const docTop = (el) => rect(el).top + sy;
+    const words = (s) => (s.trim().match(/\S+/g) || []).length;
+    const own = (el) => [...el.childNodes].filter((n) => n.nodeType === 3).map((n) => n.nodeValue).join(" ");
+    const colorDiff = (a, b) => Math.abs(a.r - b.r) + Math.abs(a.g - b.g) + Math.abs(a.b - b.b);
+    const dim = (el) => { const r = rect(el); return Math.min(r.width, r.height); };
+
+    const clickSel = "a[href], button, [role='button'], input[type='submit'], input[type='button'], summary";
+    const clickables = [...document.querySelectorAll(clickSel)].filter(isVisible).slice(0, 2000);
+    const aboveFold = clickables.filter((el) => docTop(el) < vh && rect(el).bottom + sy > 0);
+
+    // Hick's Law: how many choices?
+    const nav = [...document.querySelectorAll("header nav, [role='banner'] nav, nav, [role='navigation']")].find(isVisible);
+    const navItems = nav ? [...nav.querySelectorAll("a[href]")].filter(isVisible).length : null;
+
+    // Fitts's Law: how big are the targets?
+    const targets = [...document.querySelectorAll(clickSel + ", select, textarea, input:not([type='hidden']):not([type='checkbox']):not([type='radio'])")]
+      .filter((el) => isVisible(el) && !el.matches(":disabled") && !(el.tagName === "A" && inSentence(el)));
+
+    // Von Restorff: which actions are visually emphasised (solid-filled buttons)?
+    const filled = aboveFold.filter((el) => {
+      if (el.tagName === "SUMMARY") return false;
+      const label = textOf(el) || el.value || "";
+      if (!label || label.length > 40) return false;
+      const bg = parseColor(getComputedStyle(el).backgroundColor);
+      if (!bg || bg.a < 0.9) return false;
+      const r = rect(el);
+      if (Math.min(r.width, r.height) < 24 || r.width < 48) return false;
+      const behind = el.parentElement ? effectiveBackground(el.parentElement) : null;
+      return !behind || colorDiff(bg, behind) > 90;
+    });
+
+    // Jakob's Law: familiar conventions
+    const isHome = (a) => {
+      try {
+        const u = new URL(a.href, location.href);
+        return u.origin === location.origin && /^\/(index|home)?(\.\w+)?\/?$/i.test(u.pathname);
+      } catch (e) { return false; }
+    };
+    const footer = document.querySelector("footer, [role='contentinfo']");
+    const cartRe = /\b(cart|bag|basket)\b/i;
+
+    // Miller's Law / chunking: walls of text?
+    const blocks = textElements.map((el) => words(own(el))).filter((n) => n >= 15);
+    const headingCount = [...document.querySelectorAll("h1,h2,h3,h4,h5,h6")].filter(isVisible).length;
+    const totalWords = words((document.body && document.body.innerText) || "");
+
+    // Doherty: speed
+    const nav0 = performance.getEntriesByType("navigation")[0];
+    const fcpEntry = performance.getEntriesByName("first-contentful-paint")[0];
+
+    // Similarity: do inline links look different from the text around them?
+    const inlineLinks = [...document.querySelectorAll("p a[href]")].filter(isVisible).filter((a) => words(own(a.closest("p"))) >= 6);
+    const distinctLinks = inlineLinks.filter((a) => {
+      const s = getComputedStyle(a), ps = getComputedStyle(a.parentElement);
+      const c1 = parseColor(s.color), c2 = parseColor(ps.color);
+      return s.textDecorationLine.includes("underline") ||
+        (c1 && c2 && colorDiff(c1, c2) > 60) ||
+        parseInt(s.fontWeight, 10) - parseInt(ps.fontWeight, 10) >= 200;
+    }).length;
+
+    // Nielsen consistency: how many typefaces?
+    const fam = {};
+    textElements.forEach((el) => {
+      const f = getComputedStyle(el).fontFamily.split(",")[0].replace(/["']/g, "").trim().toLowerCase();
+      if (f && !/awesome|icon|material|glyph|symbol|emoji/.test(f)) fam[f] = (fam[f] || 0) + 1;
+    });
+
+    // Nielsen help: is help/contact easy to find?
+    const helpRe = /\b(help|support|faq|contact|customer care|get in touch)\b/i;
+
+    return {
+      navItems,
+      aboveFoldChoices: aboveFold.length,
+      targetsTotal: targets.length,
+      targets24: targets.filter((el) => dim(el) >= 24).length,
+      targets44: targets.filter((el) => dim(el) >= 44).length,
+      filledCount: filled.length,
+      largestFilledPx: Math.round(filled.reduce((m, el) => Math.max(m, dim(el)), 0)),
+      logoTopLeft: clickables.some((a) => a.tagName === "A" && isHome(a) && docTop(a) < 200 && rect(a).left < vw * 0.35),
+      navNearTop: !!nav && docTop(nav) < 250,
+      footerLinks: footer ? [...footer.querySelectorAll("a[href]")].filter(isVisible).length : 0,
+      searchPresent: [...document.querySelectorAll("input[type='search'], [role='search'], form[action*='search' i], input[name='q'], input[placeholder*='search' i], input[aria-label*='search' i]")].some(isVisible),
+      cartTopRight: clickables.some((el) => cartRe.test(textOf(el) + " " + (el.getAttribute("aria-label") || "") + " " + (el.getAttribute("href") || "")) && docTop(el) < 200 && rect(el).left > vw * 0.55),
+      totalLinks: document.links.length,
+      paragraphs: blocks.length,
+      longParagraphs: blocks.filter((n) => n > 120).length,
+      longestParagraph: blocks.reduce((m, n) => Math.max(m, n), 0),
+      totalWords,
+      headingCount,
+      loadMs: nav0 && nav0.loadEventEnd > 0 ? Math.round(nav0.loadEventEnd) : null,
+      fcpMs: fcpEntry ? Math.round(fcpEntry.startTime) : null,
+      inlineLinks: inlineLinks.length,
+      distinctLinks,
+      fontFamilies: Object.entries(fam).sort((a, b) => b[1] - a[1]).map(([n, c]) => `${n} (${c})`),
+      formFields: [...document.querySelectorAll("input, select, textarea")].filter((el) => isVisible(el) && !el.matches("input[type='hidden'],input[type='submit'],input[type='button'],input[type='reset'],input[type='image']")).length,
+      helpLinks: clickables.filter((el) => el.tagName === "A" && helpRe.test((textOf(el) || el.getAttribute("aria-label") || "").slice(0, 60))).length,
+    };
+  })();
+
   // ---------- scoring ----------
   const WEIGHT = { high: 3, medium: 2, low: 1 };
   const score = (list) => {
@@ -622,6 +737,7 @@
     score: score(checks),
     categoryScores,
     profile,
+    ux,
     summary: {
       passed: checks.filter((c) => c.status === "pass").length,
       failed: checks.filter((c) => c.status === "fail").length,
