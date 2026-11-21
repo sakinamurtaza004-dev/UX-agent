@@ -37,3 +37,10 @@ a { color: var(--brand); }
 .caveat { font-size: 11px; color: var(--muted); margin-top: 3px; }
 .note-inline { font-size: 12px; margin-top: 6px; padding: 6px 8px; border-left: 3px solid var(--medium); background: #fff; }
 .status { font-size: 12px; font-weight: 600; margin-top: 6px; }
+.st { font-size: 10px; font-weight: 700; border-radius: 4px; padding: 1px 6px; color: #fff; flex: none; white-space: nowrap; }
+.st.likely { background: #4f46e5; } .st.may { background: #b45309; } .st.pending { background: #0369a1; }
+.st.unknown { background: #71717a; } .st.unlikely { background: #52525b; } .st.info { background: #52525b; }
+.about { background: var(--card); border-radius: 8px; padding: 8px 10px; margin-top: 12px; font-size: 12px; }
+.about b { display: block; color: var(--muted); text-transform: uppercase; margin-bottom: 2px; }
+.refbox b.sub { display: block; margin-top: 8px; }
+.note-inline.ctx { border-left-color: var(--brand); }

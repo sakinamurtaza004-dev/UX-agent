@@ -482,6 +482,128 @@
     });
   }
 
+  // =====================================================================
+  // SITE PROFILE (Step 3b)
+  // Collects FACTS about the site (what it seems to be, where it seems to
+  // operate, what data it collects). The popup's applicability engine turns
+  // these into "does this law probably apply?" verdicts, with the evidence.
+  // We record evidence strings so every verdict can be explained.
+  // =====================================================================
+  const profile = (() => {
+    const host = location.hostname.toLowerCase();
+    const path = location.pathname.toLowerCase();
+    const text = ((document.body && document.body.innerText) || "").slice(0, 80000);
+    const lower = text.toLowerCase();
+    const count = (re) => (text.match(re) || []).length;
+
+    // ---- region signals (where does this site seem to operate?) ----
+    const regions = [];
+    const addRegion = (region, strength, why) => {
+      if (!regions.some((r) => r.region === region && r.why === why)) regions.push({ region, strength, why });
+    };
+    const EU = ["eu", "de", "fr", "it", "es", "nl", "be", "at", "pt", "ie", "se", "dk", "fi", "pl", "cz", "sk", "hu", "ro", "bg", "hr", "si", "ee", "lv", "lt", "lu", "mt", "cy", "gr"];
+    const tld = host.split(".").pop();
+    if (tld === "in") addRegion("IN", "strong", "Domain ends in .in");
+    else if (EU.includes(tld)) addRegion("EU", "strong", `Domain ends in .${tld} (EU country)`);
+    else if (tld === "us" || tld === "gov" || tld === "mil") addRegion("US", "strong", `Domain ends in .${tld}`);
+    else if (tld === "uk") addRegion("UK", "strong", "Domain ends in .uk");
+
+    const inr = count(/₹|\bINR\b|\bRs\.?\s?\d/g);
+    const eur = count(/€|\bEUR\b/g);
+    const gbp = count(/£|\bGBP\b/g);
+    const usd = count(/\bUSD\b|US\$/g);
+    const dollar = count(/\$\s?\d/g);
+    if (inr >= 2) addRegion("IN", "strong", `Prices in Indian rupees (${inr} mentions)`);
+    if (eur >= 2) addRegion("EU", "strong", `Prices in euros (${eur} mentions)`);
+    if (gbp >= 2) addRegion("UK", "strong", `Prices in pounds (${gbp} mentions)`);
+    if (usd >= 2) addRegion("US", "strong", `Prices in US dollars (${usd} mentions)`);
+    else if (dollar >= 2) addRegion("US", "weak", `Prices in $ (${dollar} mentions; the $ sign is used in several countries)`);
+
+    if (/\+91[\s-]?\d/.test(text)) addRegion("IN", "strong", "Phone number with +91 country code");
+    if (/\+(49|33|39|34|31|32|43|351|353|46|45|358|48)[\s-]?\d/.test(text)) addRegion("EU", "strong", "Phone number with an EU country code");
+    if (/\+1[\s-]?\(?\d{3}\)?[\s-]?\d{3}/.test(text)) addRegion("US", "weak", "Phone number with +1 (US/Canada)");
+
+    const lang = (document.documentElement.getAttribute("lang") || "").toLowerCase();
+    const sub = lang.split("-")[1];
+    if (sub === "in") addRegion("IN", "strong", `Page language is ${lang}`);
+    else if (sub === "us") addRegion("US", "weak", `Page language is ${lang}`);
+    else if (sub === "gb") addRegion("UK", "weak", `Page language is ${lang}`);
+    else if (sub && EU.includes(sub)) addRegion("EU", "strong", `Page language is ${lang}`);
+    else if (!sub && ["de", "nl", "pl", "sv", "da", "fi", "cs", "el", "hu", "ro", "bg", "hr", "sk", "sl", "et", "lv", "lt"].includes(lang)) {
+      addRegion("EU", "weak", `Page language is "${lang}", mostly used in the EU`);
+    } else if (lang === "hi") addRegion("IN", "weak", 'Page language is "hi" (Hindi)');
+
+    // ---- government? ----
+    const isGov = /(^|\.)(gov|gouv|gob|govt)(\.[a-z]{2})?$/.test(host) || /\.nic\.in$/.test(host) || /(^|\.)europa\.eu$/.test(host);
+    let govCountry = null;
+    if (isGov) {
+      if (/\.gov$/.test(host)) govCountry = "US";
+      else if (/\.gov\.in$|\.nic\.in$/.test(host)) govCountry = "IN";
+      else if (/europa\.eu$/.test(host)) govCountry = "EU";
+      else govCountry = "other";
+    }
+
+    // ---- e-commerce? ----
+    const clickables = [...document.querySelectorAll("a, button, [role='button'], input[type='submit']")].filter(isVisible).slice(0, 800);
+    const labelOf = (el) => (textOf(el) || el.value || el.getAttribute("aria-label") || "").toLowerCase();
+    const ecom = [];
+    let ecomScore = 0;
+    if (clickables.some((el) => /add to (cart|bag|basket|trolley)|buy now/.test(labelOf(el)))) { ecomScore += 2; ecom.push('"Add to cart" / "Buy now" button'); }
+    if (clickables.some((el) => /^(cart|bag|basket|my cart|view cart|shopping cart)\b/.test(labelOf(el)) || /\/(cart|basket|bag)\b/.test(el.getAttribute("href") || ""))) { ecomScore += 1; ecom.push("Cart link"); }
+    if ([...document.querySelectorAll('script[type="application/ld+json"]')].some((s) => /"@type"\s*:\s*"(Product|Offer)"/.test(s.textContent))) { ecomScore += 1; ecom.push("Product data (schema.org) in the page"); }
+    const priceCount = count(/(?:₹|€|£|\$|\brs\.?|\binr|\beur|\busd)\s?\d[\d,.]*/gi);
+    if (priceCount >= 3) { ecomScore += 1; ecom.push(`${priceCount} prices shown`); }
+    if (/(checkout|cart|basket|payment)/.test(path)) { ecomScore += 1; ecom.push("Cart/checkout address"); }
+    const payFields = !!document.querySelector('input[autocomplete^="cc-"]');
+    if (payFields) { ecomScore += 2; ecom.push("Card payment fields"); }
+    const ecommerce = { level: ecomScore >= 3 ? "likely" : ecomScore === 2 ? "possible" : "none", why: ecom };
+
+    // ---- subscriptions? ----
+    const subPatterns = [
+      [/\/\s?(month|mo|year|yr)\b|per (month|year)|a month|monthly|annual(ly)?/, "monthly/yearly pricing"],
+      [/cancel any ?time/, '"cancel anytime"'],
+      [/free trial|start (your )?(free )?trial/, "free trial"],
+      [/subscribe|subscription/, '"subscribe"/"subscription"'],
+    ];
+    const subHits = subPatterns.filter(([re]) => re.test(lower)).map(([, name]) => name);
+    const subscription = { found: subHits.length >= 2, why: subHits };
+
+    // ---- online platform (marketplace / user content)? ----
+    const platWhy = [];
+    if (/(become a seller|sell on |seller central|marketplace|multiple vendors|our sellers)/.test(lower)) platWhy.push("Marketplace/seller wording");
+    if (/(write a review|leave a comment|post a comment|add a comment)/.test(lower) ||
+        [...document.querySelectorAll("textarea")].some((t) => isVisible(t) && /comment|review|post|reply/i.test(t.name + t.id + (t.placeholder || "")))) {
+      platWhy.push("Users can post comments or reviews");
+    }
+    const platform = { found: platWhy.length > 0, why: platWhy };
+
+    // ---- personal data? ----
+    const inputs = [...document.querySelectorAll("input, textarea")].filter(isVisible);
+    const emailN = inputs.filter((i) => i.type === "email" || /email/i.test(i.name + i.id + (i.autocomplete || ""))).length;
+    const telN = inputs.filter((i) => i.type === "tel").length;
+    const pwN = inputs.filter((i) => i.type === "password").length;
+    const nameN = inputs.filter((i) => /^(name|given-name|family-name)$/.test(i.autocomplete || "")).length;
+    const cookieBanner =
+      [...document.querySelectorAll('[id*="cookie" i],[class*="cookie" i],[id*="consent" i],[class*="consent" i],[id*="onetrust" i]')].some(isVisible) ||
+      /we use cookies|this (web)?site uses cookies/.test(lower);
+    const dataWhy = [];
+    if (emailN) dataWhy.push("Email field");
+    if (telN) dataWhy.push("Phone field");
+    if (pwN) dataWhy.push("Account login/signup (password field)");
+    if (nameN) dataWhy.push("Name field");
+    if (cookieBanner) dataWhy.push("Cookie banner");
+    const data = { collects: dataWhy.length > 0, why: dataWhy };
+
+    // ---- what kind of page is this? ----
+    let pageKind = "other", pageKindWhy = "";
+    if (payFields || /(checkout|payment|billing)/.test(path)) { pageKind = "checkout"; pageKindWhy = "payment/checkout page"; }
+    else if (/(cart|basket|bag)/.test(path)) { pageKind = "cart"; pageKindWhy = "cart page"; }
+    else if (pwN) { pageKind = "login"; pageKindWhy = "login/signup page"; }
+    else if (path === "/" || path === "") { pageKind = "home"; pageKindWhy = "home page"; }
+
+    return { host, lang, gov: { is: isGov, country: govCountry }, regions, ecommerce, subscription, platform, data, pageKind, pageKindWhy };
+  })();
+
   // ---------- scoring ----------
   const WEIGHT = { high: 3, medium: 2, low: 1 };
   const score = (list) => {
@@ -499,6 +621,7 @@
     scannedAt: new Date().toISOString(),
     score: score(checks),
     categoryScores,
+    profile,
     summary: {
       passed: checks.filter((c) => c.status === "pass").length,
       failed: checks.filter((c) => c.status === "fail").length,
