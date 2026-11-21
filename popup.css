@@ -48,3 +48,25 @@ a { color: var(--brand); }
 .vd.followed { background: var(--pass); } .vd.partly { background: var(--medium); } .vd.not { background: var(--high); }
 .vd.na { background: #71717a; } .vd.unmeasured { background: #52525b; }
 .uxsum { font-size: 13px; font-weight: 600; margin: 4px 0; }
+/* ---- AI review (Step 4) ---- */
+.aipanel { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin-top: 14px; }
+.aipanel h2 { margin-top: 0; }
+.check { display: flex; gap: 8px; align-items: flex-start; font-size: 12px; margin: 8px 0; }
+.check input { margin-top: 2px; flex: none; }
+button.primary { padding: 8px 14px; border: 0; border-radius: 8px; background: var(--brand); color: #fff; cursor: pointer; font: inherit; margin-top: 6px; }
+button.primary:disabled { opacity: .6; cursor: default; }
+.aistatus { font-size: 12px; color: var(--muted); margin-top: 8px; min-height: 1em; overflow-wrap: anywhere; }
+.warn { font-size: 12px; background: #fef3c7; color: #78350f; border-radius: 6px; padding: 6px 8px; margin: 6px 0; }
+.field { display: block; font-size: 12px; margin: 8px 0; color: var(--muted); }
+.field input { display: block; width: 100%; margin-top: 3px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; font: inherit; color: var(--text); }
+details.settings { border: 0; padding: 0; margin: 10px 0 0; }
+details.settings summary { font-size: 12px; color: var(--muted); }
+.airesults h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 16px 0 6px; }
+.aibanner { font-size: 12px; background: var(--card); border-radius: 6px; padding: 6px 8px; margin: 12px 0 8px; }
+.aibanner.mock { background: #fee2e2; color: #7f1d1d; font-weight: 700; }
+.aisummary { margin: 8px 0; }
+.usp { font-size: 15px; font-weight: 600; margin: 8px 0 0; }
+.badge.usp-badge { background: var(--brand); }
+.prio { margin: 4px 0 0; padding-left: 20px; }
+.prio li { margin-bottom: 4px; }
+.aitag { font-size: 10px; font-weight: 700; border: 1px solid var(--brand); color: var(--brand); border-radius: 4px; padding: 0 5px; flex: none; }

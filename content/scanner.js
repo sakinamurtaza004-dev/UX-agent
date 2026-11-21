@@ -692,6 +692,8 @@
 
     return {
       navItems,
+      navLabels: nav ? [...nav.querySelectorAll("a[href]")].filter(isVisible).map((a) => textOf(a).slice(0, 60)).filter(Boolean).slice(0, 25) : [],
+      ctaLabels: filled.map((el) => (textOf(el) || el.value || "").slice(0, 60)).slice(0, 10),
       aboveFoldChoices: aboveFold.length,
       targetsTotal: targets.length,
       targets24: targets.filter((el) => dim(el) >= 24).length,
@@ -719,6 +721,21 @@
     };
   })();
 
+  // =====================================================================
+  // PAGE CONTENT (only used if the user clicks "Run AI review")
+  // Text the AI reads. Form values are never included (innerText excludes
+  // what people typed into fields) and the text is capped.
+  // =====================================================================
+  const pageContent = (() => {
+    const md = document.querySelector('meta[name="description"]');
+    const clean = (t) => (t || "").replace(/\s+/g, " ").trim();
+    return {
+      metaDescription: clean(md && md.getAttribute("content")).slice(0, 480),
+      headings: [...document.querySelectorAll("h1,h2,h3")].filter(isVisible).map((h) => clean(h.textContent).slice(0, 160)).filter(Boolean).slice(0, 30),
+      text: ((document.body && document.body.innerText) || "").replace(/[ \t]+/g, " ").replace(/\n{3,}/g, "\n\n").trim().slice(0, 9000),
+    };
+  })();
+
   // ---------- scoring ----------
   const WEIGHT = { high: 3, medium: 2, low: 1 };
   const score = (list) => {
@@ -738,6 +755,7 @@
     categoryScores,
     profile,
     ux,
+    pageContent,
     summary: {
       passed: checks.filter((c) => c.status === "pass").length,
       failed: checks.filter((c) => c.status === "fail").length,

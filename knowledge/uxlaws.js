@@ -172,3 +172,24 @@ function assessUxLaws(ux, profile, checks) {
 
   return out.sort((a, b) => VERDICT_ORDER.indexOf(a.verdict) - VERDICT_ORDER.indexOf(b.verdict));
 }
+
+
+// Merge the AI's opinion on the six laws that code can't judge.
+// Marked ai:true so the UI can say it's a judgment call, not a measurement.
+function mergeAiLaws(laws, ai) {
+  if (!ai || !ai.laws) return laws;
+  const byId = Object.fromEntries(ai.laws.map((l) => [l.id, l]));
+  return laws
+    .map((l) => {
+      const a = byId[l.id];
+      if (!a || l.verdict !== "unmeasured") return l;
+      if (a.verdict === "unknown") return Object.assign({}, l, { evidence: ["The AI couldn't tell: " + a.reasoning] });
+      return Object.assign({}, l, {
+        verdict: a.verdict,
+        evidence: [a.reasoning],
+        how: "AI judgment based on the page text and screenshot. Subjective: a reviewer could disagree, and the AI can be wrong.",
+        ai: true,
+      });
+    })
+    .sort((x, y) => VERDICT_ORDER.indexOf(x.verdict) - VERDICT_ORDER.indexOf(y.verdict));
+}

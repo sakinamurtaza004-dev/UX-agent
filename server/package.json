@@ -1,0 +1,19 @@
+{
+  "name": "ux-audit-buddy-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Small backend that keeps the Anthropic API key off the browser and runs the AI review.",
+  "scripts": {
+    "start": "node server.js",
+    "mock": "MOCK=1 node server.js",
+    "test": "node test/run.js"
+  },
+  "engines": {
+    "node": ">=20.12"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.12.0",
+    "zod": "^4.6.7"
+  }
+}

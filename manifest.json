@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "UX Audit Buddy",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "description": "Audit any web page for UX issues, strengths and USP, and download a report.",
   "action": {
     "default_title": "Audit this page",
@@ -10,5 +10,13 @@
   "background": {
     "service_worker": "background/service-worker.js"
   },
-  "permissions": ["activeTab", "scripting"]
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://localhost:8787/*",
+    "http://127.0.0.1:8787/*"
+  ]
 }

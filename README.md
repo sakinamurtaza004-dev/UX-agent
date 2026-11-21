@@ -13,5 +13,5 @@ Chrome extension (Manifest V3) that audits any web page for UX issues, strengths
 - [x] Step 3: UX laws, WCAG and regulations knowledge base with cited sources (researched 2026-11-21), plus 3 dark-pattern heuristics
 - [x] Step 3b: applicability engine (which rules apply to this site, with evidence and what to confirm)
 - [x] Step 3c: UX laws & heuristics scorecard (10 measured with stated proxies, 6 flagged for human/AI review)
-- [ ] Step 4: AI layer (USP, strengths, deeper reasoning) via a small backend
+- [x] Step 4: AI review (USP, strengths/weaknesses, AI verdicts for the 6 unmeasured laws) via a small backend in `server/` (see `server/README.md`); issue cards now show UX laws
 - [ ] Step 5: downloadable report (PDF) and audit history
