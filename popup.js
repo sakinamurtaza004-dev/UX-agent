@@ -19,6 +19,63 @@ function el(tag, props = {}, ...children) {
   return node;
 }
 
+// Links come only from our own knowledge base (never from the audited page),
+// and we still insist on https.
+function link(label, url) {
+  const a = el("a", { text: label });
+  if (/^https:\/\//.test(url)) {
+    a.href = url;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+  }
+  return a;
+}
+
+function refItem(name, summary, url, extra) {
+  const li = el("li", {}, link(name, url), document.createTextNode(` — ${summary}`));
+  if (extra) li.append(el("div", { class: "caveat", text: extra }));
+  return li;
+}
+
+// "Laws & rules behind this" block for one check.
+function renderRefs(c) {
+  const m = (typeof CHECK_REFS !== "undefined" && CHECK_REFS[c.id]) || null;
+  if (!m) return el("div", { class: "ref", text: `Reference: ${c.ref}` });
+  const ul = el("ul", { class: "refs" });
+  (m.laws || []).forEach((k) => { const r = LAWS[k]; ul.append(refItem(r.name, r.summary, r.url, r.caveat)); });
+  (m.wcag || []).forEach((k) => { const r = WCAG[k]; ul.append(refItem(r.name, r.summary, r.url)); });
+  const regs = [...(m.regs || []), ...(m.a11yRegs ? A11Y_REGS : [])];
+  regs.forEach((k) => {
+    const r = REGS[k];
+    ul.append(refItem(r.name, `${r.region}. ${r.status}`, r.sources[0].url));
+  });
+  const wrap = el("div", { class: "refbox" }, el("b", { text: "Laws & rules behind this" }));
+  if (ul.children.length) wrap.append(ul);
+  if (m.a11yRegs) wrap.append(el("div", { class: "caveat", text: "Accessibility laws mostly point to WCAG 2.1 AA. Check which apply to your site and country; this is not legal advice." }));
+  if (m.note) wrap.append(el("div", { class: "note-inline", text: m.note }));
+  return wrap;
+}
+
+// Watchlist of regulations at the bottom of the report.
+function renderWatchlist() {
+  const box = el("div", {});
+  box.append(el("h2", { text: "Rules & regulations watchlist" }));
+  box.append(el("div", { class: "caveat", text: `Researched via web search on ${VERIFIED_ON}. Laws change quickly. General information, not legal advice.` }));
+  Object.values(REGS).forEach((r) => {
+    const body = el("div", { class: "body" },
+      el("p", {}, document.createTextNode(r.summary)));
+    if (r.caveat) body.append(el("p", { class: "caveat", text: "Caution: " + r.caveat }));
+    const ul = el("ul", { class: "refs" });
+    r.sources.forEach((src) => ul.append(el("li", {}, link(src.label, src.url))));
+    body.append(el("p", {}, el("b", { text: "Sources" }), ul));
+    box.append(el("details", {},
+      el("summary", {}, el("span", { text: r.name }), el("span", { class: "count", text: r.region })),
+      el("div", { class: "status", text: r.status }),
+      body));
+  });
+  return box;
+}
+
 const scoreColor = (s) => (s >= 80 ? "var(--pass)" : s >= 60 ? "var(--medium)" : "var(--high)");
 
 function renderIssue(c) {
@@ -32,7 +89,7 @@ function renderIssue(c) {
     if (c.count > c.examples.length) ul.append(el("li", { text: `…and ${c.count - c.examples.length} more` }));
     body.append(el("p", {}, el("b", { text: "Found on this page" }), ul));
   }
-  body.append(el("div", { class: "ref", text: `Reference: ${c.ref}` }));
+  body.append(renderRefs(c));
   return el("details", {},
     el("summary", {},
       el("span", { class: `badge ${c.severity}`, text: c.severity }),
@@ -75,9 +132,11 @@ function render(result) {
   passed.forEach((c) => ul.append(el("li", { text: c.title })));
   root.append(ul);
 
+  root.append(renderWatchlist());
+
   root.append(el("div", { class: "note", text:
     "These are automatic rule-based checks, a first pass rather than a full audit. " +
-    "Coming next: UX laws, regulations with sources, USP analysis and a downloadable report." }));
+    "Coming next: USP analysis and a downloadable report." }));
 
   root.hidden = false;
 }

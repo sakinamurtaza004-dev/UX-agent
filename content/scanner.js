@@ -419,6 +419,69 @@
     });
   }
 
+  // =====================================================================
+  // CATEGORY: Ethics & Trust (possible dark patterns)
+  // These are HEURISTICS. They flag things worth a human look; they cannot
+  // know intent (e.g. real stock levels are legitimate).
+  // =====================================================================
+
+  {
+    const urgency = /\b(only \d+ (\w+ )?left|hurry|limited[- ]time|offer (ends|expires)|ends (in|soon|tonight|today)|last chance|selling (out )?fast|\d+ (people|others|persons) (are )?(viewing|looking|watching)|don'?t miss out)\b/i;
+    const offenders = textElements.filter((el) => {
+      const t = textOf(el);
+      return t.length > 0 && t.length < 160 && urgency.test(t);
+    });
+    document.querySelectorAll('[class*="countdown" i], [id*="countdown" i]').forEach((el) => {
+      if (isVisible(el) && !offenders.includes(el)) offenders.push(el);
+    });
+    addCheck({
+      id: "pressure",
+      category: "Ethics & Trust",
+      title: "No pressure tactics found (possible false urgency)",
+      severity: "medium",
+      offenders,
+      why: "Countdowns, 'only 2 left' and 'hurry' messages push people to decide fast. If the scarcity isn't real, regulators in several regions treat this as a dark pattern.",
+      fix: "Only show urgency that is true and verifiable (real stock, real deadlines), and avoid fake timers.",
+      ref: "Dark patterns",
+    });
+  }
+
+  {
+    const extras = /(newsletter|marketing|promo|offers|updates|partners|third[- ]part|insurance|protection|donat|extra|add[- ]?on|subscribe|share my)/i;
+    const labelText = (el) => {
+      const l = (el.labels && el.labels[0]) || el.closest("label");
+      return (l ? textOf(l) : "") + " " + (el.getAttribute("aria-label") || "");
+    };
+    addCheck({
+      id: "prechecked",
+      category: "Ethics & Trust",
+      title: "Optional extras and consents aren't pre-ticked",
+      severity: "medium",
+      offenders: [...document.querySelectorAll('input[type="checkbox"]:checked')].filter(
+        (el) => isVisible(el) && extras.test(labelText(el))
+      ).map((el) => `Pre-ticked: "${labelText(el).trim().slice(0, 60)}"`),
+      why: "Boxes that are already ticked for marketing, insurance or donations rely on people not noticing. They can end up paying for or agreeing to things they never chose.",
+      fix: "Leave optional extras and consents unticked so users opt in actively.",
+      ref: "Dark patterns",
+    });
+  }
+
+  {
+    const shame = /\bno,? (thanks,? )?i (don'?t|do not|hate|prefer|would rather|like paying|already)|i (don'?t|do not) want (to )?(save|discount|deal|sale|offer|free|success|improve|grow|be healthy)/i;
+    addCheck({
+      id: "confirmshame",
+      category: "Ethics & Trust",
+      title: "Decline options use neutral wording (no confirm-shaming)",
+      severity: "low",
+      offenders: [...document.querySelectorAll("a, button, [role='button']")].filter(
+        (el) => isVisible(el) && shame.test(textOf(el))
+      ),
+      why: "Wording like 'No thanks, I don't want to save money' guilt-trips people into saying yes.",
+      fix: "Use plain, respectful wording for the decline option, such as 'No thanks'.",
+      ref: "Dark patterns",
+    });
+  }
+
   // ---------- scoring ----------
   const WEIGHT = { high: 3, medium: 2, low: 1 };
   const score = (list) => {
