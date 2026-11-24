@@ -25,3 +25,12 @@ After a scan, **Open full report** shows a complete document: score, issues with
 - **JSON:** the raw data.
 - **History:** every audit is saved on your device only (the 50 most recent). Re-audit the same page later and the popup shows the score change; the History page shows what was fixed and what broke.
 - Saved addresses drop the query string and #fragment (they can contain secrets). Sample data from mock mode is never saved as a real review. Switch history off any time.
+
+## Getting ready to publish
+
+Nothing here submits anything. See `docs/` and `scripts/`:
+
+- `npm run build:store -- --no-ai-server` (or `--server https://your.host`) builds the zip to upload, after checking permissions, icons and code rules.
+- `docs/privacy-policy.html`: draft policy with placeholders to fill in.
+- `docs/store/permissions-and-disclosures.md` and `docs/store/listing.md`: store form answers and listing text.
+- `server/HOSTING.md`: how to host the review server safely, and who pays for the AI.

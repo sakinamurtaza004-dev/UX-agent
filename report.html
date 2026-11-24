@@ -9,12 +9,18 @@
 <body>
   <div class="toolbar no-print" id="toolbar">
     <div class="tb-left">
+      <label class="pick">Version
+        <select id="view">
+          <option value="summary">Summary (about 2 pages)</option>
+          <option value="full">Full report (all details)</option>
+        </select>
+      </label>
       <button id="btn-print" class="primary">Print / Save as PDF</button>
       <button id="btn-html">Download HTML</button>
       <button id="btn-json">Download data (JSON)</button>
       <a id="btn-history" href="history.html">History</a>
     </div>
-    <div class="tb-hint">To get a PDF: click <b>Print / Save as PDF</b>, then choose <b>Save as PDF</b> as the destination.</div>
+    <div class="tb-hint">Pick a version, then click <b>Print / Save as PDF</b> and choose <b>Save as PDF</b> as the destination. The HTML download uses the same version.</div>
   </div>
   <main id="root"><p class="loading">Loading report…</p></main>
   <script src="lib/dom.js"></script>

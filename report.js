@@ -15,10 +15,10 @@ const list = (items) => { const ul = el("ul"); items.forEach((t) => ul.append(el
 const labelled = (label, content) => el("p", {}, el("span", { class: "lbl", text: label }), typeof content === "string" ? document.createTextNode(content) : content);
 
 // ---------- sections ----------
-function header(a) {
+function header(a, heading = "UX Audit Report") {
   const root = el("div", {});
   root.append(
-    el("h1", { text: "UX Audit Report" }),
+    el("h1", { text: heading }),
     el("div", { class: "site-title", text: a.title || "(untitled page)" }),
     el("div", { class: "meta", text: a.url }),
     el("div", { class: "meta", text: `Audited ${fmtDate(a.ts)} · UX Audit Buddy ${a.extVersion || ""}` }),
@@ -180,18 +180,79 @@ function method(a) {
   return root;
 }
 
+// ---------- summary version (about 2 pages) ----------
+// Short enough to share: score, the few things that matter most, and where to
+// look next. Every list is capped so it stays within two printed pages.
+const clip1 = (s, n) => (s.length > n ? s.slice(0, n - 1).trimEnd() + "…" : s);
+
+function summaryReport(a) {
+  const root = el("div", {});
+  root.append(el("div", { class: "banner", text: "Summary version. The full report has every issue, law, regulation and source in detail." }));
+
+  const failed = a.checks.filter((c) => c.status === "fail").sort((x, y) => SEV[x.severity] - SEV[y.severity]);
+  root.append(el("h2", { text: `Top issues to fix (${Math.min(5, failed.length)} of ${failed.length})` }));
+  if (!failed.length) root.append(el("p", { text: "No issues were found by the automatic checks." }));
+  failed.slice(0, 5).forEach((c) => root.append(el("div", { class: "card" },
+    el("div", { class: "head" }, el("span", { class: `badge ${c.severity}`, text: c.severity }), el("span", { class: "title", text: c.title }), el("span", { class: "count", text: `${c.count} found` })),
+    el("p", { text: clip1(c.fix, 170) }))));
+
+  // UX laws: names only, grouped by verdict
+  const group = (v) => a.laws.filter((l) => l.verdict === v).map((l) => l.name.replace("Nielsen heuristic: ", "Nielsen: "));
+  root.append(el("h2", { text: "UX laws at a glance" }));
+  [["not", "Not followed"], ["partly", "Partly followed"], ["followed", "Followed"]].forEach(([v, label]) => {
+    const names = group(v);
+    if (!names.length) return;
+    const chips = el("div", { class: "chips" });
+    names.slice(0, 10).forEach((n) => chips.append(el("span", { class: "pill", text: n })));
+    root.append(el("div", { class: "lawgroup" }, vchip(v), chips));
+  });
+  const un = a.laws.filter((l) => l.verdict === "unmeasured").length;
+  if (un) root.append(el("div", { class: "small", text: `${un} more law${un === 1 ? "" : "s"} can't be judged from code and need human or AI review.` }));
+
+  // AI review: promise + first paragraph only
+  if (a.ai) {
+    const ai = a.ai.review, clarity = { clear: "Clear", somewhat_clear: "Somewhat clear", unclear: "Unclear" }[ai.usp.clarity];
+    root.append(el("h2", { text: "AI review (AI-generated, can be wrong)" }),
+      el("p", { class: "usp", text: ai.usp.statement }),
+      el("div", { class: "small", text: `How clearly the page communicates it: ${clarity}.` }),
+      el("p", { text: clip1(ai.summary, 380) }));
+    if (ai.priorities.length) root.append(el("h3", { text: "AI's top priorities" }), (() => { const ol = el("ol"); ai.priorities.slice(0, 3).forEach((p) => ol.append(el("li", { text: clip1(p, 160) }))); return ol; })());
+  }
+
+  // Rules: only the ones that probably matter
+  const ORDER = ["likely", "may", "pending"];
+  const relevant = a.regs.filter((r) => ORDER.includes(r.verdict)).sort((x, y) => ORDER.indexOf(x.verdict) - ORDER.indexOf(y.verdict));
+  root.append(el("h2", { text: "Rules that may apply to this site" }));
+  if (relevant.length) {
+    const ul = el("ul", { class: "plain" });
+    relevant.slice(0, 6).forEach((r) => ul.append(el("li", {}, schip(r.verdict), document.createTextNode(` ${r.name} (${r.region})`))));
+    root.append(ul);
+    if (relevant.length > 6) root.append(el("div", { class: "small", text: `…and ${relevant.length - 6} more in the full report.` }));
+  } else root.append(el("p", { text: "None of the rules in our list clearly apply, based on what the page shows." }));
+  root.append(el("div", { class: "small", text: `Worked out from signals on the page and researched ${a.lawsResearchDate || "on an unrecorded date"}. A web page can't show where a business is based or who its customers are, so verify each one. General information, not legal advice.` }));
+
+  root.append(el("div", { class: "box" }, el("b", { text: "Read this first" }), list([
+    `${a.checks.length} automatic checks ran on one visit. They are a first pass, not a full audit or a substitute for testing with real users.`,
+    "UX law verdicts are measurable stand-ins (proxies) with rules-of-thumb cut-offs; they are not proofs.",
+    a.ai ? "AI-generated parts are labelled and can be wrong." : "No AI review was included.",
+  ])));
+  root.append(el("footer", { class: "doc", text: `Generated by UX Audit Buddy ${a.extVersion || ""} on ${fmtDate(a.ts)}. Choose "Full report" for all details.` }));
+  return root;
+}
+
 // ---------- page ----------
-function renderReport(a) {
-  const report = el("article", { class: "report", id: "report" });
-  report.append(header(a), takeaways(a), issues(a), laws(a), aiReview(a), regulations(a), method(a));
+function renderReport(a, view) {
+  const report = el("article", { class: "report " + (view === "summary" ? "summary" : "full"), id: "report" });
+  if (view === "summary") report.append(header(a, "UX Audit Summary"), summaryReport(a));
+  else report.append(header(a), takeaways(a), issues(a), laws(a), aiReview(a), regulations(a), method(a));
   return report;
 }
 
 const safeName = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 50) || "page";
-function fileBase(a) {
+function fileBase(a, view) {
   let host = "page";
   try { host = new URL(a.url).hostname; } catch (e) { /* keep default */ }
-  return `ux-audit_${safeName(host)}_${new Date(a.ts).toISOString().slice(0, 10)}`;
+  return `ux-audit_${safeName(host)}_${new Date(a.ts).toISOString().slice(0, 10)}` + (view ? `_${view}` : "");
 }
 function download(name, text, type) {
   const url = URL.createObjectURL(new Blob([text], { type }));
@@ -213,17 +274,36 @@ async function standaloneHtml(a) {
 
 async function main() {
   const root = document.getElementById("root");
-  const id = new URLSearchParams(location.search).get("id");
+  const params = new URLSearchParams(location.search);
+  const id = params.get("id");
   const a = id ? await AuditStore.getAudit(id) : null;
   if (!a) {
     root.replaceChildren(el("p", { class: "empty", text: "This report wasn't found on this device. It may have been deleted. Open the History page to see saved audits." }));
-    document.getElementById("toolbar").querySelectorAll("button").forEach((b) => (b.disabled = true));
+    document.getElementById("toolbar").querySelectorAll("button, select").forEach((b) => (b.disabled = true));
     return;
   }
-  document.title = `UX Audit Report - ${a.title || a.url}`;
-  root.replaceChildren(renderReport(a));
+
+  // Which version? The link can say (?view=), otherwise the last one used, otherwise the summary.
+  const prefs = await AuditStore.prefs();
+  let view = ["summary", "full"].includes(params.get("view")) ? params.get("view") : (prefs.reportView || "summary");
+  const select = document.getElementById("view");
+
+  const show = () => {
+    select.value = view;
+    document.title = `UX Audit ${view === "summary" ? "Summary" : "Report"} - ${a.title || a.url}`;
+    root.replaceChildren(renderReport(a, view));
+  };
+  show();
+  select.addEventListener("change", async () => {
+    view = select.value;
+    show();
+    history.replaceState(null, "", `report.html?id=${encodeURIComponent(id)}&view=${view}`);
+    await AuditStore.setPrefs({ reportView: view });
+  });
+
+  // Print / Save as PDF prints whichever version is on screen.
   document.getElementById("btn-print").addEventListener("click", () => window.print());
+  document.getElementById("btn-html").addEventListener("click", async () => download(fileBase(a, view) + ".html", await standaloneHtml(a), "text/html"));
   document.getElementById("btn-json").addEventListener("click", () => download(fileBase(a) + ".json", JSON.stringify(a, null, 2), "application/json"));
-  document.getElementById("btn-html").addEventListener("click", async () => download(fileBase(a) + ".html", await standaloneHtml(a), "text/html"));
 }
 main();

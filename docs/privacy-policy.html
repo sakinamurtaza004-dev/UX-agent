@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UX Audit Buddy: Privacy Policy</title>
+<style>
+  body { font: 16px/1.6 system-ui, sans-serif; color: #18181b; max-width: 760px; margin: 0 auto; padding: 24px 20px 64px; }
+  h1 { font-size: 28px; } h2 { font-size: 20px; margin-top: 34px; border-bottom: 1px solid #e4e4e7; padding-bottom: 6px; }
+  .draft { background: #fef3c7; color: #78350f; border-radius: 8px; padding: 12px 16px; font-size: 14px; }
+  .todo { background: #fde68a; padding: 0 4px; border-radius: 3px; font-weight: 600; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; } th, td { border: 1px solid #e4e4e7; padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #f4f4f5; }
+</style>
+</head>
+<body>
+<div class="draft"><b>DRAFT: delete this box before publishing.</b> This policy was written from what the extension's code actually does. Replace every <span class="todo">[[highlighted placeholder]]</span>, check that it is still true for the version you publish, and have it reviewed by someone qualified for your country. It is not legal advice.</div>
+
+<h1>UX Audit Buddy: Privacy Policy</h1>
+<p>Effective date: <span class="todo">[[DATE]]</span><br>
+Published by: <span class="todo">[[YOUR NAME OR ORGANISATION]]</span> ("we")<br>
+Contact: <span class="todo">[[CONTACT EMAIL]]</span></p>
+
+<p>UX Audit Buddy is a Chrome extension that audits the web page you are viewing for usability, accessibility and manipulative-design problems, and lets you save a report. This policy explains what data it handles.</p>
+
+<h2>In short</h2>
+<ul>
+  <li>The audit runs <b>on your device</b>. Your audits, reports and settings are stored <b>only in your browser</b>.</li>
+  <li>Nothing is sent anywhere unless you <b>choose to run the optional AI review</b> and confirm a consent box.</li>
+  <li>We do not use analytics or advertising trackers, do not sell data, and do not load remote code.</li>
+</ul>
+
+<h2>What stays on your device</h2>
+<table>
+<tr><th>Data</th><th>Why</th><th>Where</th></tr>
+<tr><td>For each audit: the page address (<b>without</b> its query string and #fragment), page title, the findings, scores, notes about laws and regulations, and the AI review text if you ran one</td><td>So you can open reports later and compare before and after</td><td>Your browser's extension storage (<code>chrome.storage.local</code>). The 50 most recent audits are kept</td></tr>
+<tr><td>Your settings: review-server address, optional access token, consent choice, screenshot choice, history on/off, report version</td><td>To remember your choices</td><td>Same</td></tr>
+<tr><td>A random install ID (not linked to you)</td><td>Sent with AI requests so the server can apply fair-use limits</td><td>Same</td></tr>
+</table>
+<p>You can turn history off, delete a single audit, delete all history, or export your data from the extension's History page. Uninstalling the extension removes this data.</p>
+
+<h2>The optional AI review: what is sent</h2>
+<p>The AI review only runs when you click <b>Run AI review</b> after ticking the consent box. It then sends the following to a review server and, through it, to Anthropic's Claude AI service to produce the review:</p>
+<ul>
+  <li>The page address (without query string or #fragment), page title, meta description, headings, navigation and button labels;</li>
+  <li>Up to about 9,000 characters of the page's visible text. <b>Text you typed into form fields is not included</b>;</li>
+  <li>A summary of the automatic findings (check names, counts, scores);</li>
+  <li>Optionally, a screenshot of the part of the page visible on screen (you can untick this);</li>
+  <li>The random install ID, and an access token only if you entered one.</li>
+</ul>
+<p><b>Please do not run the AI review on pages that show private information</b> (email, banking, health, internal company tools). The extension warns on pages that look private, but cannot detect everything.</p>
+
+<h2>Who receives it</h2>
+<ul>
+  <li><b>The review server</b>, operated by <span class="todo">[[WHO OPERATES THE SERVER AND WHERE IT IS HOSTED]]</span>. The server does not store page content or screenshots and does not write them to its logs. Its logs record only technical details such as time taken, model name and token counts. It keeps request addresses in memory for up to one hour to apply rate limits. Its hosting provider (<span class="todo">[[HOST NAME]]</span>) may keep standard network logs of its own.</li>
+  <li><b>Anthropic</b>, which processes the request to generate the review under its own terms and privacy policy: <span class="todo">[[ADD THE CURRENT LINK TO ANTHROPIC'S PRIVACY POLICY AND CHECK ITS DATA-RETENTION TERMS FOR API USE]]</span>.</li>
+</ul>
+<p>If you set up your own review server in the extension's settings, the data goes to the server you chose instead, and that server's operator is responsible for it.</p>
+<p>The AI review is generated by an AI model, can be wrong, and is labelled as AI-generated wherever it appears.</p>
+
+<h2>What we do not do</h2>
+<ul>
+  <li>No analytics, advertising, tracking or profiling.</li>
+  <li>No selling or sharing of your data for advertising, and no use of it for purposes unrelated to producing your audit and review.</li>
+  <li>No remotely hosted code: all of the extension's code ships inside the extension.</li>
+  <li>No reading of any page unless you open the extension on it and ask for a scan (the extension asks Chrome only for the permissions listed below).</li>
+</ul>
+
+<h2>Permissions</h2>
+<table>
+<tr><th>Permission</th><th>Why</th></tr>
+<tr><td><code>activeTab</code></td><td>Lets the extension read the page you are on, only after you open it there and click Scan.</td></tr>
+<tr><td><code>scripting</code></td><td>Runs the extension's analysis script in that page.</td></tr>
+<tr><td><code>storage</code></td><td>Saves your audit history and settings on your device.</td></tr>
+</table>
+
+<h2>Children</h2>
+<p>The extension is not directed at children under 13 and we do not knowingly collect their data.</p>
+
+<h2>Your choices and rights</h2>
+<p>Because audits are stored on your device, you control them directly (delete, export, turn history off). For data processed through the AI review, contact us at the address above to ask about access or deletion. <span class="todo">[[ADD ANY RIGHTS THAT APPLY WHERE YOU AND YOUR USERS ARE (for example under the GDPR or India's DPDP Act). Get qualified advice.]]</span></p>
+
+<h2>Changes</h2>
+<p>If we change what the extension collects or shares, we will update this page and the effective date before the change takes effect.</p>
+</body>
+</html>

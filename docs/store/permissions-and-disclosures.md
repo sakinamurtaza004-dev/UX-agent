@@ -1,0 +1,51 @@
+# Permissions and Chrome Web Store disclosures (draft)
+
+You will be asked to justify each permission and to fill in the **Privacy practices** tab when you submit. These are draft answers based on what the code actually does. **Check each one is still true for the version you upload.** I can't make legal certifications for you.
+
+## Permissions (from `manifest.json`)
+
+| Permission | Plain-language justification to paste |
+|---|---|
+| `activeTab` | "The extension audits the page the user is viewing. It needs temporary access to that single tab, granted when the user opens the extension on it, to read the page's structure and (optionally) capture a screenshot of it for the AI review. It does not access any other tab or any site in the background." |
+| `scripting` | "Used to run the extension's own analysis script (`content/scanner.js`, shipped inside the package) in the tab the user chose to audit. No remote code is loaded." |
+| `storage` | "Saves the user's audit history, report preferences and settings locally in the browser. Nothing is synced or uploaded." |
+
+**Not requested:** host permissions, `tabs`, `history`, `cookies`, `webRequest`, `downloads`, remote code, content scripts that run automatically on websites. If a reviewer asks why the extension can reach a review server without host permissions: it uses standard cross-origin requests that the server explicitly allows.
+
+## Single purpose
+
+"Audit the web page the user is viewing for usability, accessibility and manipulative-design issues, and present the findings as a saved, printable report."
+
+## Remote code
+
+"No. All JavaScript ships inside the extension package."
+
+## Privacy practices: draft answers (confirm them yourself)
+
+**Data the extension handles:**
+
+| Chrome category | Handled? | Notes |
+|---|---|---|
+| Personally identifiable information | No | Not collected on purpose. Page text could contain some if the user runs AI review on such a page (warned against) |
+| Health, financial, authentication information | No | Same note |
+| Personal communications | No | |
+| Location | No | |
+| Web history | Declare conservatively | The audited page's address (no query/fragment) is stored locally, and sent to the review server if the user runs the AI review |
+| User activity | No | No tracking of clicks, keystrokes or browsing |
+| **Website content** | **Yes, only with the optional AI review** | Page text, headings, labels and an optional screenshot, sent after explicit consent |
+
+**Statements you will be asked to certify (only certify if true):**
+- I do not sell or transfer user data to third parties, outside of approved use cases. *(The data goes to the AI processor in order to provide the feature the user asked for.)*
+- I do not use or transfer user data for purposes unrelated to the item's single purpose.
+- I do not use or transfer user data to determine creditworthiness or for lending purposes.
+
+**Privacy policy URL:** host `docs/privacy-policy.html` (see "Hosting the policy" below) and paste the address.
+
+## Hosting the policy
+
+The store needs a public web address. The simplest free option is **GitHub Pages**:
+1. Fill in every highlighted placeholder in `docs/privacy-policy.html` and delete the yellow draft box.
+2. On GitHub: repository **Settings → Pages → Build and deployment → Deploy from a branch → `main` → `/docs` → Save**.
+3. After a minute the policy is at `https://<your-username>.github.io/<repo-name>/privacy-policy.html`. Open it to check, then paste that address into the store form.
+
+(I couldn't enable Pages from my environment, so that step is yours.)

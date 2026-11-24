@@ -159,7 +159,27 @@ function VERDICTS_DATE() { return typeof VERIFIED_ON !== "undefined" ? VERIFIED_
 // =====================================================================
 // AI REVIEW (Step 4)
 // =====================================================================
-const AI_DEFAULTS = { serverUrl: "http://localhost:8787", token: "", consent: false, screenshot: true };
+const AI_DEFAULTS = { serverUrl: APP_CONFIG.defaultServerUrl, token: "", consent: false, screenshot: true };
+
+// A random id for this install, sent with AI requests so the server can apply
+// per-install limits. It is not tied to you or your browsing, and is created locally.
+async function getInstallId() {
+  try {
+    let { installId } = await chrome.storage.local.get("installId");
+    if (!installId) { installId = crypto.randomUUID(); await chrome.storage.local.set({ installId }); }
+    return installId;
+  } catch (e) { return ""; }
+}
+
+// Page text is only sent over https (plain http is allowed just for localhost while testing).
+function serverUrlProblem(u) {
+  if (!u) return "AI review isn't set up yet. Add your review server's address under 'Review server settings'.";
+  let x;
+  try { x = new URL(u); } catch (e) { return "That server address isn't valid. Example: http://localhost:8787"; }
+  const local = ["localhost", "127.0.0.1", "[::1]"].includes(x.hostname);
+  if (x.protocol === "https:" || (x.protocol === "http:" && local)) return "";
+  return "For safety, page text is only sent to https addresses (or localhost while testing).";
+}
 
 async function loadAiSettings() {
   try {
@@ -298,7 +318,8 @@ function renderAiPanel(result, settings) {
     await saveAiSettings(s);
     out.replaceChildren();
     if (!s.consent) { status.textContent = "Tick the consent box first. Nothing is sent until you do."; return; }
-    if (!/^https?:\/\//.test(s.serverUrl)) { status.textContent = "Enter the server address, for example http://localhost:8787"; return; }
+    const problem = serverUrlProblem(s.serverUrl);
+    if (problem) { status.textContent = problem; return; }
 
     runBtn.disabled = true;
     try {
@@ -315,7 +336,7 @@ function renderAiPanel(result, settings) {
       try {
         resp = await fetch(s.serverUrl + "/api/review", {
           method: "POST",
-          headers: Object.assign({ "content-type": "application/json" }, s.token ? { "x-app-token": s.token } : {}),
+          headers: Object.assign({ "content-type": "application/json", "x-install-id": await getInstallId() }, s.token ? { "x-app-token": s.token } : {}),
           body: JSON.stringify(buildAiPayload(result, current.laws, screenshot)),
           signal: ctrl.signal,
         });
@@ -385,7 +406,7 @@ function renderActions() {
     : "History is off. This report is temporary and is replaced by your next scan.";
   box.append(el("b", { text: "Report" }), el("div", { class: "caveat", text: msg }));
 
-  const open = el("button", { class: "primary", text: "Open full report" });
+  const open = el("button", { class: "primary", text: "Open report" });
   open.disabled = !r || !r.ok;
   open.addEventListener("click", () => openTab(`report.html?id=${r && r.history ? current.savedId : "last"}`));
   const hist = el("button", { text: "History" });
@@ -471,7 +492,7 @@ async function render(result) {
 
   root.append(el("div", { class: "note", text:
     "These are automatic rule-based checks plus an optional AI review, a first pass rather than a full audit. " +
-    "Use 'Open full report' for a printable document you can keep." }));
+    "Use 'Open report' for a printable document you can keep (summary or full)." }));
 
   root.hidden = false;
   await persist();

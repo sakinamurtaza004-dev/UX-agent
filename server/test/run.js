@@ -7,7 +7,7 @@
 import http from "node:http";
 import assert from "node:assert/strict";
 import Anthropic from "@anthropic-ai/sdk";
-import { createApp, loadConfig } from "../server.js";
+import { createApp, loadConfig, validateConfig } from "../server.js";
 
 // ---- fake upstream "Anthropic" ----
 const upstream = { requests: [], mode: "ok", reviewJson: null };
@@ -216,6 +216,55 @@ await test("page content is never written to the logs", () => withServer({}, asy
   assert.ok(logs.length > 0);
   assert.ok(logs.every((l) => !l.includes("SECRET-PAGE-TEXT") && !l.includes("example.com")));
 }));
+
+// ---- public deployment protections ----
+await test("ALLOW_EXTENSION_IDS: only your extension is accepted", () => withServer({ ALLOW_EXTENSION_IDS: "goodid,otherid" }, async (b) => {
+  assert.equal((await post(b, payload(), { origin: "chrome-extension://goodid" })).status, 200);
+  const bad = await post(b, payload(), { origin: "chrome-extension://evilid" });
+  assert.equal(bad.status, 403); assert.equal(bad.headers.get("access-control-allow-origin"), null);
+  const web = await post(b, payload(), { origin: "https://evil.example" });
+  assert.equal(web.status, 403);
+  const none = await fetch(b + "/api/review", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload()) });
+  assert.equal(none.status, 403, "requests with no Origin are refused too");
+  assert.equal(upstream.requests.length, 1, "only the allowed call reached the AI");
+  const pre = await fetch(b + "/api/review", { method: "OPTIONS", headers: { origin: "chrome-extension://evilid" } });
+  assert.equal(pre.headers.get("access-control-allow-origin"), null, "CORS preflight also refuses other extensions");
+}));
+
+await test("install id: limit is per install, not shared", () => withServer({ RATE_LIMIT_PER_HOUR: "1" }, async (b) => {
+  assert.equal((await post(b, payload(), { "x-install-id": "install-aaaaaaaa" })).status, 200);
+  assert.equal((await post(b, payload(), { "x-install-id": "install-bbbbbbbb" })).status, 200, "a different install is not blocked");
+  assert.equal((await post(b, payload(), { "x-install-id": "install-aaaaaaaa" })).status, 429, "the same install is");
+}));
+
+await test("address limit stops one machine rotating install ids", () => withServer({ RATE_LIMIT_PER_HOUR: "5", IP_RATE_LIMIT_PER_HOUR: "2" }, async (b) => {
+  assert.equal((await post(b, payload(), { "x-install-id": "install-00000001" })).status, 200);
+  assert.equal((await post(b, payload(), { "x-install-id": "install-00000002" })).status, 200);
+  assert.equal((await post(b, payload(), { "x-install-id": "install-00000003" })).status, 429);
+}));
+
+await test("malformed install id is ignored (falls back to the address limit)", () => withServer({ RATE_LIMIT_PER_HOUR: "1" }, async (b) => {
+  assert.equal((await post(b, payload(), { "x-install-id": "x y<script>" })).status, 200);
+  assert.equal((await post(b, payload(), { "x-install-id": "another bad!!" })).status, 429);
+}));
+
+await test("X-Forwarded-For is ignored unless TRUST_PROXY=1 (can't be spoofed)", () => withServer({ IP_RATE_LIMIT_PER_HOUR: "1", RATE_LIMIT_PER_HOUR: "9" }, async (b) => {
+  assert.equal((await post(b, payload(), { "x-install-id": "install-11111111", "x-forwarded-for": "1.1.1.1" })).status, 200);
+  assert.equal((await post(b, payload(), { "x-install-id": "install-22222222", "x-forwarded-for": "2.2.2.2" })).status, 429, "spoofed address must not bypass the limit");
+}));
+
+await test("TRUST_PROXY=1 uses the proxy-appended address", () => withServer({ TRUST_PROXY: "1", IP_RATE_LIMIT_PER_HOUR: "1", RATE_LIMIT_PER_HOUR: "9" }, async (b) => {
+  assert.equal((await post(b, payload(), { "x-install-id": "install-11111111", "x-forwarded-for": "spoofed, 9.9.9.1" })).status, 200);
+  assert.equal((await post(b, payload(), { "x-install-id": "install-22222222", "x-forwarded-for": "spoofed2, 9.9.9.2" })).status, 200, "different real client");
+  assert.equal((await post(b, payload(), { "x-install-id": "install-33333333", "x-forwarded-for": "other, 9.9.9.1" })).status, 429, "same real client");
+}));
+
+await test("PUBLIC_MODE refuses unsafe configuration", () => {
+  assert.ok(validateConfig(loadConfig({ PUBLIC_MODE: "1" })).length >= 2);
+  assert.ok(validateConfig(loadConfig({ PUBLIC_MODE: "1", ALLOW_EXTENSION_IDS: "abc", TRUST_PROXY: "1", MAX_REVIEWS_PER_DAY: "999999" })).some((e) => /MAX_REVIEWS/.test(e)));
+  assert.deepEqual(validateConfig(loadConfig({ PUBLIC_MODE: "1", ALLOW_EXTENSION_IDS: "abc", TRUST_PROXY: "1" })), []);
+  assert.deepEqual(validateConfig(loadConfig({})), [], "local use needs nothing extra");
+});
 
 fakeSrv.close();
 console.log(`\n${passed} passed${process.exitCode ? ", some FAILED" : ""}`);

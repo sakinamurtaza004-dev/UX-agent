@@ -1,0 +1,13 @@
+{
+  "name": "ux-audit-buddy",
+  "version": "0.6.0",
+  "private": true,
+  "description": "Chrome extension that audits a web page's UX. Root tooling only: the extension itself has no build step.",
+  "scripts": {
+    "build:store": "node scripts/build-store.mjs",
+    "test:server": "npm --prefix server test"
+  },
+  "devDependencies": {
+    "adm-zip": "^0.5.16"
+  }
+}
