@@ -9,7 +9,7 @@ You will be asked to justify each permission and to fill in the **Privacy practi
 | `activeTab` | "The extension audits the page the user is viewing. It needs temporary access to that single tab, granted when the user opens the extension on it, to read the page's structure and (optionally) capture a screenshot of it for the AI review. It does not access any other tab or any site in the background." |
 | `scripting` | "Used to run the extension's own analysis script (`content/scanner.js`, shipped inside the package) in the tab the user chose to audit. No remote code is loaded." |
 | `storage` | "Saves the user's audit history, report preferences and settings locally in the browser. Nothing is synced or uploaded." |
-| `sidePanel` | "The extension's interface is a side panel that stays open next to the page while the user browses. This permission lets the toolbar icon open it." |
+| `sidePanel` | "The extension's interface is a side panel. This permission lets the toolbar icon open it, only on the tab where the user clicked the icon; switching to another tab hides it." |
 
 **Clipboard:** the "Ask your own AI chat" feature copies a prompt when the user clicks a button. Chrome allows this from the extension's own page on a user click, so no clipboard permission is requested (tested). If it is blocked, the prompt is shown in a box to copy by hand.
 

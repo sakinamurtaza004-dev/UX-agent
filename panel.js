@@ -77,7 +77,7 @@ function pageIdentity() {
   if (App.screen === "done" && App.rec) return { title: App.rec.title || "(untitled page)", sub: pageSub(App.rec), letter: letterOf(App.rec.url) };
   const t = App.target;
   if (t && t.url) return { title: t.title || "Current page", sub: hostOf(t.url), letter: letterOf(t.url) };
-  return { title: "Current page", sub: "Open a website, then scan it", letter: "?" };
+  return { title: "Current page", sub: "Click the toolbar icon on a website to read it", letter: "?" };
 }
 function hostOf(u) { try { return new URL(u).hostname.replace(/^www\./, ""); } catch (e) { return ""; } }
 function letterOf(u) { const h = hostOf(u); return h ? h[0].toUpperCase() : "?"; }
@@ -132,6 +132,19 @@ function buildHeader() {
 }
 
 function goTab(t) { set({ tab: t }, { reset: true }); }
+
+// While the "needs your OK" screen is showing, notice when the user has clicked the toolbar icon
+// (Chrome then reveals the page's address) and carry on with the scan by itself.
+let accessTimer = null;
+function watchForAccess() {
+  clearInterval(accessTimer);
+  accessTimer = setInterval(async () => {
+    if (App.screen !== "needaccess" || App.ui.retrying) return;
+    await refreshTarget();
+    if (App.target && /^https?:/i.test(App.target.url || "")) { clearInterval(accessTimer); toast("Access granted. Scanning…"); scan(); }
+  }, 800);
+}
+document.addEventListener("visibilitychange", async () => { if (!document.hidden) { await refreshTarget(); if (App.screen === "start") render(); } });
 
 // ---------------------------------------------------------------- start / scanning / problems
 function buildStart() {
@@ -208,11 +221,13 @@ function buildProblem() {
       el("div", { class: "h2", style: "font-size:16px", text: "Chrome needs your OK to read this page" }),
       el("p", { class: "mut sm", style: "margin:0 0 8px", text: "To keep your browsing private, this extension only reads a page when you ask it to." }),
       el("ol", { class: "sm mut", style: "margin:0 0 12px;padding-left:18px" },
-        el("li", { text: "Click the UX Audit Buddy icon in the toolbar while this tab is showing." }),
-        el("li", { text: "Press Scan this page again." })),
-      el("p", { class: "xs", style: "margin:0 0 12px", text: "Browser pages (like chrome://) and the Chrome Web Store are never allowed, for any extension. Open a normal website instead." }));
+        el("li", { text: "Click the UX Audit Buddy icon in the toolbar, with this page showing. The panel stays open." }),
+        el("li", { text: "The scan then starts by itself. If it doesn't, press Scan again." })));
+    if ((f.attempts || 0) > 0) c.append(el("div", { class: "err", role: "alert", style: "margin:0 0 10px", text: "Still can't read this page. Click the toolbar icon while this tab is showing, then try again." }));
+    c.append(el("p", { class: "xs", style: "margin:0 0 12px", text: "Browser pages (like chrome://) and the Chrome Web Store are never allowed, for any extension. Open a normal website instead." }));
     const row = el("div", { style: "display:flex;gap:8px;flex-wrap:wrap" });
-    const again = el("button", { type: "button", class: "btn pri", text: "Scan again" });
+    const again = fk("scan-again", el("button", { type: "button", class: "btn pri", text: App.ui.retrying ? "Checking…" : "Scan again" }));
+    again.disabled = !!App.ui.retrying;
     again.addEventListener("click", scan);
     row.append(again);
     if (f.origin) {
@@ -786,18 +801,29 @@ async function allowSite(origin) {
 
 async function scan() {
   App.ui.sheet = null;
-  set({ screen: "scan", fail: null, stale: false, ui: { ...App.ui, scanStep: 0, sheet: null } }, { reset: true });
+  // Trying again from a problem screen stays on that screen (no flashing); a first scan shows the progress steps.
+  const retry = App.screen === "needaccess" || App.screen === "error";
+  const attempts = retry && App.fail ? App.fail.attempts || 0 : 0;
+  if (retry) set({ ui: { ...App.ui, retrying: true, sheet: null } });
+  else set({ screen: "scan", fail: null, stale: false, ui: { ...App.ui, scanStep: 0, sheet: null, retrying: false } }, { reset: true });
   const started = Date.now();
-  const ticker = setInterval(() => { if (App.ui.scanStep < 3) { App.ui.scanStep++; render(); } }, 380);
+  const ticker = retry ? null : setInterval(() => { if (App.ui.scanStep < 3) { App.ui.scanStep++; render(); } }, 380);
   let result = null, failure = null, tab = null;
   try {
     tab = await getTargetTab();
     const [{ result: r }] = await chrome.scripting.executeScript({ target: { tabId: tab.id }, files: ["content/scanner.js"] });
     result = r;
   } catch (e) { failure = classifyScanError(e, tab); }
-  if (!failure) await new Promise((r) => setTimeout(r, Math.max(0, 1500 - (Date.now() - started))));
-  clearInterval(ticker);
-  if (failure) { App.fail = failure; set({ screen: failure.kind === "blocked" ? "blocked" : failure.kind === "access" ? "needaccess" : "error" }, { reset: true }); return; }
+  if (!failure && !retry) await new Promise((r) => setTimeout(r, Math.max(0, 1500 - (Date.now() - started))));
+  if (retry) await new Promise((r) => setTimeout(r, Math.max(0, 500 - (Date.now() - started))));   // let "Checking…" be seen
+  if (ticker) clearInterval(ticker);
+  if (failure) {
+    App.fail = { ...failure, attempts: attempts + 1 };
+    if (failure.kind === "access") watchForAccess();
+    set({ screen: failure.kind === "blocked" ? "blocked" : failure.kind === "access" ? "needaccess" : "error", ui: { ...App.ui, retrying: false } }, { reset: !retry });
+    return;
+  }
+  App.ui.retrying = false;
   App.ui.scanStep = 4;
   await ingest(result, tab);
 }

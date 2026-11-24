@@ -18,9 +18,9 @@ Chrome extension (Manifest V3) that audits any web page for UX issues, strengths
 
 ## The side panel
 
-Click the toolbar icon to open the panel next to the page. **Overview** (score, fix-these-first, score by area), **Issues** (filter by severity; each issue shows why, fix and the standard, and **Show on page** highlights the elements), **UX laws** (23 laws and heuristics grouped by verdict, including all 10 Nielsen heuristics), **Rules** (which laws may apply, with sources), and **AI review**. History and Settings are in the header. The design lives in `panel.html`, `panel.css` and `panel.js`.
+Click the toolbar icon to open the panel on the page you want to audit. It belongs to that tab: switch to another tab and it hides, switch back and it returns. **Overview** (score, fix-these-first, score by area), **Issues** (filter by severity; each issue shows why, fix and the standard, and **Show on page** highlights the elements), **UX laws** (23 laws and heuristics grouped by verdict, including all 10 Nielsen heuristics), **Rules** (which laws may apply, with sources), and **AI review**. History and Settings are in the header. The design lives in `panel.html`, `panel.css` and `panel.js`.
 
-Chrome lets an extension read a page only after you invoke it there. If a scan is refused, the panel says so and offers to ask for that one site.
+Chrome lets an extension read a page only after you click its icon on that page, so clicking the icon is also what lets a scan read the page. If a scan is refused (for example after you navigate), the panel says so, waits, and scans by itself as soon as you click the icon.
 
 ## Ask your own AI chat (free, no key)
 
