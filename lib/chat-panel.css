@@ -1,16 +1,25 @@
-/* "Ask your own AI chat" panel: shared by the popup and the report page. */
-.chatpanel { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin-top: 14px; background: #fff; text-align: left; }
-.chatpanel h2 { margin-top: 0; border: 0; padding: 0; }
-.chatpanel .field { display: block; font-size: 12px; color: var(--muted); margin: 8px 0; }
-.chatpanel select, .chatpanel input[type="text"], .chatpanel textarea { display: block; width: 100%; margin-top: 3px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; font: inherit; color: var(--text); background: #fff; }
-.chatpanel textarea { resize: vertical; font-size: 12px; }
-.chatpanel .btnrow { display: flex; gap: 8px; margin: 8px 0 4px; flex-wrap: wrap; }
-.chatpanel .btnrow button { padding: 7px 12px; border-radius: 8px; border: 1px solid var(--line); background: #fff; color: var(--text); font: inherit; cursor: pointer; }
-.chatpanel .btnrow button.primary { background: var(--brand); color: #fff; border-color: var(--brand); }
-.chatpanel .check { display: flex; gap: 8px; align-items: flex-start; font-size: 12px; margin: 8px 0; }
-.chatpanel .caveat { font-size: 11px; color: var(--muted); }
-.chatpanel .aistatus { font-size: 12px; color: var(--muted); min-height: 1em; overflow-wrap: anywhere; }
-.chatpanel .warn { font-size: 12px; background: #fef3c7; color: #78350f; border-radius: 6px; padding: 6px 8px; margin: 6px 0; }
-.chatpanel details.settings { border: 0; padding: 0; margin: 8px 0 0; }
-.chatpanel details.settings summary { font-size: 12px; color: var(--muted); cursor: pointer; }
-.chatpanel [hidden] { display: none !important; }
+/* "Or ask your own AI chat" card: shared by the side panel and the report page.
+   Self-contained (.cp-*) so it looks the same wherever it is placed. */
+.cp { background: #fff; border: 1px solid #EAECF0; border-radius: 10px; padding: 14px; margin-bottom: 12px; text-align: left; color: #101828; font-size: 13px; line-height: 1.45; font-family: Inter, system-ui, sans-serif; }
+.cp * { box-sizing: border-box; }
+.cp-head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.cp-h { flex: 1; margin: 0; font-size: 13px; font-weight: 600; }
+.cp-free { display: inline-flex; padding: 1px 7px; border-radius: 5px; font-size: 10px; font-weight: 700; line-height: 18px; background: #DCFAE6; color: #067647; }
+.cp-xs { font-size: 11px; color: #667085; margin: 0 0 4px; }
+.cp-lab { display: block; font-size: 12px; font-weight: 600; margin: 10px 0 5px; color: #344054; }
+.cp-fld { width: 100%; border: 1px solid #D0D5DD; border-radius: 8px; padding: 8px 10px; font: inherit; font-size: 13px; background: #fff; color: #101828; }
+textarea.cp-fld { min-height: 64px; resize: vertical; }
+.cp-chk { display: flex; gap: 8px; align-items: flex-start; font-size: 12px; color: #344054; margin: 10px 0; cursor: pointer; }
+.cp-chk input { margin: 2px 0 0; width: 16px; height: 16px; accent-color: #4F46E5; flex: none; }
+.cp-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.cp-btn { border-radius: 8px; border: 1px solid #D0D5DD; background: #fff; color: #344054; font: inherit; font-weight: 600; font-size: 13px; padding: 9px 14px; min-height: 38px; cursor: pointer; }
+.cp-btn:hover { background: #F9FAFB; }
+.cp-btn.cp-pri { background: #4F46E5; border-color: #4F46E5; color: #fff; flex: 1; }
+.cp-btn.cp-pri:hover { background: #4338CA; }
+.cp-lnk { border: 0; background: transparent; color: #4F46E5; font: inherit; font-weight: 600; font-size: 12px; padding: 4px 0; margin-top: 8px; cursor: pointer; }
+.cp-lnk:hover { color: #3730A3; text-decoration: underline; }
+.cp :focus-visible { outline: 2px solid #4F46E5; outline-offset: 2px; }
+.cp-prev { background: #F8F8FB; border: 1px solid #EAECF0; border-radius: 8px; padding: 10px; font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: #344054; white-space: pre-wrap; margin-top: 8px; max-height: 260px; overflow: auto; overflow-wrap: anywhere; }
+.cp-status { font-size: 12px; color: #475467; min-height: 1em; margin-top: 8px; overflow-wrap: anywhere; }
+.cp-warn { font-size: 12px; background: #FEF0C7; color: #93370D; border-radius: 6px; padding: 6px 8px; margin: 8px 0 6px; }
+.cp [hidden] { display: none !important; }

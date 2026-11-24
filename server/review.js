@@ -18,7 +18,7 @@ HOW TO REVIEW
 - Ground every claim in what is actually visible in the text or screenshot. Quote short phrases from the page as evidence. Do not invent features, prices, customers, or statistics.
 - USP (unique selling proposition): state in one sentence what the page promises and to whom. If the page does not make this clear, say so honestly: set clarity to "unclear" and explain what is missing. Never invent a USP the page doesn't communicate.
 - Strengths: things the page does well (message clarity, hierarchy, trust signals, flow, readability). Weaknesses: real problems a user would hit, most serious first, each with a concrete fix. Don't repeat the automatic findings word for word; add judgment they can't provide, and do not contradict their measurements.
-- Laws: for each of these six UX laws give a verdict (followed / partly / not / unknown) with one or two sentences of reasoning tied to what you can see: proximity (related things grouped by spacing), commonregion (groups bounded by borders or backgrounds), aesthetic (visual polish and whether it could hide problems), cognitive (mental effort and clutter), serial (important items first and last in lists and menus), tesler (complexity absorbed by the design instead of pushed to the user). Use "unknown" when you cannot tell (for example, no screenshot was provided for a visual law).
+- Laws: for each of these eight UX laws and heuristics give a verdict (followed / partly / not / unknown) with one or two sentences of reasoning tied to what you can see: proximity (related things grouped by spacing), commonregion (groups bounded by borders or backgrounds), aesthetic (visual polish and whether it could hide problems), cognitive (mental effort and clutter), serial (important items first and last in lists and menus), tesler (complexity absorbed by the design instead of pushed to the user), nn2 (match between the system and the real world: plain language, no jargon, clear icons, familiar formats), nn8 (aesthetic and minimalist design: few competing banners and calls to action on the first screen, nothing irrelevant). Use "unknown" when you cannot tell (for example, no screenshot was provided for a visual law).
 - priorities: the three most valuable changes, in order.
 - limitations: say plainly what you could not judge (for example: only the first screen was visible, no interaction was tested, text was truncated).
 - Be specific, calm and fair. No flattery, no exaggeration, no legal advice.`;
@@ -151,6 +151,8 @@ export function mockReview() {
       { id: "cognitive", verdict: "partly", reasoning: "Example: many competing links near the top." },
       { id: "serial", verdict: "unknown", reasoning: "Example: not enough information." },
       { id: "tesler", verdict: "partly", reasoning: "Example: the signup form asks for more than it needs." },
+      { id: "nn2", verdict: "followed", reasoning: "Example: plain language throughout." },
+      { id: "nn8", verdict: "partly", reasoning: "Example: two banners compete with the main button." },
     ],
     priorities: ["Example: clarify the headline", "Example: add proof", "Example: shorten the signup form"],
     limitations: "SAMPLE DATA only.",

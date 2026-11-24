@@ -13,6 +13,55 @@ const VERIFIED_ON = "2026-11-21";
 // UX laws & heuristics (design psychology, not legal requirements)
 // ---------------------------------------------------------------------------
 const LAWS = {
+  nn1: {
+    name: "Nielsen heuristic: Visibility of system status",
+    kind: "UX heuristic",
+    summary: "Keep users informed about what the system is doing, with timely feedback.",
+    url: "https://www.nngroup.com/articles/ten-usability-heuristics/",
+    source: "Nielsen Norman Group",
+  },
+  nn2: {
+    name: "Nielsen heuristic: Match between the system and the real world",
+    kind: "UX heuristic",
+    summary: "Use familiar words, symbols and conventions instead of internal jargon.",
+    url: "https://www.nngroup.com/articles/ten-usability-heuristics/",
+    source: "Nielsen Norman Group",
+  },
+  nn3: {
+    name: "Nielsen heuristic: User control and freedom",
+    kind: "UX heuristic",
+    summary: "Provide clearly marked exits for accidental or unwanted actions, plus undo and back.",
+    url: "https://www.nngroup.com/articles/ten-usability-heuristics/",
+    source: "Nielsen Norman Group",
+  },
+  nn5: {
+    name: "Nielsen heuristic: Error prevention",
+    kind: "UX heuristic",
+    summary: "Remove error-prone conditions, or ask for confirmation before committing an action.",
+    url: "https://www.nngroup.com/articles/ten-usability-heuristics/",
+    source: "Nielsen Norman Group",
+  },
+  nn7: {
+    name: "Nielsen heuristic: Flexibility and efficiency of use",
+    kind: "UX heuristic",
+    summary: "Offer shortcuts for experienced users and let people tailor frequent actions.",
+    url: "https://www.nngroup.com/articles/ten-usability-heuristics/",
+    source: "Nielsen Norman Group",
+  },
+  nn8: {
+    name: "Nielsen heuristic: Aesthetic and minimalist design",
+    kind: "UX heuristic",
+    summary: "Remove information and decoration that is irrelevant or rarely needed.",
+    url: "https://www.nngroup.com/articles/ten-usability-heuristics/",
+    source: "Nielsen Norman Group",
+  },
+  nn9: {
+    name: "Nielsen heuristic: Recognize, diagnose and recover from errors",
+    kind: "UX heuristic",
+    summary: "Explain problems in plain language, say what went wrong, and suggest a fix.",
+    url: "https://www.nngroup.com/articles/ten-usability-heuristics/",
+    source: "Nielsen Norman Group",
+  },
   jakob: {
     name: "Jakob's Law",
     kind: "UX law",

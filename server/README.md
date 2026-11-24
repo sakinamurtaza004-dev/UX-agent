@@ -64,7 +64,7 @@ When you run an AI review, the page's text and (if ticked) a screenshot go to th
 | "The server's Anthropic API key was rejected" | Check the key in `.env`, and that your Console account has credit. |
 | "Too many reviews this hour" | Wait, or raise `RATE_LIMIT_PER_HOUR` in `.env` and restart. |
 | "The AI declined to review this page" | Rare; try a different page. |
-| No screenshot included | Chrome only allows screenshots right after you click the toolbar icon. Click the icon, scan, then run the review in the same popup. |
+| No screenshot included | Chrome only allows screenshots right after you click the toolbar icon. Click the icon, scan, then run the review from the AI review tab. |
 
 ## Tests
 

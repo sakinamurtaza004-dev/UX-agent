@@ -38,17 +38,28 @@
     else if (typeof el.className === "string" && el.className.trim()) {
       s += "." + el.className.trim().split(/\s+/)[0];
     }
-    const t = textOf(el).slice(0, 40);
+    // Form fields have no text, so name them by what identifies them.
+    const t = textOf(el).slice(0, 40) ||
+      (/^(INPUT|SELECT|TEXTAREA)$/.test(el.tagName)
+        ? [el.getAttribute("name") && "name=" + el.getAttribute("name"), el.getAttribute("type") && el.getAttribute("type") !== "text" && "type=" + el.getAttribute("type"), el.getAttribute("placeholder")].filter(Boolean).join(", ").slice(0, 50)
+        : "");
     return t ? `${s} "${t}"` : s;
   };
 
   // offenders: array of DOM elements or plain strings. Empty array = pass.
+  // Offenders may be: a DOM element, a plain string, or { el, text } (an element with its own description).
+  // Elements are remembered so "Show on page" can highlight them later (see content/highlight.js).
+  window.__uxabTargets = {};
+  const isEl = (o) => o && typeof o === "object" && o.nodeType === 1;
   const addCheck = ({ id, category, title, severity, offenders, why, fix, ref }) => {
+    const targets = offenders.map((o) => (isEl(o) ? o : o && o.el && isEl(o.el) ? o.el : null)).filter(Boolean).slice(0, 200);
+    window.__uxabTargets[id] = targets;
     checks.push({
       id, category, title, severity,
       status: offenders.length ? "fail" : "pass",
       count: offenders.length,
-      examples: offenders.slice(0, MAX_EXAMPLES).map((o) => (typeof o === "string" ? o : describe(o))),
+      highlightable: targets.length,
+      examples: offenders.slice(0, MAX_EXAMPLES).map((o) => (typeof o === "string" ? o : isEl(o) ? describe(o) : o.text)),
       why, fix, ref,
     });
   };
@@ -147,7 +158,7 @@
       const large = size >= 24 || (size >= 18.66 && bold);
       const needed = large ? 3 : 4.5;
       if (ratio < needed) {
-        offenders.push(`${describe(el)} (contrast ${ratio.toFixed(1)}:1, needs ${needed}:1)`);
+        offenders.push({ el, text: `${describe(el)} (contrast ${ratio.toFixed(1)}:1, needs ${needed}:1)` });
       }
     }
     addCheck({
@@ -251,7 +262,7 @@
     let prev = 0;
     for (const h of headings) {
       const level = Number(h.tagName[1]);
-      if (prev && level > prev + 1) skips.push(`${describe(h)} jumps from H${prev} to H${level}`);
+      if (prev && level > prev + 1) skips.push({ el: h, text: `${describe(h)} jumps from H${prev} to H${level}` });
       prev = level;
     }
     addCheck({
@@ -467,7 +478,7 @@
       severity: "medium",
       offenders: [...document.querySelectorAll('input[type="checkbox"]:checked')].filter(
         (el) => isVisible(el) && extras.test(labelText(el))
-      ).map((el) => `Pre-ticked: "${labelText(el).trim().slice(0, 60)}"`),
+      ).map((el) => ({ el, text: `Pre-ticked: "${labelText(el).trim().slice(0, 60)}"` })),
       why: "Boxes that are already ticked for marketing, insurance or donations rely on people not noticing. They can end up paying for or agreeing to things they never chose.",
       fix: "Leave optional extras and consents unticked so users opt in actively.",
       ref: "Dark patterns",
@@ -690,6 +701,59 @@
     // Nielsen help: is help/contact easy to find?
     const helpRe = /\b(help|support|faq|contact|customer care|get in touch)\b/i;
 
+    // ---- Nielsen heuristics that markup can partly reveal ----
+    const HIDDEN_FIELD = "input[type='hidden'],input[type='submit'],input[type='button'],input[type='reset'],input[type='image']";
+    const fieldEls = [...document.querySelectorAll("input, select, textarea")].filter((el) => isVisible(el) && !el.matches(HIDDEN_FIELD));
+    const fieldHint = (el) => {
+      const lab = (el.labels && el.labels[0] ? textOf(el.labels[0]) : "");
+      return [el.name, el.id, el.placeholder, el.getAttribute("aria-label"), el.autocomplete, lab].filter(Boolean).join(" ").toLowerCase();
+    };
+
+    // 1. Visibility of system status: do feedback mechanisms exist?
+    const statusSignals = document.querySelectorAll('[aria-live]:not([aria-live="off"]), [role="status"], [role="alert"], [aria-busy], progress, [role="progressbar"]').length;
+    const currentMarks = document.querySelectorAll('[aria-current]:not([aria-current="false"])').length;
+    const stepper = !!document.querySelector('[aria-current="step"], [class*="stepper" i], [class*="wizard" i], [class*="progress-steps" i]');
+
+    // 3. User control and freedom: dialogs need an exit; back paths help
+    const closeRe = /^(×|✕|✖|x|close|dismiss|cancel|no,? thanks|got it)$|\b(close|dismiss|cancel)\b/i;
+    const dialogs = [...document.querySelectorAll("dialog[open], [role='dialog'], [role='alertdialog'], [aria-modal='true']")].filter(isVisible);
+    const dialogsWithClose = dialogs.filter((d) =>
+      [...d.querySelectorAll("button, [role='button'], a")].some((b) => closeRe.test((textOf(b) || b.getAttribute("aria-label") || b.getAttribute("title") || "").trim()))).length;
+    const backLinks = (document.querySelector("nav[aria-label*='breadcrumb' i], [class*='breadcrumb' i]") ? 1 : 0) +
+      clickables.filter((el) => /^(←\s*)?(go )?back\b|^previous\b|^← /i.test(textOf(el))).length;
+
+    // 5. Error prevention: right input types, built-in validation
+    const SEMANTIC = [
+      [/e-?mail/, (el) => el.type === "email"],
+      [/phone|mobile|\btel\b|whatsapp/, (el) => el.type === "tel" || /tel|numeric/.test(el.inputMode || "")],
+      [/\b(date|dob|birth)/, (el) => /date|month|week/.test(el.type)],
+      [/website|\burl\b/, (el) => el.type === "url"],
+      [/\b(age|qty|quantity|amount)\b/, (el) => el.type === "number" || /numeric|decimal/.test(el.inputMode || "")],
+    ];
+    const typeable = fieldEls.filter((el) => el.tagName === "INPUT");
+    let typeMismatch = 0, typeChecked = 0;
+    for (const el of typeable) {
+      const h = fieldHint(el);
+      const rule = SEMANTIC.find(([re]) => re.test(h));
+      if (!rule) continue;
+      typeChecked++;
+      if (!rule[1](el)) typeMismatch++;
+    }
+    const validationHints = fieldEls.filter((el) => el.matches("[required],[pattern],[min],[max],[maxlength],[minlength]")).length;
+
+    // 9. Recognise, diagnose and recover from errors: errors tied to the field
+    const errorWired = fieldEls.filter((el) => {
+      const ids = (el.getAttribute("aria-describedby") || "").split(/\s+/).filter(Boolean);
+      return el.hasAttribute("aria-errormessage") || el.hasAttribute("aria-invalid") || ids.some((id) => document.getElementById(id));
+    }).length;
+    const errorRegions = document.querySelectorAll("[role='alert'], [aria-live='assertive']").length;
+
+    // 7. Flexibility and efficiency: autocomplete, skip link, accelerators
+    const PERSONAL = /(^|\W)(name|e-?mail|phone|mobile|tel|address|street|city|zip|postal|pin ?code|country|card|cc-|first|last|username|company)(\W|$)/;
+    const personal = fieldEls.filter((el) => PERSONAL.test(fieldHint(el)));
+    const personalWithAutocomplete = personal.filter((el) => { const a = (el.getAttribute("autocomplete") || "").trim().toLowerCase(); return a && a !== "off"; }).length;
+    const skipLink = [...document.querySelectorAll("a[href^='#']")].slice(0, 6).some((a) => /skip/i.test(textOf(a) || a.getAttribute("aria-label") || ""));
+
     return {
       navItems,
       navLabels: nav ? [...nav.querySelectorAll("a[href]")].filter(isVisible).map((a) => textOf(a).slice(0, 60)).filter(Boolean).slice(0, 25) : [],
@@ -717,6 +781,11 @@
       distinctLinks,
       fontFamilies: Object.entries(fam).sort((a, b) => b[1] - a[1]).map(([n, c]) => `${n} (${c})`),
       formFields: [...document.querySelectorAll("input, select, textarea")].filter((el) => isVisible(el) && !el.matches("input[type='hidden'],input[type='submit'],input[type='button'],input[type='reset'],input[type='image']")).length,
+      statusSignals, currentMarks, stepper,
+      dialogs: dialogs.length, dialogsWithClose, backLinks,
+      typeChecked, typeMismatch, validationHints,
+      errorWired, errorRegions,
+      personalFields: personal.length, personalWithAutocomplete, skipLink, accessKeys: document.querySelectorAll("[accesskey]").length,
       helpLinks: clickables.filter((el) => el.tagName === "A" && helpRe.test((textOf(el) || el.getAttribute("aria-label") || "").slice(0, 60))).length,
     };
   })();

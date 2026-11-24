@@ -21,6 +21,7 @@ const goodReview = {
     { id: "made_up_law", verdict: "followed", reasoning: "Should be dropped." },
     { id: "proximity", verdict: "not", reasoning: "Duplicate should be dropped." },
     { id: "cognitive", verdict: "partly", reasoning: "Busy header." },
+    { id: "nn2", verdict: "partly", reasoning: "Some jargon." },
   ],
   priorities: ["a", "b", "c", "d-should-be-dropped"],
   limitations: "First screen only.",
@@ -125,7 +126,7 @@ await test("happy path: correct request sent to Claude via the SDK", () => withS
 await test("answer is validated, clipped and cleaned", () => withServer({}, async (b) => {
   const j = await (await post(b, payload())).json();
   assert.ok(j.review.summary.length <= 700);
-  assert.deepEqual(j.review.laws.map((l) => l.id), ["proximity", "cognitive"], "unknown + duplicate laws dropped");
+  assert.deepEqual(j.review.laws.map((l) => l.id), ["proximity", "cognitive", "nn2"], "unknown + duplicate laws dropped; the new nn2 heuristic is accepted");
   assert.equal(j.review.laws[0].verdict, "followed", "first occurrence wins");
   assert.equal(j.review.priorities.length, 3);
   assert.equal(j.mock, false);

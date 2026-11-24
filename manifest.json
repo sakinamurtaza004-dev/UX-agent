@@ -1,11 +1,10 @@
 {
   "manifest_version": 3,
   "name": "UX Audit Buddy",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Audit any web page for UX and accessibility issues, see which UX laws it follows, and save a report.",
   "action": {
-    "default_title": "Audit this page",
-    "default_popup": "popup.html",
+    "default_title": "Open UX Audit Buddy",
     "default_icon": {
       "16": "icons/icon-16.png",
       "32": "icons/icon-32.png",
@@ -18,12 +17,21 @@
   "permissions": [
     "activeTab",
     "scripting",
-    "storage"
+    "storage",
+    "sidePanel"
   ],
   "icons": {
     "16": "icons/icon-16.png",
     "32": "icons/icon-32.png",
     "48": "icons/icon-48.png",
     "128": "icons/icon-128.png"
-  }
+  },
+  "minimum_chrome_version": "114",
+  "side_panel": {
+    "default_path": "panel.html"
+  },
+  "optional_host_permissions": [
+    "https://*/*",
+    "http://*/*"
+  ]
 }

@@ -1,26 +1,29 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <link rel="stylesheet" href="popup.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UX Audit Buddy</title>
+  <link rel="stylesheet" href="fonts/fonts.css" />
+  <link rel="stylesheet" href="panel.css" />
   <link rel="stylesheet" href="lib/chat-panel.css" />
 </head>
 <body>
-  <header>
-    <h1>UX Audit Buddy</h1>
-    <button id="scan">Scan this page</button>
-  </header>
-  <div id="status">Click "Scan this page" to audit the site you're viewing.</div>
-  <main id="report" hidden></main>
+  <div class="pn" id="pn">
+    <div id="app"></div>
+    <div class="toastw" id="toastw" role="status" aria-live="polite"></div>
+  </div>
   <script src="lib/config.js"></script>
   <script src="lib/dom.js"></script>
+  <script src="lib/icons.js"></script>
   <script src="knowledge/references.js"></script>
   <script src="knowledge/applicability.js"></script>
   <script src="knowledge/uxlaws.js"></script>
   <script src="lib/audit-model.js"></script>
   <script src="lib/audit-store.js"></script>
+  <script src="lib/view-model.js"></script>
   <script src="lib/chat-handoff.js"></script>
   <script src="lib/chat-panel.js"></script>
-  <script src="popup.js"></script>
+  <script src="panel.js"></script>
 </body>
 </html>

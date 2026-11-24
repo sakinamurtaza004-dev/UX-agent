@@ -6,8 +6,8 @@
 
 import { z } from "zod";
 
-// The six laws code can't judge. The AI gives its opinion on these.
-export const LAW_IDS = ["proximity", "commonregion", "aesthetic", "cognitive", "serial", "tesler"];
+// The laws code can't judge (the first six, plus two Nielsen heuristics). The AI gives its opinion on these.
+export const LAW_IDS = ["proximity", "commonregion", "aesthetic", "cognitive", "serial", "tesler", "nn2", "nn8"];
 
 // ---------- What we ask Claude to return ----------
 // Kept to plain types (strings, enums, arrays) because structured-output

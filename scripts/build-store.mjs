@@ -29,10 +29,10 @@ else if (value("--server")) {
 } else fail("Say how to build.\n  --no-ai-server        launch without the AI review\n  --server <https-url>  use your hosted review server\n  --dev                 local testing build (do not upload)");
 
 // ---- 2. files that ship ----
-const FILES = ["manifest.json", "popup.html", "popup.js", "popup.css", "report.html", "report.js", "report.css", "history.html", "history.js", "history.css"];
-const DIRS = ["background", "content", "knowledge", "lib", "icons"];
+const FILES = ["manifest.json", "panel.html", "panel.js", "panel.css", "report.html", "report.js", "report.css", "history.html", "history.js", "history.css"];
+const DIRS = ["background", "content", "knowledge", "lib", "icons", "fonts"];
 const list = [...FILES];
-for (const d of DIRS) for (const f of fs.readdirSync(path.join(root, d))) if (/\.(js|png|css|html)$/.test(f)) list.push(`${d}/${f}`);
+for (const d of DIRS) for (const f of fs.readdirSync(path.join(root, d))) if (/\.(js|png|css|html|woff2|txt)$/.test(f)) list.push(`${d}/${f}`);
 
 const read = (f) => fs.readFileSync(path.join(root, f), "utf8");
 const staged = new Map(list.map((f) => [f, fs.readFileSync(path.join(root, f))]));
@@ -50,9 +50,14 @@ if (m.manifest_version !== 3) errors.push("manifest_version must be 3.");
 if (!m.name || m.name.length > 45) errors.push("name is missing or longer than 45 characters.");
 if (!m.description || m.description.length > 132) errors.push(`description must be 1-132 characters (now ${m.description ? m.description.length : 0}).`);
 if (!/^\d+(\.\d+){0,3}$/.test(m.version || "")) errors.push("version must look like 1.2.3.");
-const ALLOWED = ["activeTab", "scripting", "storage"];
+const ALLOWED = ["activeTab", "scripting", "storage", "sidePanel"];
 for (const p of m.permissions || []) if (!ALLOWED.includes(p)) errors.push(`Unexpected permission "${p}". Every permission must be justified in docs/store/permissions-and-disclosures.md, so add it there and to ALLOWED in this script on purpose.`);
-for (const k of ["host_permissions", "optional_host_permissions", "externally_connectable", "content_scripts", "web_accessible_resources", "update_url"]) if (m[k]) errors.push(`manifest has "${k}", which this extension shouldn't need. Remove it, or justify it in the docs.`);
+// Site access is requested one site at a time, only when the user asks; nothing is granted at install.
+const OPTIONAL_HOSTS = ["https://*/*", "http://*/*"];
+for (const h of m.optional_host_permissions || []) if (!OPTIONAL_HOSTS.includes(h)) errors.push(`Unexpected optional host permission "${h}".`);
+if (m.side_panel && !m.side_panel.default_path) errors.push("side_panel needs a default_path.");
+if (m.action && m.action.default_popup) errors.push("action.default_popup is set, but the toolbar icon is meant to open the side panel.");
+for (const k of ["host_permissions", "externally_connectable", "content_scripts", "web_accessible_resources", "update_url"]) if (m[k]) errors.push(`manifest has "${k}", which this extension shouldn't need. Remove it, or justify it in the docs.`);
 for (const [size, f] of Object.entries(m.icons || {})) {
   const b = staged.get(f);
   if (!b) { errors.push(`icon ${f} is missing.`); continue; }
@@ -62,7 +67,7 @@ for (const [size, f] of Object.entries(m.icons || {})) {
 if (!m.icons || !m.icons["128"]) errors.push("a 128x128 icon is required.");
 
 // every file referenced from the manifest or an html page must be in the package
-const need = new Set([m.action?.default_popup, m.background?.service_worker, ...Object.values(m.icons || {}), ...Object.values(m.action?.default_icon || {})].filter(Boolean));
+const need = new Set([m.action?.default_popup, m.side_panel?.default_path, m.background?.service_worker, ...Object.values(m.icons || {}), ...Object.values(m.action?.default_icon || {})].filter(Boolean));
 for (const [f, buf] of staged) {
   const text = buf.toString("utf8");
   if (f.endsWith(".html")) {
@@ -80,6 +85,14 @@ for (const [f, buf] of staged) {
       const hit = text.match(/https?:\/\/[^\s"'`)]+/g).filter((u) => !/localhost|127\.0\.0\.1|w3\.org|lawsofux|nngroup|cppa\.ca|nda\.ie|taylorwessing|govinfo|federalregister|india\.gov|deque|pib\.gov|doca\.gov|springlex|europarl|gibsondunn|scconline|chatgpt\.com|claude\.ai|gemini\.google|copilot\.microsoft|perplexity\.ai|example\.com/.test(u));
       if (hit.length) warnings.push(`${f} mentions other web addresses: ${[...new Set(hit)].slice(0, 3).join(", ")}`);
     }
+  }
+}
+for (const [f, buf] of staged) {
+  if (!f.endsWith(".css")) continue;
+  for (const mt of buf.toString("utf8").matchAll(/url\(\s*["']?([^"')]+)["']?\s*\)/g)) {
+    if (/^(https?:|data:)/.test(mt[1])) { if (/^https?:/.test(mt[1])) errors.push(`${f} loads a remote file (${mt[1]}).`); continue; }
+    const target = path.posix.normalize(path.posix.join(path.posix.dirname(f), mt[1]));
+    if (!staged.has(target)) errors.push(`${f} refers to ${target}, which is not in the package.`);
   }
 }
 for (const f of need) if (!staged.has(f)) errors.push(`${f} is referenced but not in the package.`);

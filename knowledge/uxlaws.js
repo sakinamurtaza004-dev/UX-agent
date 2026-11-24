@@ -158,6 +158,68 @@ function assessUxLaws(ux, profile, checks) {
     else add("nn10", "na", ["No help link found, but this looks like a simple content page."], "Looks for visible links mentioning help, support, FAQ or contact.", "");
   }
 
+  // ---- Nielsen 1: visibility of system status ----
+  {
+    const signals = ux.statusSignals + ux.currentMarks + (ux.stepper ? 1 : 0);
+    const relevant = ux.formFields > 0 || ux.stepper;
+    const how = "Partial measurement. Looks for markup that reports status: live regions, progress bars, aria-busy, 'current page' marks and step indicators. It can't see how a page behaves while something loads. Only forms and multi-step flows need this, so pages without them aren't judged.";
+    const fix = "Show loading and progress states, announce results in a live region (role=status), and mark the current page or step.";
+    if (signals > 0) add("nn1", "followed", [`${ux.statusSignals} live or progress element${ux.statusSignals === 1 ? "" : "s"}, ${ux.currentMarks} 'current' mark${ux.currentMarks === 1 ? "" : "s"}${ux.stepper ? ", a step indicator" : ""} found.`], how, "", { partial: true });
+    else if (relevant) add("nn1", "partly", ["The page has forms or steps, but no live region, progress element or step indicator was found in its markup."], how + " Feedback may still exist; submit a form to check.", fix, { partial: true });
+    else add("nn1", "na", ["No forms or multi-step flows, so there is little status to report."], how, "", { partial: true });
+  }
+
+  // ---- Nielsen 3: user control and freedom ----
+  {
+    const how = "Dialogs and pop-ups need a visible way out (close, cancel or dismiss). Otherwise looks for a way back (breadcrumbs, back links). Undo after destructive actions can't be detected from the page.";
+    const fix = "Give every dialog a close button and let Esc close it; offer back links, and undo after destructive actions.";
+    if (ux.dialogs > 0) {
+      const all = ux.dialogsWithClose === ux.dialogs;
+      add("nn3", all ? "followed" : ux.dialogsWithClose === 0 ? "not" : "partly",
+        [`${ux.dialogsWithClose} of ${ux.dialogs} open dialog${ux.dialogs === 1 ? "" : "s"} have a close, cancel or dismiss control.`], how, all ? "" : fix);
+    } else if (ux.backLinks > 0) add("nn3", "followed", [`${ux.backLinks} back or breadcrumb path${ux.backLinks === 1 ? "" : "s"} found; no dialogs are open.`], how, "");
+    else add("nn3", "na", ["No dialogs, breadcrumbs or back links found, so there was nothing to judge."], how, "");
+  }
+
+  // ---- Nielsen 5: error prevention ----
+  {
+    const how = "Checks that fields whose purpose is clear (email, phone, date, URL, quantity) use the matching input type, and counts built-in limits (required, pattern, min, max, maxlength). 'No more than a third mismatched' is followed, half or more is not; both cut-offs are our rule of thumb. A confirmation step before delete or pay can't be detected.";
+    const fix = "Use type=email, tel, date, url or number (or inputmode) for those fields, and add required, min, max or pattern where they apply.";
+    if (!ux.formFields) add("nn5", "na", ["No form fields on this page."], how, "");
+    else if (ux.typeChecked === 0) add("nn5", ux.validationHints > 0 ? "followed" : "partly",
+      [ux.validationHints > 0 ? `${ux.validationHints} of ${ux.formFields} field${ux.formFields === 1 ? "" : "s"} set built-in limits (required, min, max, pattern or length).` : "No built-in limits (required, min, max, pattern) were found on any field."], how, ux.validationHints > 0 ? "" : fix);
+    else {
+      const r = ux.typeMismatch / ux.typeChecked;
+      add("nn5", r === 0 ? "followed" : r >= 0.5 ? "not" : r > 1 / 3 ? "partly" : "followed",
+        [`${ux.typeChecked - ux.typeMismatch} of ${ux.typeChecked} fields with a clear purpose use the matching input type.`, `${ux.validationHints} of ${ux.formFields} fields set built-in limits.`], how, r === 0 ? "" : fix);
+    }
+  }
+
+  // ---- Nielsen 9: recognise, diagnose and recover from errors ----
+  {
+    const how = "Partial measurement. Looks for errors wired to fields (aria-describedby, aria-errormessage, aria-invalid) or announced in an alert region. Error messages that only appear after a failed submit can't be seen on a fresh page.";
+    const fix = "Tie each error message to its field with aria-describedby, say what went wrong and how to fix it, and don't rely on colour alone.";
+    if (!ux.formFields) add("nn9", "na", ["No form fields on this page."], how, "", { partial: true });
+    else if (ux.errorWired > 0 || ux.errorRegions > 0) add("nn9", "followed", [`${ux.errorWired} field${ux.errorWired === 1 ? "" : "s"} tied to a message or error state, ${ux.errorRegions} alert region${ux.errorRegions === 1 ? "" : "s"}.`], how, "", { partial: true });
+    else add("nn9", "partly", [ux.validationHints > 0 ? "Fields use the browser's built-in validation, but none is tied to its own error message." : "No error messages are tied to fields in the markup."], how + " Submit the form with a mistake to check.", fix, { partial: true });
+  }
+
+  // ---- Nielsen 7: flexibility and efficiency of use ----
+  {
+    const items = [];
+    if (ux.personalFields > 0) items.push([`Autocomplete on ${ux.personalWithAutocomplete} of ${ux.personalFields} personal-detail fields`, ux.personalWithAutocomplete / ux.personalFields >= 0.8]);
+    if (ux.totalLinks > 30 || prof.ecommerce.level === "likely") items.push(["Search box", ux.searchPresent]);
+    if (ux.totalLinks >= 10) items.push(["'Skip to content' link", ux.skipLink]);
+    const how = "Looks for shortcuts that save experienced users effort: autocomplete on personal-detail fields (80%+ counts), a search box on larger sites, and a skip link. 70%+ of these present is followed, 40-69% partly. Keyboard shortcuts and saved details can't be detected.";
+    const fix = "Add autocomplete attributes (name, email, tel, address), a search box for larger sites, and a 'Skip to content' link.";
+    if (!items.length) add("nn7", "na", ["No personal-detail fields, and a small page, so there is little to speed up."], how, "");
+    else {
+      const ok = items.filter((i) => i[1]).map((i) => i[0]), missing = items.filter((i) => !i[1]).map((i) => i[0]);
+      const r = ok.length / items.length;
+      add("nn7", r >= 0.7 ? "followed" : r >= 0.4 ? "partly" : "not", [`Present: ${ok.join(", ") || "none"}.`, missing.length ? `Not found: ${missing.join(", ")}.` : "Everything checked was found."], how, r >= 0.7 ? "" : fix);
+    }
+  }
+
   // ---- Laws that can't be judged from code ----
   const unmeasured = {
     proximity: "Whether related things are placed close together is a visual judgment that needs a human or AI looking at the rendered page.",
@@ -166,6 +228,8 @@ function assessUxLaws(ux, profile, checks) {
     cognitive: "Overall mental effort depends on the content, the task and the design together. It needs human testing or AI review.",
     serial: "Whether the most important items sit first and last depends on what counts as important, which needs human or AI review.",
     tesler: "Whether complexity is absorbed by the system or pushed onto the user depends on the task, which needs human or AI review.",
+    nn2: "Whether the words, icons and formats match the real world (jargon, ambiguous icons, unfamiliar date formats) is a language judgment that needs a human or AI reading the page.",
+    nn8: "Whether the first screen is free of competing banners and calls to action is a visual judgment that needs a human or AI looking at the page.",
   };
   Object.entries(unmeasured).forEach(([id, why]) =>
     add(id, "unmeasured", [why], "Not measured automatically. Planned for the AI review step (screenshot + page text).", ""));

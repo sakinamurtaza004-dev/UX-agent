@@ -61,6 +61,12 @@ Contact: <span class="todo">[[CONTACT EMAIL]]</span></p>
 <h2>"Ask your own AI chat" (optional, no account or key)</h2>
 <p>The extension can build a ready-made prompt from your audit and copy it to your clipboard, then open the AI chat website you choose (for example ChatGPT, Claude, Gemini, Copilot, Perplexity, or an address you enter). <b>The extension itself sends nothing</b>: you paste the prompt into that chat yourself. The prompt contains the audit findings and, if you leave the option ticked, up to about 9,000 characters of the page's visible text (never text you typed into form fields). You can read the exact text in the preview before copying. What the chat service does with what you paste is governed by that service's own terms and privacy policy, and we do not receive it.</p>
 
+<h2>Highlighting problems on the page</h2>
+<p>When you click <b>Show on page</b>, the extension draws outlines over the affected elements of the page you are viewing. This happens entirely in your browser. Nothing is sent anywhere, and the outlines disappear when you press Esc, click Clear, or reload the page.</p>
+
+<h2>Fonts and other resources</h2>
+<p>The extension's font and icons are included in the extension itself. It does not contact any font, analytics or advertising server.</p>
+
 <h2>What we do not do</h2>
 <ul>
   <li>No analytics, advertising, tracking or profiling.</li>
@@ -75,6 +81,8 @@ Contact: <span class="todo">[[CONTACT EMAIL]]</span></p>
 <tr><td><code>activeTab</code></td><td>Lets the extension read the page you are on, only after you open it there and click Scan.</td></tr>
 <tr><td><code>scripting</code></td><td>Runs the extension's analysis script in that page.</td></tr>
 <tr><td><code>storage</code></td><td>Saves your audit history and settings on your device.</td></tr>
+<tr><td><code>sidePanel</code></td><td>Lets the toolbar icon open the extension's side panel.</td></tr>
+<tr><td>Optional site access</td><td>Not granted at install. If Chrome refuses a scan, the extension can ask you, with a button, to allow it on that one site.</td></tr>
 </table>
 
 <h2>Children</h2>

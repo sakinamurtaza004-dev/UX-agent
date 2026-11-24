@@ -9,14 +9,17 @@ You will be asked to justify each permission and to fill in the **Privacy practi
 | `activeTab` | "The extension audits the page the user is viewing. It needs temporary access to that single tab, granted when the user opens the extension on it, to read the page's structure and (optionally) capture a screenshot of it for the AI review. It does not access any other tab or any site in the background." |
 | `scripting` | "Used to run the extension's own analysis script (`content/scanner.js`, shipped inside the package) in the tab the user chose to audit. No remote code is loaded." |
 | `storage` | "Saves the user's audit history, report preferences and settings locally in the browser. Nothing is synced or uploaded." |
+| `sidePanel` | "The extension's interface is a side panel that stays open next to the page while the user browses. This permission lets the toolbar icon open it." |
 
 **Clipboard:** the "Ask your own AI chat" feature copies a prompt when the user clicks a button. Chrome allows this from the extension's own page on a user click, so no clipboard permission is requested (tested). If it is blocked, the prompt is shown in a box to copy by hand.
 
-**Not requested:** host permissions, `tabs`, `history`, `cookies`, `webRequest`, `downloads`, remote code, content scripts that run automatically on websites. If a reviewer asks why the extension can reach a review server without host permissions: it uses standard cross-origin requests that the server explicitly allows.
+**Optional, per-site access (`optional_host_permissions`):** declared but NOT granted at install. Because a side panel stays open while the user moves between pages, Chrome's one-page-at-a-time `activeTab` grant can run out. If a scan is refused, the panel explains what to do and offers an **"Allow on this site"** button that asks Chrome for that single site only, after the user clicks it. Justification to paste: "Used only when the user explicitly allows the extension to audit a specific site after Chrome refused a scan. Requested one site at a time, on a button click." (If a reviewer objects to this, it can be removed: the panel then asks the user to click the toolbar icon on the page instead.)
+
+**Not requested at install:** host permissions, `tabs`, `history`, `cookies`, `webRequest`, `downloads`, remote code, content scripts that run automatically on websites. If a reviewer asks why the extension can reach a review server without host permissions: it uses standard cross-origin requests that the server explicitly allows.
 
 ## Single purpose
 
-"Audit the web page the user is viewing for usability, accessibility and manipulative-design issues, and present the findings as a saved, printable report."
+"Audit the web page the user is viewing for usability, accessibility and manipulative-design issues, show the findings in a side panel (including highlighting the affected elements on the page), and save them as a printable report."
 
 ## Remote code
 

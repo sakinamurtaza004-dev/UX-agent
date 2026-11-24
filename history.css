@@ -1,15 +1,15 @@
 .actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 12px 0 18px; }
 .actions button, .row button, .row a.btn { font: inherit; padding: 6px 12px; border-radius: 8px; border: 1px solid var(--line); background: #fff; color: var(--text); cursor: pointer; text-decoration: none; display: inline-block; }
-button.danger { color: var(--high); border-color: #fecaca; }
+button.danger { color: var(--ink-high); border-color: #FECDCA; }
 label.inline { font-size: 13px; color: var(--muted); display: flex; gap: 6px; align-items: center; margin-left: auto; }
-.row { display: grid; grid-template-columns: 56px 1fr; gap: 12px; align-items: center; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin: 8px 0; }
+.row { display: grid; grid-template-columns: 56px 1fr; gap: 12px; align-items: center; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin: 8px 0; }
 .mini { width: 52px; height: 52px; border-radius: 50%; border: 5px solid var(--c, var(--pass)); display: grid; place-items: center; font-weight: 700; font-size: 15px; }
 .row .t { font-weight: 600; overflow-wrap: anywhere; }
 .row .u { font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
 .row .btns { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
 .delta { font-size: 28px; font-weight: 700; }
-.delta.up { color: var(--pass); } .delta.down { color: var(--high); } .delta.same { color: var(--muted); }
+.delta.up { color: var(--ink-pass); } .delta.down { color: var(--ink-high); } .delta.same { color: var(--muted); }
 .cmp { border: 2px solid var(--brand); border-radius: 10px; padding: 14px 16px; margin-bottom: 18px; }
 .cmp ul { margin: 4px 0 8px; padding-left: 20px; }
 .cmp h3 { margin-top: 12px; }
-.tag-ok { color: var(--pass); font-weight: 600; } .tag-bad { color: var(--high); font-weight: 600; }
+.tag-ok { color: var(--ink-pass); font-weight: 600; } .tag-bad { color: var(--ink-high); font-weight: 600; }
