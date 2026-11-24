@@ -54,7 +54,7 @@ To spend less: `EFFORT=low` in `.env`, or untick the screenshot in the extension
 
 ## Privacy: read before you click
 
-When you run an AI review, the page's text and (if ticked) a screenshot go to this server and then to Anthropic's API. Don't run it on pages showing private information (email, banking, medical records, internal tools). The extension shows a warning on pages that look private, but it can't catch everything.
+When you run an AI review, the page's text and (if ticked) a screenshot go to this server and then to Anthropic's API. The page address is sent without its query string or #fragment. Don't run it on pages showing private information (email, banking, medical records, internal tools). The extension shows a warning on pages that look private, but it can't catch everything.
 
 ## Troubleshooting
 

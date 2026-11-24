@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UX Audit History</title>
+  <link rel="stylesheet" href="report.css" />
+  <link rel="stylesheet" href="history.css" />
+</head>
+<body>
+  <main>
+    <div class="report">
+      <h1>Audit history</h1>
+      <p class="meta">Saved on this device only. Nothing is uploaded. The 50 most recent audits are kept.</p>
+      <div class="actions">
+        <button id="btn-export">Export all (JSON)</button>
+        <button id="btn-clear" class="danger">Delete all history</button>
+        <label class="inline"><input type="checkbox" id="pref-save"> Save new audits to history</label>
+      </div>
+      <div id="compare"></div>
+      <div id="list"></div>
+    </div>
+  </main>
+  <script src="lib/dom.js"></script>
+  <script src="lib/audit-model.js"></script>
+  <script src="lib/audit-store.js"></script>
+  <script src="history.js"></script>
+</body>
+</html>

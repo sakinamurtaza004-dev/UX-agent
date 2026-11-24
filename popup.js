@@ -9,30 +9,6 @@
 
 const $ = (id) => document.getElementById(id);
 
-// Tiny helper to build elements safely.
-function el(tag, props = {}, ...children) {
-  const node = document.createElement(tag);
-  for (const [k, v] of Object.entries(props)) {
-    if (k === "class") node.className = v;
-    else if (k === "text") node.textContent = v;
-    else node.setAttribute(k, v);
-  }
-  for (const c of children) if (c) node.append(c);
-  return node;
-}
-
-// Links come only from our own knowledge base (never from the audited page),
-// and we still insist on https.
-function link(label, url) {
-  const a = el("a", { text: label });
-  if (/^https:\/\//.test(url)) {
-    a.href = url;
-    a.target = "_blank";
-    a.rel = "noopener noreferrer";
-  }
-  return a;
-}
-
 const STATUS_LABEL = {
   likely: "Likely applies",
   may: "May apply",
@@ -46,16 +22,6 @@ const verdictChip = (v) => el("span", { class: `vd ${v}`, text: VERDICT_LABEL[v]
 
 // What the last scan and AI review produced (Step 5 will use this for the report).
 let current = null;
-
-// What kind of page this is can change how serious an issue is.
-function pageContextNote(c, profile) {
-  const kind = profile && profile.pageKind;
-  const m = CHECK_REFS[c.id] || {};
-  if (m.a11yRegs && kind === "checkout") return "This is a checkout/payment page. Accessibility failures here can stop someone from completing a purchase.";
-  if (m.a11yRegs && kind === "login") return "This is a login/sign-up page. Accessibility failures here can lock people out of an account.";
-  if (c.id === "prechecked" && kind === "checkout") return "On a checkout page, pre-ticked extras are most consequential because they change what the buyer pays.";
-  return "";
-}
 
 // Inside an open issue card: which UX laws does this relate to, and does the
 // page follow them? (Regulations live in "Which rules apply to this site?".)
@@ -219,7 +185,7 @@ function buildAiPayload(result, laws, screenshot) {
   const failed = result.checks.filter((c) => c.status === "fail")
     .map((c) => ({ title: clamp(c.title, 200), severity: c.severity, count: c.count }));
   return {
-    url: clamp(result.url, 2000),
+    url: clamp(safeUrl(result.url), 2000),
     title: clamp(result.title, 300),
     metaDescription: clamp(result.pageContent.metaDescription, 500),
     headings: result.pageContent.headings.map((h) => clamp(h, 200)).slice(0, 40),
@@ -370,6 +336,7 @@ function renderAiPanel(result, settings) {
       const old = $("uxlaws-box");
       if (old) old.replaceWith(renderUxLaws(current.laws));
       updateLawGlance();
+      await persist();
     } catch (e) {
       status.textContent = e && e.name === "AbortError"
         ? "The review took too long and was cancelled. Try again."
@@ -386,6 +353,60 @@ function updateLawGlance() {
   if (!g || !current) return;
   const lc = (v) => current.laws.filter((l) => l.verdict === v).length;
   g.textContent = `${lc("followed")} followed · ${lc("partly")} partly · ${lc("not")} not followed (details below)`;
+}
+
+// =====================================================================
+// SAVING, REPORT & HISTORY (Step 5)
+// =====================================================================
+const openTab = (page) => chrome.tabs.create({ url: chrome.runtime.getURL(page) });
+
+// Save (or update) the current audit on this device. Safe to call again after
+// the AI review finishes: it updates the same record.
+async function persist() {
+  if (!current) return;
+  const prefs = await AuditStore.prefs();
+  const record = buildAuditRecord(current, chrome.runtime.getManifest().version);
+  current.savedId = record.id;
+  current.savedTs = record.ts;
+  if (prefs.saveHistory && current.prev === undefined) current.prev = await AuditStore.previousFor(record);
+  const res = await AuditStore.save(record, prefs.saveHistory);
+  current.saveResult = res;
+  renderActions();
+}
+
+function renderActions() {
+  const box = $("report-actions");
+  if (!box || !current) return;
+  box.replaceChildren();
+  const r = current.saveResult;
+  const msg = !r ? "Saving…"
+    : !r.ok ? "Couldn't save to history (" + r.error + "). You can still open this report now."
+    : r.history ? "Saved to history on this device."
+    : "History is off. This report is temporary and is replaced by your next scan.";
+  box.append(el("b", { text: "Report" }), el("div", { class: "caveat", text: msg }));
+
+  const open = el("button", { class: "primary", text: "Open full report" });
+  open.disabled = !r || !r.ok;
+  open.addEventListener("click", () => openTab(`report.html?id=${r && r.history ? current.savedId : "last"}`));
+  const hist = el("button", { text: "History" });
+  hist.addEventListener("click", () => openTab("history.html"));
+  box.append(el("div", { class: "btnrow" }, open, hist));
+
+  const save = el("input", { type: "checkbox" });
+  AuditStore.prefs().then((p) => { save.checked = p.saveHistory; });
+  save.addEventListener("change", async () => { await AuditStore.setPrefs({ saveHistory: save.checked }); await persist(); });
+  box.append(el("label", { class: "check" }, save, document.createTextNode(" Save audits to history on this device")));
+
+  // Before and after, if this page was audited before.
+  if (current.prev && r && r.history) {
+    const c = compareAudits(current.prev, buildAuditRecord(current, ""));
+    const sign = c.delta > 0 ? "+" : "";
+    const line = `Last audit of this page (${new Date(current.prev.ts).toLocaleDateString()}): score ${c.scoreFrom} → ${c.scoreTo} (${sign}${c.delta}). ` +
+      `${c.fixed.length} fixed · ${c.regressed.length} new problem${c.regressed.length === 1 ? "" : "s"}.`;
+    const see = el("button", { text: "See comparison" });
+    see.addEventListener("click", () => openTab(`history.html?compare=${current.prev.id},${current.savedId}`));
+    box.append(el("div", { class: "cmpline" + (c.delta < 0 ? " down" : c.delta > 0 ? " up" : "") , text: line }), see);
+  }
 }
 
 // =====================================================================
@@ -427,6 +448,9 @@ async function render(result) {
     el("div", { id: "laws-glance" })));
   updateLawGlance();
 
+  root.append(el("div", { class: "about", id: "report-actions" }));
+  renderActions();
+
   root.append(renderAiPanel(result, await loadAiSettings()));
 
   const order = { high: 0, medium: 1, low: 2 };
@@ -447,9 +471,10 @@ async function render(result) {
 
   root.append(el("div", { class: "note", text:
     "These are automatic rule-based checks plus an optional AI review, a first pass rather than a full audit. " +
-    "Coming next: a downloadable report." }));
+    "Use 'Open full report' for a printable document you can keep." }));
 
   root.hidden = false;
+  await persist();
 }
 
 async function scan() {

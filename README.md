@@ -14,4 +14,14 @@ Chrome extension (Manifest V3) that audits any web page for UX issues, strengths
 - [x] Step 3b: applicability engine (which rules apply to this site, with evidence and what to confirm)
 - [x] Step 3c: UX laws & heuristics scorecard (10 measured with stated proxies, 6 flagged for human/AI review)
 - [x] Step 4: AI review (USP, strengths/weaknesses, AI verdicts for the 6 unmeasured laws) via a small backend in `server/` (see `server/README.md`); issue cards now show UX laws
-- [ ] Step 5: downloadable report (PDF) and audit history
+- [x] Step 5: full report (print to PDF, self-contained HTML, JSON), audit history on your device (last 50), before/after comparison
+
+## Reports and history
+
+After a scan, **Open full report** shows a complete document: score, issues with fixes, UX laws, AI review (if run), the rules that apply, and how to read it all.
+
+- **PDF:** click *Print / Save as PDF*, then choose *Save as PDF* as the destination.
+- **HTML:** a single self-contained file that works offline.
+- **JSON:** the raw data.
+- **History:** every audit is saved on your device only (the 50 most recent). Re-audit the same page later and the popup shows the score change; the History page shows what was fixed and what broke.
+- Saved addresses drop the query string and #fragment (they can contain secrets). Sample data from mock mode is never saved as a real review. Switch history off any time.

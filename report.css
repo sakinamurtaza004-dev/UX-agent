@@ -1,0 +1,76 @@
+:root {
+  --bg: #ffffff; --text: #18181b; --muted: #52525b; --line: #e4e4e7; --card: #f4f4f5;
+  --brand: #4f46e5; --high: #b91c1c; --medium: #b45309; --low: #4d7c0f; --pass: #15803d;
+}
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; font: 14px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); background: #fafafa; }
+.toolbar { position: sticky; top: 0; z-index: 5; background: #fff; border-bottom: 1px solid var(--line); padding: 10px 16px; display: flex; gap: 16px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+.toolbar button, .toolbar a { font: inherit; padding: 7px 12px; border-radius: 8px; border: 1px solid var(--line); background: #fff; color: var(--text); cursor: pointer; text-decoration: none; }
+.toolbar button.primary { background: var(--brand); color: #fff; border-color: var(--brand); }
+.tb-left { display: flex; gap: 8px; flex-wrap: wrap; }
+.tb-hint { font-size: 12px; color: var(--muted); }
+main { padding: 16px; }
+.report { max-width: 820px; margin: 0 auto; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 32px 36px; }
+.loading, .empty { text-align: center; color: var(--muted); padding: 40px; }
+
+h1 { font-size: 26px; margin: 0 0 4px; }
+h2 { font-size: 17px; margin: 30px 0 10px; padding-bottom: 6px; border-bottom: 2px solid var(--line); }
+h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 16px 0 6px; }
+.meta { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+.site-title { font-size: 18px; font-weight: 600; margin-top: 6px; }
+
+.hero { display: flex; gap: 24px; align-items: center; margin: 20px 0 4px; flex-wrap: wrap; }
+.score { width: 104px; height: 104px; border-radius: 50%; border: 9px solid var(--c, var(--pass)); display: grid; place-items: center; font-size: 32px; font-weight: 700; flex: none; text-align: center; line-height: 1; }
+.score small { display: block; font-size: 11px; font-weight: 400; color: var(--muted); margin-top: 2px; }
+.facts { flex: 1; min-width: 220px; }
+.facts .big { font-size: 15px; font-weight: 600; }
+.bars { margin-top: 8px; }
+.bar { display: grid; grid-template-columns: 120px 1fr 34px; gap: 8px; align-items: center; font-size: 12px; margin: 3px 0; }
+.bar .track { height: 8px; background: var(--card); border-radius: 4px; overflow: hidden; }
+.bar .fill { height: 100%; background: var(--c, var(--pass)); }
+
+.box { background: var(--card); border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
+.box b { display: block; font-size: 12px; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+.banner { border-radius: 8px; padding: 8px 12px; font-size: 12px; background: var(--card); margin: 10px 0; }
+.banner.warn { background: #fef3c7; color: #78350f; }
+
+.card { border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; margin: 10px 0; break-inside: avoid; }
+.card .head { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.card .head .title { font-weight: 600; }
+.card .head .count { margin-left: auto; color: var(--muted); font-size: 12px; }
+.card p { margin: 6px 0 0; }
+.card .lbl { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); }
+.card ul, .box ul { margin: 3px 0 0; padding-left: 20px; }
+.card li { overflow-wrap: anywhere; }
+.small { font-size: 12px; color: var(--muted); }
+.note { font-size: 12px; margin-top: 8px; padding: 6px 10px; border-left: 3px solid var(--medium); background: #fffbeb; }
+.note.ctx { border-left-color: var(--brand); background: #eef2ff; }
+
+.badge, .chip { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; border-radius: 4px; padding: 1px 6px; color: #fff; white-space: nowrap; }
+.badge.high { background: var(--high); } .badge.medium { background: var(--medium); } .badge.low { background: var(--low); }
+.vd.followed { background: var(--pass); } .vd.partly { background: var(--medium); } .vd.not { background: var(--high); }
+.vd.na, .vd.unmeasured { background: #71717a; }
+.st.likely { background: #4f46e5; } .st.may { background: #b45309; } .st.pending { background: #0369a1; }
+.st.unknown { background: #71717a; } .st.unlikely { background: #52525b; } .st.info { background: #52525b; }
+.aitag { display: inline-block; font-size: 10px; font-weight: 700; border: 1px solid var(--brand); color: var(--brand); border-radius: 4px; padding: 0 5px; }
+.usp { font-size: 16px; font-weight: 600; }
+.passlist { list-style: none; padding: 0; columns: 2; column-gap: 24px; }
+.passlist li { padding: 2px 0; break-inside: avoid; }
+.passlist li::before { content: "✓ "; color: var(--pass); font-weight: 700; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips .pill { background: var(--card); border-radius: 999px; padding: 2px 10px; font-size: 12px; }
+a { color: var(--brand); overflow-wrap: anywhere; }
+.url { color: var(--muted); font-size: 11px; }
+footer.doc { margin-top: 32px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 11px; color: var(--muted); }
+
+@page { size: A4; margin: 16mm 14mm; @bottom-center { content: "UX Audit Buddy report - page " counter(page); font-size: 9px; color: #71717a; } }
+@media print {
+  body { background: #fff; }
+  .no-print { display: none !important; }
+  main { padding: 0; }
+  .report { border: 0; border-radius: 0; padding: 0; max-width: none; }
+  h2 { break-after: avoid; }
+  a { color: inherit; text-decoration: none; }
+}
+@media (max-width: 600px) { .report { padding: 18px; } .passlist { columns: 1; } .bar { grid-template-columns: 90px 1fr 30px; } }

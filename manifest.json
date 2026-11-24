@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "UX Audit Buddy",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Audit any web page for UX issues, strengths and USP, and download a report.",
   "action": {
     "default_title": "Audit this page",

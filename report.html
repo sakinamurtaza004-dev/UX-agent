@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UX Audit Report</title>
+  <link rel="stylesheet" href="report.css" />
+</head>
+<body>
+  <div class="toolbar no-print" id="toolbar">
+    <div class="tb-left">
+      <button id="btn-print" class="primary">Print / Save as PDF</button>
+      <button id="btn-html">Download HTML</button>
+      <button id="btn-json">Download data (JSON)</button>
+      <a id="btn-history" href="history.html">History</a>
+    </div>
+    <div class="tb-hint">To get a PDF: click <b>Print / Save as PDF</b>, then choose <b>Save as PDF</b> as the destination.</div>
+  </div>
+  <main id="root"><p class="loading">Loading report…</p></main>
+  <script src="lib/dom.js"></script>
+  <script src="lib/audit-model.js"></script>
+  <script src="lib/audit-store.js"></script>
+  <script src="report.js"></script>
+</body>
+</html>
