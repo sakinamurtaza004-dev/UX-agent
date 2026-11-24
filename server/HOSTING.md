@@ -2,6 +2,8 @@
 
 Running `npm start` on your own laptop is fine for you. Other people's extensions can't reach your laptop, so for a published extension the server must run on the internet, **and you pay for every review.** Read the cost and safety notes before you switch it on.
 
+> **Decision (this project):** the first AI feature is **"Ask your own AI chat"**, which is free, needs no key and no server (already built). A bring-your-own-key mode comes later. This server is therefore **optional**: for development, self-hosters, or if you ever choose option A below.
+
 ## Decide first: who pays for the AI?
 
 | Option | How it works | Trade-off |

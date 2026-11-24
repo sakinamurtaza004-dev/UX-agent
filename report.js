@@ -304,6 +304,13 @@ async function main() {
   // Print / Save as PDF prints whichever version is on screen.
   document.getElementById("btn-print").addEventListener("click", () => window.print());
   document.getElementById("btn-html").addEventListener("click", async () => download(fileBase(a, view) + ".html", await standaloneHtml(a), "text/html"));
+  // "Ask my AI chat": findings only (saved reports don't keep the page's text).
+  const slot = document.getElementById("chat-slot");
+  document.getElementById("btn-ai").addEventListener("click", () => {
+    if (!slot.firstChild) { slot.append(renderChatPanel({ getRecord: () => a })); slot.classList.add("chatslot"); }
+    slot.hidden = !slot.hidden;
+    if (!slot.hidden) slot.scrollIntoView({ block: "nearest" });
+  });
   document.getElementById("btn-json").addEventListener("click", () => download(fileBase(a) + ".json", JSON.stringify(a, null, 2), "application/json"));
 }
 main();

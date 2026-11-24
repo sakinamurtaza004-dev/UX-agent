@@ -1,0 +1,16 @@
+/* "Ask your own AI chat" panel: shared by the popup and the report page. */
+.chatpanel { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin-top: 14px; background: #fff; text-align: left; }
+.chatpanel h2 { margin-top: 0; border: 0; padding: 0; }
+.chatpanel .field { display: block; font-size: 12px; color: var(--muted); margin: 8px 0; }
+.chatpanel select, .chatpanel input[type="text"], .chatpanel textarea { display: block; width: 100%; margin-top: 3px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; font: inherit; color: var(--text); background: #fff; }
+.chatpanel textarea { resize: vertical; font-size: 12px; }
+.chatpanel .btnrow { display: flex; gap: 8px; margin: 8px 0 4px; flex-wrap: wrap; }
+.chatpanel .btnrow button { padding: 7px 12px; border-radius: 8px; border: 1px solid var(--line); background: #fff; color: var(--text); font: inherit; cursor: pointer; }
+.chatpanel .btnrow button.primary { background: var(--brand); color: #fff; border-color: var(--brand); }
+.chatpanel .check { display: flex; gap: 8px; align-items: flex-start; font-size: 12px; margin: 8px 0; }
+.chatpanel .caveat { font-size: 11px; color: var(--muted); }
+.chatpanel .aistatus { font-size: 12px; color: var(--muted); min-height: 1em; overflow-wrap: anywhere; }
+.chatpanel .warn { font-size: 12px; background: #fef3c7; color: #78350f; border-radius: 6px; padding: 6px 8px; margin: 6px 0; }
+.chatpanel details.settings { border: 0; padding: 0; margin: 8px 0 0; }
+.chatpanel details.settings summary { font-size: 12px; color: var(--muted); cursor: pointer; }
+.chatpanel [hidden] { display: none !important; }

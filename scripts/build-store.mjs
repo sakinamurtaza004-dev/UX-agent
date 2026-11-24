@@ -76,8 +76,8 @@ for (const [f, buf] of staged) {
     if (/\bnew Function\s*\(/.test(text)) errors.push(`${f} uses new Function(), which Manifest V3 forbids.`);
     if (/importScripts\s*\(\s*["']https?:/.test(text)) errors.push(`${f} imports a remote script.`);
     if (/\.innerHTML\s*=|insertAdjacentHTML/.test(text)) warnings.push(`${f} writes HTML directly. Everything is meant to go in with textContent.`);
-    if (/https?:\/\/(?!localhost|127\.0\.0\.1|www\.w3\.org|lawsofux|www\.nngroup|www\.cppa|nda\.ie|www\.taylorwessing|www\.govinfo|www\.federalregister|guidelines\.india|www\.deque|www\.pib|ccpa\.doca|www\.springlex|www\.europarl|gibsondunn|www\.scconline|schemas)/.test(text) && f !== "lib/config.js") {
-      const hit = text.match(/https?:\/\/[^\s"'`)]+/g).filter((u) => !/localhost|127\.0\.0\.1|w3\.org|lawsofux|nngroup|cppa\.ca|nda\.ie|taylorwessing|govinfo|federalregister|india\.gov|deque|pib\.gov|doca\.gov|springlex|europarl|gibsondunn|scconline/.test(u));
+    if (/https?:\/\/(?!localhost|127\.0\.0\.1|www\.w3\.org|lawsofux|www\.nngroup|www\.cppa|nda\.ie|www\.taylorwessing|www\.govinfo|www\.federalregister|guidelines\.india|www\.deque|www\.pib|ccpa\.doca|www\.springlex|www\.europarl|gibsondunn|www\.scconline|schemas|chatgpt\.com|claude\.ai|gemini\.google|copilot\.microsoft|www\.perplexity|your-ai\.example)/.test(text) && f !== "lib/config.js") {
+      const hit = text.match(/https?:\/\/[^\s"'`)]+/g).filter((u) => !/localhost|127\.0\.0\.1|w3\.org|lawsofux|nngroup|cppa\.ca|nda\.ie|taylorwessing|govinfo|federalregister|india\.gov|deque|pib\.gov|doca\.gov|springlex|europarl|gibsondunn|scconline|chatgpt\.com|claude\.ai|gemini\.google|copilot\.microsoft|perplexity\.ai|example\.com/.test(u));
       if (hit.length) warnings.push(`${f} mentions other web addresses: ${[...new Set(hit)].slice(0, 3).join(", ")}`);
     }
   }

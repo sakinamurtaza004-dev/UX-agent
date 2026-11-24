@@ -16,6 +16,10 @@ Chrome extension (Manifest V3) that audits any web page for UX issues, strengths
 - [x] Step 4: AI review (USP, strengths/weaknesses, AI verdicts for the 6 unmeasured laws) via a small backend in `server/` (see `server/README.md`); issue cards now show UX laws
 - [x] Step 5: full report (print to PDF, self-contained HTML, JSON), audit history on your device (last 50), before/after comparison
 
+## Ask your own AI chat (free, no key)
+
+Pick ChatGPT, Claude, Gemini, Copilot, Perplexity or your own address, choose what you want (full review, USP and wording, fix plan, plain-language explanation), and click **Copy prompt & open chat**. The extension copies the prompt and opens the chat; you paste it. It sends nothing itself, and you can preview the exact text first. Available in the popup (can include the page's text) and on saved reports (findings only).
+
 ## Reports and history
 
 After a scan, **Open full report** shows a complete document: score, issues with fixes, UX laws, AI review (if run), the rules that apply, and how to read it all.

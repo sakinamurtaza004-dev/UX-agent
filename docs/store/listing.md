@@ -19,10 +19,11 @@ Audit any web page in one click and get a clear, plain-language report on what i
 - **Which rules may apply.** Based on signals on the page, see which accessibility, consumer-protection and data laws may be relevant (for example WCAG, the EU Accessibility Act, India's dark-pattern guidelines), with sources, status and what you still need to confirm. General information, not legal advice.
 - **Reports you can keep.** Open a **Summary** (about 2 pages) or a **Full report**, then save it as a PDF, a single HTML file or raw data.
 - **History and before/after.** Audits are saved on your device. Re-audit a page later and see what you fixed and what broke.
+- **Ask your own AI chat (free, no key).** One click copies a ready-made prompt and opens ChatGPT, Claude, Gemini, Copilot, Perplexity or any chat you choose. You paste it in; the extension sends nothing.
 - **Optional AI review.** Add an AI-generated read on the page's USP, strengths and weaknesses, plus a judgment on UX laws that code can't measure. Always labelled as AI, always optional.
 
 **Privacy**
-Audits run on your device. Nothing leaves your browser unless you choose to run the optional AI review and confirm a consent box. No analytics, no ads, no remote code. Page addresses are stored without query strings.
+Audits run on your device. Nothing leaves your browser unless you choose an optional AI feature: you paste a prompt into your own AI chat yourself, or you confirm a consent box for the AI review. No analytics, no ads, no remote code. Page addresses are stored without query strings.
 
 **Honest limits**
 Automatic checks are a first pass, not a full audit, and can't replace testing with real users. UX law verdicts are measurable stand-ins for psychological principles. AI output can be wrong.

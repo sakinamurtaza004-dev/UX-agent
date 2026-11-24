@@ -85,3 +85,5 @@ footer.doc { margin-top: 32px; padding-top: 10px; border-top: 1px solid var(--li
 ul.plain { list-style: none; padding: 0; margin: 4px 0; }
 ul.plain li { padding: 3px 0; }
 @media print { .report.summary { font-size: 12.5px; } .report.summary h1 { font-size: 22px; } }
+
+.chatslot { max-width: 820px; margin: 12px auto 0; padding: 0 16px; }

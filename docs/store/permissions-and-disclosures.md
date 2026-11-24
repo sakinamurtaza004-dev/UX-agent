@@ -10,6 +10,8 @@ You will be asked to justify each permission and to fill in the **Privacy practi
 | `scripting` | "Used to run the extension's own analysis script (`content/scanner.js`, shipped inside the package) in the tab the user chose to audit. No remote code is loaded." |
 | `storage` | "Saves the user's audit history, report preferences and settings locally in the browser. Nothing is synced or uploaded." |
 
+**Clipboard:** the "Ask your own AI chat" feature copies a prompt when the user clicks a button. Chrome allows this from the extension's own page on a user click, so no clipboard permission is requested (tested). If it is blocked, the prompt is shown in a box to copy by hand.
+
 **Not requested:** host permissions, `tabs`, `history`, `cookies`, `webRequest`, `downloads`, remote code, content scripts that run automatically on websites. If a reviewer asks why the extension can reach a review server without host permissions: it uses standard cross-origin requests that the server explicitly allows.
 
 ## Single purpose
@@ -32,7 +34,7 @@ You will be asked to justify each permission and to fill in the **Privacy practi
 | Location | No | |
 | Web history | Declare conservatively | The audited page's address (no query/fragment) is stored locally, and sent to the review server if the user runs the AI review |
 | User activity | No | No tracking of clicks, keystrokes or browsing |
-| **Website content** | **Yes, only with the optional AI review** | Page text, headings, labels and an optional screenshot, sent after explicit consent |
+| **Website content** | **Only if the user chooses an optional AI feature** | (1) The optional AI review sends page text, headings, labels and an optional screenshot to a review server after explicit consent. (2) "Ask your own AI chat" copies a prompt (findings and optional page text) to the clipboard; the extension itself sends nothing, the user pastes it |
 
 **Statements you will be asked to certify (only certify if true):**
 - I do not sell or transfer user data to third parties, outside of approved use cases. *(The data goes to the AI processor in order to provide the feature the user asked for.)*

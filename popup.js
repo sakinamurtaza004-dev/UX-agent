@@ -453,7 +453,7 @@ async function render(result) {
   score.style.setProperty("--c", scoreColor(result.score));
 
   root.append(
-    el("div", { class: "page", text: `${result.title} — ${result.url}` }),
+    el("div", { class: "page", text: `${result.title} — ${safeUrl(result.url)}` }),
     el("div", { class: "score-row" }, score, el("div", {},
       el("div", { text: `${result.summary.failed} issues found, ${result.summary.passed} checks passed` }),
       catChips)),
@@ -471,6 +471,12 @@ async function render(result) {
 
   root.append(el("div", { class: "about", id: "report-actions" }));
   renderActions();
+
+  // Free "ask your own AI chat" hand-off (no key, nothing sent by the extension).
+  root.append(renderChatPanel({
+    getRecord: () => buildAuditRecord(current, chrome.runtime.getManifest().version),
+    getPageContent: () => result.pageContent,
+  }));
 
   root.append(renderAiPanel(result, await loadAiSettings()));
 

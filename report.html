@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>UX Audit Report</title>
   <link rel="stylesheet" href="report.css" />
+  <link rel="stylesheet" href="lib/chat-panel.css" />
 </head>
 <body>
   <div class="toolbar no-print" id="toolbar">
@@ -17,15 +18,19 @@
       </label>
       <button id="btn-print" class="primary">Print / Save as PDF</button>
       <button id="btn-html">Download HTML</button>
+      <button id="btn-ai">Ask my AI chat</button>
       <button id="btn-json">Download data (JSON)</button>
       <a id="btn-history" href="history.html">History</a>
     </div>
     <div class="tb-hint">Pick a version, then click <b>Print / Save as PDF</b> and choose <b>Save as PDF</b> as the destination. The HTML download uses the same version.</div>
   </div>
+  <div id="chat-slot" class="no-print" hidden></div>
   <main id="root"><p class="loading">Loading report…</p></main>
   <script src="lib/dom.js"></script>
   <script src="lib/audit-model.js"></script>
   <script src="lib/audit-store.js"></script>
+  <script src="lib/chat-handoff.js"></script>
+  <script src="lib/chat-panel.js"></script>
   <script src="report.js"></script>
 </body>
 </html>
