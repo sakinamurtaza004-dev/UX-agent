@@ -17,13 +17,12 @@ Audit any web page in one click and get a clear, plain-language report on what i
 - **A score and prioritised issues.** 22 automatic checks cover accessibility, readability, mobile use, structure, performance, trust and manipulative design, each with why it matters and how to fix it. **Show on page** highlights the exact elements on the site.
 - **UX laws, scored honestly.** See whether the page follows Hick's Law, Fitts's Law, Jakob's Law, Miller's Law, the Doherty Threshold, the Von Restorff Effect, the Law of Similarity and all 10 of Nielsen's usability heuristics (23 laws and heuristics in total). Every verdict shows what was measured and how it was judged, and says plainly when code can't judge.
 - **Which rules may apply.** Based on signals on the page, see which accessibility, consumer-protection and data laws may be relevant (for example WCAG, the EU Accessibility Act, India's dark-pattern guidelines), with sources, status and what you still need to confirm. General information, not legal advice.
-- **Reports you can keep.** Open a **Summary** (about 2 pages) or a **Full report**, then save it as a PDF, a single HTML file or raw data.
+- **Reports you can keep.** Click **Download report** and pick a Summary PDF (about 2 pages), a Full report PDF, a single HTML file or raw data. It downloads straight away.
 - **History and before/after.** Audits are saved on your device. Re-audit a page later and see what you fixed and what broke.
 - **Ask your own AI chat (free, no key).** One click copies a ready-made prompt and opens ChatGPT, Claude, Gemini, Copilot, Perplexity or any chat you choose. You paste it in; the extension sends nothing.
-- **Optional AI review.** Add an AI-generated read on the page's USP, strengths and weaknesses, plus a judgment on UX laws that code can't measure. Always labelled as AI, always optional.
 
 **Privacy**
-Audits run on your device. Nothing leaves your browser unless you choose an optional AI feature: you paste a prompt into your own AI chat yourself, or you confirm a consent box for the AI review. No analytics, no ads, no remote code. Page addresses are stored without query strings.
+Audits run on your device. The extension sends nothing: if you use the AI chat hand-off, you paste the prompt into your own AI chat yourself. No analytics, no ads, no remote code. Page addresses are stored without query strings.
 
 **Honest limits**
 Automatic checks are a first pass, not a full audit, and can't replace testing with real users. UX law verdicts are measurable stand-ins for psychological principles. AI output can be wrong.

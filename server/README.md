@@ -1,3 +1,5 @@
+> **Not used by the extension (v0.9.0 onward).** The extension now only offers the free "ask your own AI chat" hand-off and sends nothing to any server. This folder is kept for reference and is not shipped in the store package.
+
 # UX Audit Buddy: review server
 
 A small program that runs **on your computer** (or later, on a host). The Chrome extension sends it the page's text, and it asks Claude for the AI review.

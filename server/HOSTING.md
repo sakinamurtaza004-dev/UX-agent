@@ -1,3 +1,5 @@
+> **Not used by the extension (v0.9.0 onward).** The extension now only offers the free "ask your own AI chat" hand-off and sends nothing to any server. This folder is kept for reference and is not shipped in the store package.
+
 # Hosting the review server for real users
 
 Running `npm start` on your own laptop is fine for you. Other people's extensions can't reach your laptop, so for a published extension the server must run on the internet, **and you pay for every review.** Read the cost and safety notes before you switch it on.

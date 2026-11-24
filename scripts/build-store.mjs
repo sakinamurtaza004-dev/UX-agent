@@ -1,32 +1,17 @@
 // BUILD THE PACKAGE YOU UPLOAD TO THE CHROME WEB STORE.
 //
-//   node scripts/build-store.mjs --no-ai-server                 launch without the AI review
-//   node scripts/build-store.mjs --server https://your.host     point the AI review at your hosted server
-//   node scripts/build-store.mjs --dev                          keep the localhost default (for testing; do NOT upload)
+//   node scripts/build-store.mjs      (or: npm run build:store)
 //
 // It copies only the files the extension needs (no server/, docs, tests or
-// secrets), sets the default server address, checks the package for things the
-// store would reject or that would be unsafe, and writes dist/<name>-<version>.zip.
+// secrets), checks the package for things the store would reject or that would
+// be unsafe, and writes dist/<name>-<version>.zip.
 
 import fs from "node:fs";
 import path from "node:path";
 import AdmZip from "adm-zip";
 
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
-const args = process.argv.slice(2);
-const flag = (n) => args.includes(n);
-const value = (n) => { const i = args.indexOf(n); return i >= 0 ? args[i + 1] : undefined; };
 const fail = (m) => { console.error("\nBUILD STOPPED: " + m + "\n"); process.exit(1); };
-
-// ---- 1. what is the default server address? ----
-let serverUrl, label = "";
-if (flag("--dev")) { serverUrl = "http://localhost:8787"; label = "-dev"; }
-else if (flag("--no-ai-server")) serverUrl = "";
-else if (value("--server")) {
-  serverUrl = value("--server").replace(/\/+$/, "");
-  let u; try { u = new URL(serverUrl); } catch { fail(`--server "${serverUrl}" is not a valid address.`); }
-  if (u.protocol !== "https:") fail("--server must be an https address. Page text must never be sent over plain http.");
-} else fail("Say how to build.\n  --no-ai-server        launch without the AI review\n  --server <https-url>  use your hosted review server\n  --dev                 local testing build (do not upload)");
 
 // ---- 2. files that ship ----
 const FILES = ["manifest.json", "panel.html", "panel.js", "panel.css", "report.html", "report.js", "report.css", "history.html", "history.js", "history.css"];
@@ -36,12 +21,6 @@ for (const d of DIRS) for (const f of fs.readdirSync(path.join(root, d))) if (/\
 
 const read = (f) => fs.readFileSync(path.join(root, f), "utf8");
 const staged = new Map(list.map((f) => [f, fs.readFileSync(path.join(root, f))]));
-
-// default server address
-const cfg = staged.get("lib/config.js").toString("utf8");
-const newCfg = cfg.replace(/defaultServerUrl:\s*"[^"]*"/, `defaultServerUrl: ${JSON.stringify(serverUrl)}`);
-if (newCfg === cfg && !cfg.includes(JSON.stringify(serverUrl))) fail("Couldn't set the default server address in lib/config.js.");
-staged.set("lib/config.js", Buffer.from(newCfg));
 
 // ---- 3. checks ----
 const errors = [], warnings = [];
@@ -81,7 +60,7 @@ for (const [f, buf] of staged) {
     if (/\bnew Function\s*\(/.test(text)) errors.push(`${f} uses new Function(), which Manifest V3 forbids.`);
     if (/importScripts\s*\(\s*["']https?:/.test(text)) errors.push(`${f} imports a remote script.`);
     if (/\.innerHTML\s*=|insertAdjacentHTML/.test(text)) warnings.push(`${f} writes HTML directly. Everything is meant to go in with textContent.`);
-    if (/https?:\/\/(?!localhost|127\.0\.0\.1|www\.w3\.org|lawsofux|www\.nngroup|www\.cppa|nda\.ie|www\.taylorwessing|www\.govinfo|www\.federalregister|guidelines\.india|www\.deque|www\.pib|ccpa\.doca|www\.springlex|www\.europarl|gibsondunn|www\.scconline|schemas|chatgpt\.com|claude\.ai|gemini\.google|copilot\.microsoft|www\.perplexity|your-ai\.example)/.test(text) && f !== "lib/config.js") {
+    if (/https?:\/\/(?!localhost|127\.0\.0\.1|www\.w3\.org|lawsofux|www\.nngroup|www\.cppa|nda\.ie|www\.taylorwessing|www\.govinfo|www\.federalregister|guidelines\.india|www\.deque|www\.pib|ccpa\.doca|www\.springlex|www\.europarl|gibsondunn|www\.scconline|schemas|chatgpt\.com|claude\.ai|gemini\.google|copilot\.microsoft|www\.perplexity|your-ai\.example)/.test(text)) {
       const hit = text.match(/https?:\/\/[^\s"'`)]+/g).filter((u) => !/localhost|127\.0\.0\.1|w3\.org|lawsofux|nngroup|cppa\.ca|nda\.ie|taylorwessing|govinfo|federalregister|india\.gov|deque|pib\.gov|doca\.gov|springlex|europarl|gibsondunn|scconline|chatgpt\.com|claude\.ai|gemini\.google|copilot\.microsoft|perplexity\.ai|example\.com/.test(u));
       if (hit.length) warnings.push(`${f} mentions other web addresses: ${[...new Set(hit)].slice(0, 3).join(", ")}`);
     }
@@ -96,9 +75,6 @@ for (const [f, buf] of staged) {
   }
 }
 for (const f of need) if (!staged.has(f)) errors.push(`${f} is referenced but not in the package.`);
-if (/localhost|127\.0\.0\.1/.test(newCfg) && !flag("--dev")) errors.push("The store build still points at localhost.");
-if (!flag("--dev") && newCfg.includes("http://")) errors.push("The default server address is not https.");
-if (flag("--dev")) warnings.push("DEV build: points at localhost. Do not upload this to the store.");
 // Reminders that are not build errors but must not be forgotten before submitting.
 try {
   const policy = read("docs/privacy-policy.html");
@@ -111,13 +87,13 @@ if (errors.length) fail("\n - " + errors.join("\n - "));
 // ---- 4. write the zip ----
 const outDir = path.join(root, "dist");
 fs.mkdirSync(outDir, { recursive: true });
-const zipName = `ux-audit-buddy-${m.version}${label}.zip`;
+const zipName = `ux-audit-buddy-${m.version}.zip`;
 const zip = new AdmZip();
 for (const [f, buf] of [...staged].sort(([a], [b]) => a.localeCompare(b))) zip.addFile(f, buf);
 zip.writeZip(path.join(outDir, zipName));
 
 const size = fs.statSync(path.join(outDir, zipName)).size;
 console.log(`\nBuilt dist/${zipName}  (${(size / 1024).toFixed(0)} KB, ${staged.size} files)`);
-console.log(`Version ${m.version} | permissions: ${(m.permissions || []).join(", ")} | AI server: ${serverUrl || "(none, AI review disabled)"}`);
+console.log(`Version ${m.version} | permissions: ${(m.permissions || []).join(", ")}`);
 for (const w of warnings) console.log("  note: " + w);
 console.log("\nContents:\n  " + [...staged.keys()].sort().join("\n  "));

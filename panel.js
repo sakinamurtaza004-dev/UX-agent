@@ -23,11 +23,9 @@ const App = {
   stale: false,        // the user moved on from the scanned page
   fail: null,
   recents: [],
-  settings: { serverUrl: APP_CONFIG.defaultServerUrl, token: "", consent: false, screenshot: true },
   ui: {
     scanStep: 0, filter: "all", issueOpen: {}, passOpen: false, lawGroup: { not: true }, lawOpen: {}, ruleGroup: { may: true }, ruleOpen: {},
-    sheet: null, histList: [], saveHist: true, editServer: false, confirmClear: false,
-    aiStatus: "idle", aiErr: "", aiOut: null, aiMsg: "",
+    sheet: null, histList: [], saveHist: true, confirmClear: false, menu: false,
   },
 };
 let chatNode = null;            // the chat card keeps what the user typed, so it is built once
@@ -84,8 +82,8 @@ function letterOf(u) { const h = hostOf(u); return h ? h[0].toUpperCase() : "?";
 
 function buildHeader() {
   const hd = el("div", { class: "hd" });
-  const hist = fk("hist", el("button", { type: "button", class: "ib", "aria-label": "History" }, icon("history", 18)));
-  const setb = fk("set", el("button", { type: "button", class: "ib", "aria-label": "Settings" }, icon("settings", 18)));
+  const hist = fk("hist", el("button", { type: "button", class: "ib", "aria-label": "History", "data-tip": "History" }, icon("history", 18)));
+  const setb = fk("set", el("button", { type: "button", class: "ib tip-r", "aria-label": "Settings", "data-tip": "Settings" }, icon("settings", 18)));
   hist.addEventListener("click", () => openSheet("hist"));
   setb.addEventListener("click", () => openSheet("set"));
   hd.append(el("div", { class: "hrow" },
@@ -96,7 +94,7 @@ function buildHeader() {
   const pg = el("div", { class: "pg" }, el("div", { class: "fav", text: id.letter }),
     el("div", { style: "min-width:0;flex:1" }, el("div", { class: "pgt", text: id.title }), el("div", { class: "pgu", text: id.sub })));
   if (App.screen === "done") {
-    const rs = fk("rescan", el("button", { type: "button", class: "ib", "aria-label": "Scan the current page again" }, icon("rescan", 16, "currentColor", 1.9)));
+    const rs = fk("rescan", el("button", { type: "button", class: "ib tip-r", "aria-label": "Scan the current page again", "data-tip": "Scan this page again" }, icon("rescan", 16, "currentColor", 1.9)));
     rs.addEventListener("click", scan);
     pg.append(rs);
   }
@@ -314,22 +312,68 @@ function buildOverview() {
   // AI
   const ai = fk("go-ai", el("button", { type: "button", class: "card", style: "width:100%;text-align:left;display:flex;gap:12px;align-items:center;border-color:#C7D2FE;background:#FAFAFF" },
     el("div", { style: "width:34px;height:34px;border-radius:9px;background:#EEF0FF;display:flex;align-items:center;justify-content:center;flex:none" }, icon("chat", 17, "#4F46E5", 1.9)),
-    el("div", { style: "flex:1" }, el("div", { style: "font-weight:600;font-size:13px;color:#101828", text: "Go deeper with AI" }), el("div", { class: "xs", text: `USP, what works, and the ${lc.unmeasured + lc.ai} laws code can't judge` })),
+    el("div", { style: "flex:1" }, el("div", { style: "font-weight:600;font-size:13px;color:#101828", text: "Go deeper with your own AI" }), el("div", { class: "xs", text: `USP, what works, and the ${lc.unmeasured + lc.ai} laws code can't judge` })),
     icon("chevRight", 16, "#667085", 2)));
   ai.addEventListener("click", () => goTab("ai"));
   frag.append(ai);
 
-  // Report
-  const rep = el("button", { type: "button", class: "btn", style: "flex:1", text: "Open full report" });
-  rep.addEventListener("click", openReport);
+  // Report: one button, a small menu of kinds, direct download (no new tab)
   const saved = App.live ? (App.cur && App.cur.saveResult ? (App.cur.saveResult.ok ? (App.cur.saveResult.history ? "Saved to history" : "Not saved (history off)") : "Couldn't save") : "Saving…") : "Saved audit";
-  frag.append(el("div", { style: "display:flex;gap:8px;align-items:center" }, rep, el("div", { class: "xs", style: "display:flex;gap:5px;align-items:center" }, icon("check", 13, "#067647", 2.4), document.createTextNode(saved))));
+  const open = App.ui.menu;
+  const dl = fk("dl-btn", el("button", { type: "button", class: "btn pri", style: "width:100%;display:flex;gap:8px;align-items:center;justify-content:center", "aria-haspopup": "menu", "aria-expanded": String(open), id: "dlbtn" }, icon("download", 15, "#fff", 2.2), document.createTextNode("Download report"), icon("chevDown", 14, "#fff", 2.4)));
+  dl.addEventListener("click", () => { lastFocusKey = "dl-btn"; ui({ menu: !open }); });
+  const wrap = el("div", { class: "dlwrap" }, dl);
+  if (open) wrap.append(buildDownloadMenu());
+  frag.append(wrap, el("div", { class: "xs", style: "display:flex;gap:5px;align-items:center;justify-content:center;margin-top:8px" }, icon("check", 13, "#067647", 2.4), document.createTextNode(saved)));
   return frag;
 }
 
-function openReport() {
-  const id = App.live && App.cur && App.cur.saveResult && !App.cur.saveResult.history ? "last" : App.rec.id;
-  openTab(`report.html?id=${encodeURIComponent(id)}`);
+const DOWNLOADS = [
+  { kind: "summary-pdf", label: "Summary (PDF)", sub: "About 2 pages: top issues, laws and rules at a glance" },
+  { kind: "full-pdf", label: "Full report (PDF)", sub: "Every issue, law, rule and source" },
+  { kind: "html", label: "Web page (HTML)", sub: "One file that opens in any browser" },
+  { kind: "json", label: "Raw data (JSON)", sub: "For developers and other tools" },
+];
+
+function buildDownloadMenu() {
+  const menu = el("div", { class: "dlmenu", role: "menu", "aria-label": "Choose a report to download" });
+  DOWNLOADS.forEach((d, i) => {
+    const b = fk("dl-" + d.kind, el("button", { type: "button", class: "dlitem", role: "menuitem", tabindex: i === 0 ? "0" : "-1" }, el("span", { class: "dlt", text: d.label }), el("span", { class: "xs", text: d.sub })));
+    b.addEventListener("click", () => downloadReport(d.kind));
+    menu.append(b);
+  });
+  menu.addEventListener("keydown", (e) => {
+    const items = [...menu.querySelectorAll("[role=menuitem]")], i = items.indexOf(document.activeElement);
+    if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); lastFocusKey = "dl-btn"; ui({ menu: false }); }
+    else if (e.key === "ArrowDown") { e.preventDefault(); items[(i + 1) % items.length].focus(); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); items[(i - 1 + items.length) % items.length].focus(); }
+    else if (e.key === "Home") { e.preventDefault(); items[0].focus(); }
+    else if (e.key === "End") { e.preventDefault(); items[items.length - 1].focus(); }
+    else if (e.key === "Tab") { lastFocusKey = null; App.ui.menu = false; }
+  });
+  setTimeout(() => { const f = menu.querySelector("[role=menuitem]"); if (f && !menu.contains(document.activeElement)) f.focus({ preventScroll: true }); }, 0);
+  return menu;
+}
+
+// Close the menu when the user clicks anywhere else.
+document.addEventListener("click", (e) => {
+  if (App.ui.menu && !e.target.closest(".dlwrap")) { App.ui.menu = false; render(); }
+});
+
+async function downloadReport(kind) {
+  const rec = App.rec;
+  lastFocusKey = "dl-btn";
+  ui({ menu: false });
+  try {
+    if (kind === "summary-pdf" || kind === "full-pdf") {
+      const view = kind === "summary-pdf" ? "summary" : "full";
+      downloadFile(fileBase(rec, view) + ".pdf", PdfWriter.build(ReportDoc.build(rec, view)), "application/pdf");
+    } else if (kind === "html") downloadFile(fileBase(rec, "full") + ".html", await standaloneHtml(rec, "full"), "text/html");
+    else downloadFile(fileBase(rec) + ".json", JSON.stringify(rec, null, 2), "application/json");
+    toast("Report downloaded");
+  } catch (e) {
+    toast("Couldn't create that file. Try another format.", true);
+  }
 }
 
 // ---------------------------------------------------------------- issues
@@ -428,9 +472,9 @@ function buildLaws() {
     if (!open) return;
     if (g.review) {
       const c = card({ style: "background:#FAFAFF;border-color:#C7D2FE" },
-        el("p", { class: "sm", style: "margin:0 0 8px;color:#344054", text: "Code can't measure these. An AI review looks at the page and judges them for you." }),
+        el("p", { class: "sm", style: "margin:0 0 8px;color:#344054", text: "Code can't measure these. Your own AI chat can judge them: we prepare the prompt for you." }),
         el("p", { class: "xs", style: "margin:0 0 10px", text: g.items.map((l) => shortLawName(l.name)).join(" · ") }));
-      const b = el("button", { type: "button", class: "btn pri sm2", text: "Run AI review" }); b.addEventListener("click", () => goTab("ai")); c.append(b);
+      const b = el("button", { type: "button", class: "btn pri sm2", text: "Ask my AI chat" }); b.addEventListener("click", () => goTab("ai")); c.append(b);
       frag.append(c);
       return;
     }
@@ -498,149 +542,20 @@ function buildRules() {
 }
 
 // ---------------------------------------------------------------- AI review
-async function loadSettings() {
-  try { const { ai } = await chrome.storage.local.get("ai"); Object.assign(App.settings, ai || {}); } catch (e) { /* defaults */ }
-}
-async function saveSettings() { try { await chrome.storage.local.set({ ai: App.settings }); } catch (e) { /* not persisted */ } }
-
-async function getInstallId() {
-  try {
-    let { installId } = await chrome.storage.local.get("installId");
-    if (!installId) { installId = crypto.randomUUID(); await chrome.storage.local.set({ installId }); }
-    return installId;
-  } catch (e) { return ""; }
-}
-
-// Page text is only sent over https (plain http is allowed just for localhost while testing).
-function serverUrlProblem(u) {
-  if (!u) return "AI review isn't set up yet. Add your review server's address in Settings.";
-  let x;
-  try { x = new URL(u); } catch (e) { return "That server address isn't valid. Example: http://localhost:8787"; }
-  const local = ["localhost", "127.0.0.1", "[::1]"].includes(x.hostname);
-  if (x.protocol === "https:" || (x.protocol === "http:" && local)) return "";
-  return "For safety, page text is only sent to https addresses (or localhost while testing).";
-}
-
-const clamp = (s, n) => String(s || "").slice(0, n);
-function buildAiPayload(result, laws, screenshot) {
-  return {
-    url: clamp(safeUrl(result.url), 2000),
-    title: clamp(result.title, 300),
-    metaDescription: clamp(result.pageContent.metaDescription, 500),
-    headings: result.pageContent.headings.map((h) => clamp(h, 200)).slice(0, 40),
-    navLabels: (result.ux.navLabels || []).map((n) => clamp(n, 80)).slice(0, 30),
-    ctas: (result.ux.ctaLabels || []).map((n) => clamp(n, 80)).slice(0, 20),
-    text: clamp(result.pageContent.text, 12000),
-    profileSummary: describeProfile(result.profile).map((p) => clamp(p, 200)).slice(0, 20),
-    failed: result.checks.filter((c) => c.status === "fail").map((c) => ({ title: clamp(c.title, 200), severity: c.severity, count: c.count })).slice(0, 40),
-    passedCount: result.summary.passed,
-    score: result.score,
-    uxLaws: laws.filter((l) => l.verdict !== "unmeasured").slice(0, 25).map((l) => ({ name: clamp(l.name, 100), verdict: clamp(l.verdict, 30), evidence: clamp(l.evidence[0], 300) })),
-    screenshot: screenshot || undefined,
-  };
-}
-
-async function captureScreenshot() {
-  for (const quality of [60, 40]) {
-    const dataUrl = await chrome.tabs.captureVisibleTab({ format: "jpeg", quality });
-    const b64 = dataUrl.replace(/^data:image\/jpeg;base64,/, "");
-    if (b64.length <= 5_000_000) return b64;
-  }
-  return null;
-}
-
-async function runAi() {
-  const s = App.settings;
-  if (!App.live || !App.cur) { ui({ aiErr: "Scan the page again to run the AI review. It needs the page's text." }); return; }
-  if (!s.consent) { ui({ aiErr: "Tick the box above first. Nothing is sent without it." }); return; }
-  const problem = serverUrlProblem(s.serverUrl);
-  if (problem) { ui({ aiErr: problem }); return; }
-  ui({ aiStatus: "run", aiErr: "" });
-  let screenshot = null;
-  if (s.screenshot) { try { screenshot = await captureScreenshot(); } catch (e) { /* text only */ } }
-  const ctrl = new AbortController(), timer = setTimeout(() => ctrl.abort(), 150000);
-  try {
-    const resp = await fetch(s.serverUrl.replace(/\/+$/, "") + "/api/review", {
-      method: "POST",
-      headers: Object.assign({ "content-type": "application/json", "x-install-id": await getInstallId() }, s.token ? { "x-app-token": s.token } : {}),
-      body: JSON.stringify(buildAiPayload(App.cur.result, App.cur.laws, screenshot)),
-      signal: ctrl.signal,
-    });
-    let data = null;
-    try { data = await resp.json(); } catch (e) { /* not JSON */ }
-    if (!resp.ok) { ui({ aiStatus: "idle", aiErr: data && data.message ? data.message : `The server answered with an error (${resp.status}).` }); return; }
-    App.cur.ai = data;
-    App.cur.aiShot = { requested: s.screenshot, sent: !!screenshot };
-    App.cur.laws = mergeAiLaws(App.cur.baseLaws, data.review);
-    ui({ aiStatus: "done", aiOut: data, aiMsg: "" });
-    App.ui.lawGroup = { ...App.ui.lawGroup, ai: true };
-    toast(data.mock ? "Sample data shown (mock mode)" : "AI review ready");
-    await persist();
-  } catch (e) {
-    ui({ aiStatus: "idle", aiErr: e && e.name === "AbortError" ? "The review took too long and was cancelled. Try again." : `Can't reach the review server at ${s.serverUrl}. Is it running?` });
-  } finally { clearTimeout(timer); }
-}
-
-function aiResultsNode(res, shot) {
-  const ai = res.review, box = el("div", { class: "air" });
-  box.append(res.mock
-    ? el("div", { class: "aib mock", text: "SAMPLE DATA from the server's mock mode. This is NOT a review of your page." })
-    : el("div", { class: "aib", text: `AI-generated by Claude${res.servedBy ? " (" + res.servedBy + ")" : ""}. It can be wrong. Check it against the page.` }));
-  if (shot) box.append(el("div", { class: "xs", style: "margin-bottom:8px", text: shot.sent ? "A screenshot of the first screen was included." : "No screenshot was included, so visual judgments are limited." }));
-  box.append(el("p", { text: ai.summary }));
-  const clarity = { clear: "Clear", somewhat_clear: "Somewhat clear", unclear: "Unclear" }[ai.usp.clarity];
-  box.append(el("h4", { text: "USP" }), el("p", { class: "usp", text: ai.usp.statement }), el("p", { class: "xs", text: `How clearly the page says it: ${clarity} (AI confidence: ${ai.usp.confidence})` }));
-  if (ai.usp.evidence.length) box.append(bulletList(ai.usp.evidence));
-  if (ai.usp.improvement) box.append(el("p", { class: "sm", text: "To sharpen it: " + ai.usp.improvement }));
-  if (ai.priorities.length) { box.append(el("h4", { text: "Top priorities" })); const ol = el("ol", { style: "margin:0;padding-left:18px" }); ai.priorities.forEach((p) => ol.append(el("li", { text: p }))); box.append(ol); }
-  box.append(el("h4", { text: `What works (${ai.strengths.length})` }));
-  ai.strengths.forEach((s) => box.append(el("p", {}, el("b", { text: s.title + ". " }), document.createTextNode(s.detail))));
-  box.append(el("h4", { text: `What doesn't (${ai.weaknesses.length})` }));
-  ai.weaknesses.forEach((w) => box.append(el("p", {}, pill("p-" + (w.severity === "medium" ? "med" : w.severity), w.severity.toUpperCase()), document.createTextNode(" "), el("b", { text: w.title + ". " }), document.createTextNode(w.detail + " Fix: " + w.fix))));
-  if (ai.limitations) box.append(el("p", { class: "xs", style: "margin-top:10px", text: "What the AI couldn't judge: " + ai.limitations }));
-  return box;
-}
-
+// Free hand-off: the extension copies a ready prompt and opens the user's own AI chat.
+// (Nothing is sent by the extension itself, so there is no key, server or cost.)
 function buildAi() {
-  const rec = App.rec, frag = el("div", {});
-  const s = App.settings, lc = lawCounts(rec);
-  const c = card({}, el("div", { style: "display:flex;align-items:center;gap:8px;margin-bottom:4px" }, el("div", { class: "h2", style: "margin:0;flex:1", text: "AI review" }), pill("p-rev", "Uses Claude")),
-    el("p", { class: "sm mut", style: "margin:0 0 4px", text: `Adds what code can't judge: the page's USP, what works, what doesn't, and the ${lc.unmeasured + lc.ai} laws that need a human or AI eye.` }));
-
-  const saved = rec.ai;
-  if (App.ui.aiStatus === "run") {
-    c.append(el("div", { class: "step", style: "margin-top:6px" }, el("div", { class: "dot d-run" }), el("div", { text: "Reviewing the page. This takes about 20 seconds." })));
-  } else if (App.ui.aiStatus === "done" && App.ui.aiOut) {
-    c.append(aiResultsNode(App.ui.aiOut, App.cur && App.cur.aiShot));
-  } else if (saved) {
-    c.append(aiResultsNode({ review: saved.review, servedBy: saved.servedBy, mock: false }, { sent: saved.screenshotSent }));
-  } else if (!App.live) {
-    c.append(el("p", { class: "xs", style: "margin:8px 0 0", text: "This is a saved audit. Scan the page again to run the AI review: it needs the page's text." }));
-  } else if (!s.serverUrl) {
-    const b = el("button", { type: "button", class: "btn pri sm2", text: "Set up review server" }); b.addEventListener("click", () => { App.ui.editServer = true; openSheet("set"); });
-    c.append(el("p", { class: "xs", style: "margin:8px 0" , text: "The AI review needs a review server. Set one up, or use your own AI chat below: it's free and needs no server." }), b);
-  } else {
-    const consent = el("input", { type: "checkbox", id: "ai-consent" }); consent.checked = !!s.consent;
-    consent.addEventListener("change", () => { App.settings.consent = consent.checked; App.ui.aiErr = ""; saveSettings(); render(); });
-    const shot = el("input", { type: "checkbox", id: "ai-shot" }); shot.checked = s.screenshot !== false;
-    shot.addEventListener("change", () => { App.settings.screenshot = shot.checked; saveSettings(); });
-    const run = fk("run-ai", el("button", { type: "button", class: "btn pri", style: "width:100%", text: "Run AI review" }));
-    run.addEventListener("click", runAi);
-    c.append(el("label", { class: "chk" }, consent, el("span", { text: "Send this page's text (about 9,000 characters) to my review server and Anthropic's API." })));
-    if (App.ui.aiErr) c.append(el("div", { class: "err", role: "alert", text: App.ui.aiErr }));
-    c.append(el("label", { class: "chk" }, shot, el("span", { text: "Include a screenshot. Needed to judge the visual laws." })), run);
-  }
-  frag.append(c);
-
-  // Free chat hand-off: built once so what the user typed survives redraws.
+  const lc = lawCounts(App.rec);
+  const n = lc.unmeasured + lc.ai;
+  // Built once so what the user typed survives redraws; rebuilt when the view changes (live scan vs saved audit).
   if (!chatNode) chatNode = renderChatPanel({
     getRecord: async () => App.rec,
     // Saved audits don't keep the page's text, so only live scans can include it.
     getPageContent: App.live && App.cur ? () => App.cur.result.pageContent : undefined,
     onToast: (t) => toast(t),
+    intro: `Your own AI can add what code can't judge: the page's USP, what works, what doesn't, and the ${n} laws that need a human eye.`,
   });
-  frag.append(chatNode);
-  return frag;
+  return el("div", {}, chatNode);
 }
 
 // ---------------------------------------------------------------- sheets
@@ -653,12 +568,12 @@ function openSheet(kind) {
   if (kind === "set") AuditStore.prefs().then((p) => { App.ui.saveHist = p.saveHistory; render(); });
   render();
 }
-function closeSheet() { App.ui.sheet = null; App.ui.editServer = false; lastFocusKey = sheetOpener; render(); }
+function closeSheet() { App.ui.sheet = null; lastFocusKey = sheetOpener; render(); }
 
 function buildSheet() {
   const kind = App.ui.sheet;
   if (!kind) return null;
-  const close = fk("sheet-close", el("button", { type: "button", class: "ib", "aria-label": "Close" }, icon("close", 18)));
+  const close = fk("sheet-close", el("button", { type: "button", class: "ib tip-r", "aria-label": "Close", "data-tip": "Close" }, icon("close", 18)));
   close.addEventListener("click", closeSheet);
   const sheet = el("div", { class: "sheet", role: "dialog", "aria-modal": "true", "aria-label": kind === "hist" ? "History" : "Settings" },
     el("div", { style: "display:flex;align-items:center;margin-bottom:10px" }, el("div", { class: "h2", style: "flex:1;margin:0;font-size:15px", text: kind === "hist" ? "History" : "Settings" }), close));
@@ -679,27 +594,6 @@ function buildSheet() {
     sw.addEventListener("click", async () => { await AuditStore.setPrefs({ saveHistory: !App.ui.saveHist }); App.ui.saveHist = !App.ui.saveHist; if (App.cur) await persist(); else render(); });
     sheet.append(el("div", { class: "swl" }, el("div", { style: "flex:1" }, el("div", { style: "font-weight:600;font-size:13px", text: "Save audits to history" }), el("div", { class: "xs", text: "Kept on this device only" })), sw));
 
-    const host = App.settings.serverUrl ? hostOf(App.settings.serverUrl) || App.settings.serverUrl : "";
-    const setup = el("button", { type: "button", class: "btn sm2", text: App.ui.editServer ? "Cancel" : host ? "Change" : "Set up" });
-    setup.addEventListener("click", () => ui({ editServer: !App.ui.editServer }));
-    sheet.append(el("div", { class: "swl" }, el("div", { style: "flex:1;min-width:0" }, el("div", { style: "font-weight:600;font-size:13px", text: "Review server" }), el("div", { class: "xs", style: "overflow:hidden;text-overflow:ellipsis", text: host ? `Used only for AI review · ${host}` : "Used only for AI review. Not set up." })), setup));
-    if (App.ui.editServer) {
-      const url = el("input", { type: "text", class: "fld", id: "srv-url", value: App.settings.serverUrl, placeholder: "https://your-server.example.com", spellcheck: "false" });
-      const tok = el("input", { type: "password", class: "fld", id: "srv-tok", value: App.settings.token, autocomplete: "off" });
-      const err = el("div", { class: "err", role: "alert" });
-      const save = el("button", { type: "button", class: "btn pri sm2", text: "Save" });
-      save.addEventListener("click", async () => {
-        const v = url.value.trim().replace(/\/+$/, "");
-        const p = v ? serverUrlProblem(v) : "";
-        if (p) { err.textContent = p; return; }
-        App.settings.serverUrl = v; App.settings.token = tok.value;
-        await saveSettings(); App.ui.editServer = false; render(); toast("Review server saved");
-      });
-      sheet.append(el("div", { style: "padding:4px 0 10px" },
-        el("label", { class: "lab", for: "srv-url", text: "Server address" }), url,
-        el("label", { class: "lab", for: "srv-tok", text: "App token (only if your server uses one)" }), tok, err,
-        el("div", { style: "margin-top:10px" }, save)));
-    }
     const clear = el("button", { type: "button", class: "lnk", style: "color:#B42318", text: App.ui.confirmClear ? "Click again to delete all history" : "Clear history" });
     clear.addEventListener("click", async () => {
       if (!App.ui.confirmClear) { ui({ confirmClear: true }); return; }
@@ -838,7 +732,7 @@ async function ingest(result, tab) {
   App.live = true;
   App.tabId = tab ? tab.id : null;
   App.stale = false;
-  Object.assign(App.ui, { issueOpen: {}, lawOpen: {}, lawGroup: { not: true }, ruleOpen: {}, ruleGroup: { may: true }, filter: "all", passOpen: false, aiStatus: "idle", aiErr: "", aiOut: null });
+  Object.assign(App.ui, { issueOpen: {}, lawOpen: {}, lawGroup: { not: true }, ruleOpen: {}, ruleGroup: { may: true }, filter: "all", passOpen: false });
   set({ screen: "done", tab: "overview" }, { reset: true });
   await persist();
 }
@@ -861,7 +755,7 @@ async function loadRecents() { try { App.recents = await AuditStore.list(); } ca
 async function openSaved(id) {
   const rec = await AuditStore.getAudit(id);
   if (!rec) { toast("That audit is no longer saved.", true); await loadRecents(); render(); return; }
-  Object.assign(App.ui, { issueOpen: {}, lawOpen: {}, lawGroup: { not: true }, ruleOpen: {}, ruleGroup: { may: true }, filter: "all", passOpen: false, aiStatus: "idle", aiErr: "", aiOut: null, sheet: null });
+  Object.assign(App.ui, { issueOpen: {}, lawOpen: {}, lawGroup: { not: true }, ruleOpen: {}, ruleGroup: { may: true }, filter: "all", passOpen: false, sheet: null });
   chatNode = null;
   App.cur = null; App.live = false; App.tabId = null; App.stale = false;
   set({ rec, screen: "done", tab: "overview" }, { reset: true });
@@ -886,7 +780,7 @@ const UX_CHECK_COUNT = 22;
 let UX_LAW_COUNT = 23;
 (async function init() {
   try { UX_LAW_COUNT = assessUxLaws({ navItems: null, navLabels: [], ctaLabels: [], aboveFoldChoices: 0, targetsTotal: 0, targets24: 0, targets44: 0, filledCount: 0, largestFilledPx: 0, logoTopLeft: false, navNearTop: false, footerLinks: 0, searchPresent: false, cartTopRight: false, totalLinks: 0, paragraphs: 0, longParagraphs: 0, longestParagraph: 0, totalWords: 0, headingCount: 0, loadMs: null, fcpMs: null, inlineLinks: 0, distinctLinks: 0, fontFamilies: [], formFields: 0, helpLinks: 0, statusSignals: 0, currentMarks: 0, stepper: false, dialogs: 0, dialogsWithClose: 0, backLinks: 0, typeChecked: 0, typeMismatch: 0, validationHints: 0, errorWired: 0, errorRegions: 0, personalFields: 0, personalWithAutocomplete: 0, skipLink: false }, null, []).length; } catch (e) { /* keep default */ }
-  await Promise.all([loadSettings(), loadRecents(), refreshTarget(), AuditStore.prefs().then((p) => { App.ui.saveHist = p.saveHistory; })]);
+  await Promise.all([loadRecents(), refreshTarget(), AuditStore.prefs().then((p) => { App.ui.saveHist = p.saveHistory; })]);
   render();
   watchTabs();
 })();

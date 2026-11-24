@@ -23,3 +23,4 @@ textarea.cp-fld { min-height: 64px; resize: vertical; }
 .cp-status { font-size: 12px; color: #475467; min-height: 1em; margin-top: 8px; overflow-wrap: anywhere; }
 .cp-warn { font-size: 12px; background: #FEF0C7; color: #93370D; border-radius: 6px; padding: 6px 8px; margin: 8px 0 6px; }
 .cp [hidden] { display: none !important; }
+.cp-intro { font-size: 13px; color: #475467; margin: 0 0 8px; }

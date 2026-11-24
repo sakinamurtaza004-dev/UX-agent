@@ -15,7 +15,7 @@ You will be asked to justify each permission and to fill in the **Privacy practi
 
 **Optional, per-site access (`optional_host_permissions`):** declared but NOT granted at install. Because a side panel stays open while the user moves between pages, Chrome's one-page-at-a-time `activeTab` grant can run out. If a scan is refused, the panel explains what to do and offers an **"Allow on this site"** button that asks Chrome for that single site only, after the user clicks it. Justification to paste: "Used only when the user explicitly allows the extension to audit a specific site after Chrome refused a scan. Requested one site at a time, on a button click." (If a reviewer objects to this, it can be removed: the panel then asks the user to click the toolbar icon on the page instead.)
 
-**Not requested at install:** host permissions, `tabs`, `history`, `cookies`, `webRequest`, `downloads`, remote code, content scripts that run automatically on websites. If a reviewer asks why the extension can reach a review server without host permissions: it uses standard cross-origin requests that the server explicitly allows.
+**Not requested at install:** host permissions, `tabs`, `history`, `cookies`, `webRequest`, `downloads`, remote code, content scripts that run automatically on websites.
 
 ## Single purpose
 
@@ -31,16 +31,16 @@ You will be asked to justify each permission and to fill in the **Privacy practi
 
 | Chrome category | Handled? | Notes |
 |---|---|---|
-| Personally identifiable information | No | Not collected on purpose. Page text could contain some if the user runs AI review on such a page (warned against) |
+| Personally identifiable information | No | Not collected on purpose. Page text could contain some if the user chooses to include it in a prompt they paste into their own AI chat |
 | Health, financial, authentication information | No | Same note |
 | Personal communications | No | |
 | Location | No | |
-| Web history | Declare conservatively | The audited page's address (no query/fragment) is stored locally, and sent to the review server if the user runs the AI review |
+| Web history | Declare conservatively | The audited page's address (no query/fragment) is stored locally |
 | User activity | No | No tracking of clicks, keystrokes or browsing |
-| **Website content** | **Only if the user chooses an optional AI feature** | (1) The optional AI review sends page text, headings, labels and an optional screenshot to a review server after explicit consent. (2) "Ask your own AI chat" copies a prompt (findings and optional page text) to the clipboard; the extension itself sends nothing, the user pastes it |
+| **Website content** | **Only if the user chooses** | "Ask your own AI chat" copies a prompt (findings and, if the user leaves it ticked, page text) to the clipboard; the extension itself sends nothing, the user pastes it. Nothing is sent to any server operated by us |
 
 **Statements you will be asked to certify (only certify if true):**
-- I do not sell or transfer user data to third parties, outside of approved use cases. *(The data goes to the AI processor in order to provide the feature the user asked for.)*
+- I do not sell or transfer user data to third parties, outside of approved use cases. *(The extension transmits no user data.)*
 - I do not use or transfer user data for purposes unrelated to the item's single purpose.
 - I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
