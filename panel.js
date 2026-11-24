@@ -329,10 +329,8 @@ function buildOverview() {
 }
 
 const DOWNLOADS = [
-  { kind: "summary-pdf", label: "Summary (PDF)", sub: "About 2 pages: top issues, laws and rules at a glance" },
-  { kind: "full-pdf", label: "Full report (PDF)", sub: "Every issue, law, rule and source" },
-  { kind: "html", label: "Web page (HTML)", sub: "One file that opens in any browser" },
-  { kind: "json", label: "Raw data (JSON)", sub: "For developers and other tools" },
+  { kind: "summary", label: "Summary (PDF)", sub: "About 2 pages, with pictures of the top problems" },
+  { kind: "full", label: "Full report (PDF)", sub: "Every issue, law, rule and source, with pictures" },
 ];
 
 function buildDownloadMenu() {
@@ -360,20 +358,30 @@ document.addEventListener("click", (e) => {
   if (App.ui.menu && !e.target.closest(".dlwrap")) { App.ui.menu = false; render(); }
 });
 
-async function downloadReport(kind) {
+async function downloadReport(view) {
   const rec = App.rec;
   lastFocusKey = "dl-btn";
   ui({ menu: false });
+  if (App.busyDl) return;
+  App.busyDl = true;
+  let shots = {}, reason = "";
   try {
-    if (kind === "summary-pdf" || kind === "full-pdf") {
-      const view = kind === "summary-pdf" ? "summary" : "full";
-      downloadFile(fileBase(rec, view) + ".pdf", PdfWriter.build(ReportDoc.build(rec, view)), "application/pdf");
-    } else if (kind === "html") downloadFile(fileBase(rec, "full") + ".html", await standaloneHtml(rec, "full"), "text/html");
-    else downloadFile(fileBase(rec) + ".json", JSON.stringify(rec, null, 2), "application/json");
-    toast("Report downloaded");
+    if (App.live && App.tabId) {
+      toast("Taking pictures of the problem areas…");
+      const failed = rec.checks.filter((c) => c.status === "fail").sort((x, y) => ({ high: 0, medium: 1, low: 2 })[x.severity] - ({ high: 0, medium: 1, low: 2 })[y.severity]);
+      const r = await ReportShots.collect({
+        tabId: App.tabId, expectedUrl: rec.url, sameUrl: (a, b) => normalizeUrl(a) === normalizeUrl(b),
+        checks: view === "summary" ? failed.slice(0, 5) : failed, max: view === "summary" ? 3 : 12,
+        onProgress: (n, total) => toast(`Taking pictures… ${n} of ${total}`),
+      });
+      shots = r.shots; reason = r.reason;
+    } else reason = "Pictures need the page open in a fresh scan.";
+    downloadFile(fileBase(rec, view) + ".pdf", PdfWriter.build(ReportDoc.build(rec, view, shots)), "application/pdf");
+    const n = Object.keys(shots).length;
+    toast(n ? `Report downloaded with ${n} picture${n === 1 ? "" : "s"}` : `Report downloaded (no pictures: ${reason || "none available"})`);
   } catch (e) {
-    toast("Couldn't create that file. Try another format.", true);
-  }
+    toast("Couldn't create the report. Please try again.", true);
+  } finally { App.busyDl = false; }
 }
 
 // ---------------------------------------------------------------- issues

@@ -37,7 +37,7 @@ You will be asked to justify each permission and to fill in the **Privacy practi
 | Location | No | |
 | Web history | Declare conservatively | The audited page's address (no query/fragment) is stored locally |
 | User activity | No | No tracking of clicks, keystrokes or browsing |
-| **Website content** | **Only if the user chooses** | "Ask your own AI chat" copies a prompt (findings and, if the user leaves it ticked, page text) to the clipboard; the extension itself sends nothing, the user pastes it. Nothing is sent to any server operated by us |
+| **Website content** | **Only if the user chooses** | "Ask your own AI chat" copies a prompt (findings and, if the user leaves it ticked, page text) to the clipboard; the extension itself sends nothing, the user pastes it. Nothing is sent to any server operated by us. (3) When the user downloads a PDF report, screenshots of problem areas on the audited tab are embedded in the file saved to their computer (using activeTab); they are not stored or transmitted |
 
 **Statements you will be asked to certify (only certify if true):**
 - I do not sell or transfer user data to third parties, outside of approved use cases. *(The extension transmits no user data.)*

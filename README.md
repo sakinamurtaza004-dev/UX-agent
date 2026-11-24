@@ -28,12 +28,12 @@ Pick ChatGPT, Claude, Gemini, Copilot, Perplexity or your own address, choose wh
 
 ## Reports and history
 
-After a scan, **Download report** (Overview tab) opens a small menu and downloads straight away, with no new tab:
+After a scan, **Download report** (Overview tab) opens a small menu and downloads a PDF straight away, with no new tab:
 
-- **Summary (PDF):** about 2 pages: score, top issues, laws and rules at a glance.
-- **Full report (PDF):** every issue, law, rule and source, with clickable source links. Latin-script text only; other scripts show as "?" (use the HTML file for those).
-- **Web page (HTML):** a single self-contained file that works offline.
-- **Raw data (JSON).**
+- **Summary (PDF):** about 2 pages: score, top issues (with pictures of the top 3 problem areas), laws and rules at a glance.
+- **Full report (PDF):** every issue, law, rule and source, with clickable source links and pictures of up to 12 problem areas. Latin-script text only; other scripts show as "?".
+
+Pictures are taken at download time from the page you audited (it must still be open and in front); otherwise the PDF is made without them. They are never stored.
 - **History:** every audit is saved on your device only (the 50 most recent). Re-audit the same page later and the Overview tab shows the score change; the History page shows what was fixed and what broke.
 - Saved addresses drop the query string and #fragment (they can contain secrets). Sample data from mock mode is never saved as a real review. Switch history off any time.
 
