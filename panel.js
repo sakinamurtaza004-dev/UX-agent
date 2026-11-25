@@ -262,6 +262,7 @@ function ring(score) {
 function buildOverview() {
   const rec = App.rec, frag = el("div", {});
   const v = scoreVerdict(rec.score), failed = failedChecks(rec), passed = passedChecks(rec);
+  if (rec.notice) frag.append(el("div", { class: "banner", role: "status", "data-notice": rec.notice.kind }, el("span", { text: rec.notice.text })));
 
   const sc = card({},
     el("div", { style: "display:flex;gap:14px;align-items:center" }, ring(rec.score),

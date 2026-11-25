@@ -318,20 +318,36 @@
     ref: "Responsive design",
   });
 
+  // WCAG 2.5.8 (Target Size, Minimum): a target under 24x24px is still fine when a 24px circle
+  // centred on it touches no other target. So a small icon with room around it passes, but a
+  // tight row of small links does not. Links inside a sentence are exempt too.
+  const tapTargets = (() => {
+    const all = [...document.querySelectorAll("button, [role='button'], input:not([type='hidden']), select, a[href]")]
+      .filter((el) => isVisible(el) && !el.matches(":disabled"))
+      .map((el) => ({ el, r: el.getBoundingClientRect() }));
+    const small = all.filter((t) => Math.min(t.r.width, t.r.height) < 24 && !(t.el.tagName === "A" && inSentence(t.el)));
+    const cx = (t) => t.r.left + t.r.width / 2, cy = (t) => t.r.top + t.r.height / 2;
+    const hitsBox = (t, o) => {           // does t's 24px circle touch o's box?
+      const dx = Math.max(o.r.left - cx(t), 0, cx(t) - o.r.right), dy = Math.max(o.r.top - cy(t), 0, cy(t) - o.r.bottom);
+      return dx * dx + dy * dy < 144;
+    };
+    return small.filter((t) => all.some((o) => {
+      if (o === t || o.el.contains(t.el) || t.el.contains(o.el)) return false;
+      if (Math.abs(cx(o) - cx(t)) > 400 || Math.abs(cy(o) - cy(t)) > 200) return false;   // quick skip
+      return Math.min(o.r.width, o.r.height) < 24 && !(o.el.tagName === "A" && inSentence(o.el))
+        ? Math.hypot(cx(o) - cx(t), cy(o) - cy(t)) < 24 || hitsBox(t, o)
+        : hitsBox(t, o);
+    })).map((t) => t.el);
+  })();
+
   addCheck({
     id: "tap-targets",
     category: "Mobile",
     title: "Tap targets are large enough (24px minimum)",
     severity: "medium",
-    offenders: [...document.querySelectorAll("button, [role='button'], input:not([type='hidden']), select, a[href]")].filter((el) => {
-      if (!isVisible(el) || el.matches(":disabled")) return false;
-      // Links sitting inside a sentence are exempt from the size rule.
-      if (el.tagName === "A" && inSentence(el)) return false;
-      const r = el.getBoundingClientRect();
-      return Math.min(r.width, r.height) < 24;
-    }),
+    offenders: tapTargets,
     why: "Small buttons are hard to hit with a thumb or for anyone with limited motor control; misses cause frustration and errors.",
-    fix: "Make clickable items at least 24x24px (44x44px is the comfortable target) with spacing between them.",
+    fix: "Make clickable items at least 24x24px (44x44px is the comfortable target), or leave at least 24px of free space around small ones so neighbours can't be hit by mistake.",
     ref: "WCAG 2.5.8 / Fitts's Law",
   });
 
@@ -816,9 +832,20 @@
   for (const c of checks) (categories[c.category] = categories[c.category] || []).push(c);
   const categoryScores = Object.fromEntries(Object.entries(categories).map(([k, v]) => [k, score(v)]));
 
+  // Is this the real page, or a bot-check / error / near-empty page that would give a misleading score?
+  const pageNotice = (() => {
+    const t = document.title || "";
+    const bodyText = ((document.body && document.body.innerText) || "").replace(/\s+/g, " ").trim();
+    const wall = /access denied|just a moment|attention required|403 forbidden|request could not be satisfied|are you a (?:robot|human)|verify you are (?:a )?human|pardon our interruption|checking your browser|captcha|security check|error page|unusual traffic/i;
+    if (wall.test(t) || (bodyText.length < 400 && (wall.test(bodyText) || (/^[a-z0-9-]+(\.[a-z0-9-]+)+$/i.test(t.trim()) && bodyText.length < 300)))) return { kind: "blocked", text: "This looks like a bot-check, access-denied or error page, not the real site. The score below describes that page, so don't rely on it. Open the page normally in your browser, wait until it fully loads, then scan again." };
+    if (!t.trim() && bodyText.length < 150 && document.querySelectorAll("a[href]").length < 3) return { kind: "empty", text: "This page has almost no content yet (it may still be loading, or be waiting on a consent or bot check). Wait for it to load fully, then scan again; the score below may be misleading." };
+    return null;
+  })();
+
   return {
     url: location.href,
     title: document.title || "(no title)",
+    pageNotice,
     scannedAt: new Date().toISOString(),
     score: score(checks),
     categoryScores,

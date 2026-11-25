@@ -1,6 +1,6 @@
 {
   "name": "ux-audit-buddy",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "private": true,
   "description": "Chrome extension that audits a web page's UX. Root tooling only: the extension itself has no build step.",
   "scripts": {
