@@ -1,0 +1,669 @@
+%PDF-1.4
+%ту╧╙
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [7 0 R 9 0 R 11 0 R 13 0 R 15 0 R 17 0 R 19 0 R 21 0 R 23 0 R] /Count 9 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Title (UX Audit Buddy real-world test report) /Author (UX Audit Buddy) /Producer (UX Audit Buddy) /Creator (UX Audit Buddy) /CreationDate (D:20261125062109Z) >>
+endobj
+6 0 obj
+<< /Length 9116 >>
+stream
+BT /F2 21 Tf 0.063 0.094 0.157 rg 46 775.37 Td (UX Audit Buddy: Real-World Test Report) Tj ET
+BT /F2 13 Tf 0.063 0.094 0.157 rg 46 755.21 Td (50 websites, one visit each) Tj ET
+BT /F1 8.5 Tf 0.400 0.439 0.522 rg 46 742.15 Td (Run on 25 November 2026 with extension v0.10.1, desktop Chrome \(1280x800\), from a cloud server) Tj ET
+BT /F1 8.5 Tf 0.400 0.439 0.522 rg 46 730.65 Td (Each site's home page was scanned with the same code real users get) Tj ET
+BT /F2 13 Tf 0.063 0.094 0.157 rg 46 698.89 Td (Summary) Tj ET
+0.918 0.925 0.941 RG 1.2 w 46 692.89 m 549.28 692.89 l S
+BT /F1 9.5 Tf 0.400 0.439 0.522 rg 47 677.78 Td (Х) Tj ET
+BT /F1 9.5 Tf 0.063 0.094 0.157 rg 57 677.78 Td (50 sites tried: 31 scanned properly, 15 flagged as bot-check/blocked/empty pages and not rated, 4 did not load.) Tj ET
+BT /F1 9.5 Tf 0.400 0.439 0.522 rg 47 664.48 Td (Х) Tj ET
+BT /F1 9.5 Tf 0.063 0.094 0.157 rg 57 664.48 Td (Average score of the 31 rated sites: 81.9 out of 100. Range: 56 to 96.) Tj ET
+BT /F1 9.5 Tf 0.400 0.439 0.522 rg 47 651.18 Td (Х) Tj ET
+BT /F1 9.5 Tf 0.063 0.094 0.157 rg 57 651.18 Td (Best: shopify.com \(96\), usa.gov \(96\), airbnb.com \(93\).) Tj ET
+BT /F1 9.5 Tf 0.400 0.439 0.522 rg 47 637.88 Td (Х) Tj ET
+BT /F1 9.5 Tf 0.063 0.094 0.157 rg 57 637.88 Td (Lowest: news.ycombinator.com \(56\), timesofindia.indiatimes.com \(64\), craigslist.org \(67\).) Tj ET
+BT /F1 9.5 Tf 0.400 0.439 0.522 rg 47 624.58 Td (Х) Tj ET
+BT /F1 9.5 Tf 0.063 0.094 0.157 rg 57 624.58 Td (Each scan took about 5 to 8 seconds.) Tj ET
+0.973 0.973 0.984 rg 0.973 0.973 0.984 RG 0.8 w 51 575.79 m 544.28 575.79 l 547.04 575.79 549.28 578.03 549.28 580.79 c 549.28 610.39 l 549.28 613.15 547.04 615.39 544.28 615.39 c 51 615.39 l 48.24 615.39 46 613.15 46 610.39 c 46 580.79 l 46 578.03 48.24 575.79 51 575.79 c h B
+BT /F1 8.5 Tf 0.278 0.329 0.404 rg 54 598.42 Td (How to read the scores: they come from 22 automatic checks, a first pass and not a full audit. A high score does not prove a site) Tj ET
+BT /F1 8.5 Tf 0.278 0.329 0.404 rg 54 586.62 Td (is well designed, and a low one does not prove it is bad. They are best used to compare and to find specific fixes.) Tj ET
+BT /F2 13 Tf 0.063 0.094 0.157 rg 46 548.79 Td (Best and lowest rated) Tj ET
+0.918 0.925 0.941 RG 1.2 w 46 542.79 m 549.28 542.79 l S
+BT /F2 7.5 Tf 0.400 0.439 0.522 rg 46 527.15 Td (TOP 5) Tj ET
+0.863 0.980 0.902 rg 49 509.79 m 60.78 509.79 l 62.44 509.79 63.78 511.13 63.78 512.79 c 63.78 519.79 l 63.78 521.45 62.44 522.79 60.78 522.79 c 49 522.79 l 47.34 522.79 46 521.45 46 519.79 c 46 512.79 l 46 511.13 47.34 509.79 49 509.79 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 51 514.29 Td (96) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 71.78 514.29 Td (shopify.com: 1 issue, 21 checks passed) Tj ET
+0.863 0.980 0.902 rg 49 492.79 m 60.78 492.79 l 62.44 492.79 63.78 494.13 63.78 495.79 c 63.78 502.79 l 63.78 504.45 62.44 505.79 60.78 505.79 c 49 505.79 l 47.34 505.79 46 504.45 46 502.79 c 46 495.79 l 46 494.13 47.34 492.79 49 492.79 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 51 497.29 Td (96) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 71.78 497.29 Td (usa.gov: 1 issue, 21 checks passed) Tj ET
+0.863 0.980 0.902 rg 49 475.79 m 60.78 475.79 l 62.44 475.79 63.78 477.13 63.78 478.79 c 63.78 485.79 l 63.78 487.45 62.44 488.79 60.78 488.79 c 49 488.79 l 47.34 488.79 46 487.45 46 485.79 c 46 478.79 l 46 477.13 47.34 475.79 49 475.79 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 51 480.29 Td (93) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 71.78 480.29 Td (airbnb.com: 1 issue, 21 checks passed) Tj ET
+0.863 0.980 0.902 rg 49 458.79 m 60.78 458.79 l 62.44 458.79 63.78 460.13 63.78 461.79 c 63.78 468.79 l 63.78 470.45 62.44 471.79 60.78 471.79 c 49 471.79 l 47.34 471.79 46 470.45 46 468.79 c 46 461.79 l 46 460.13 47.34 458.79 49 458.79 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 51 463.29 Td (93) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 71.78 463.29 Td (notion.so: 1 issue, 21 checks passed) Tj ET
+0.863 0.980 0.902 rg 49 441.79 m 60.78 441.79 l 62.44 441.79 63.78 443.13 63.78 444.79 c 63.78 451.79 l 63.78 453.45 62.44 454.79 60.78 454.79 c 49 454.79 l 47.34 454.79 46 453.45 46 451.79 c 46 444.79 l 46 443.13 47.34 441.79 49 441.79 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 51 446.29 Td (93) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 71.78 446.29 Td (figma.com: 1 issue, 21 checks passed) Tj ET
+BT /F2 7.5 Tf 0.400 0.439 0.522 rg 46 428.15 Td (BOTTOM 5) Tj ET
+0.996 0.894 0.886 rg 49 410.79 m 60.78 410.79 l 62.44 410.79 63.78 412.13 63.78 413.79 c 63.78 420.79 l 63.78 422.45 62.44 423.79 60.78 423.79 c 49 423.79 l 47.34 423.79 46 422.45 46 420.79 c 46 413.79 l 46 412.13 47.34 410.79 49 410.79 c h f
+BT /F2 7 Tf 0.706 0.137 0.094 rg 51 415.29 Td (56) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 71.78 415.29 Td (news.ycombinator.com: 9 issues, 13 checks passed) Tj ET
+0.996 0.941 0.780 rg 49 393.79 m 60.78 393.79 l 62.44 393.79 63.78 395.13 63.78 396.79 c 63.78 403.79 l 63.78 405.45 62.44 406.79 60.78 406.79 c 49 406.79 l 47.34 406.79 46 405.45 46 403.79 c 46 396.79 l 46 395.13 47.34 393.79 49 393.79 c h f
+BT /F2 7 Tf 0.576 0.216 0.051 rg 51 398.29 Td (64) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 71.78 398.29 Td (timesofindia.indiatimes.com: 8 issues, 14 checks passed) Tj ET
+0.996 0.941 0.780 rg 49 376.79 m 60.78 376.79 l 62.44 376.79 63.78 378.13 63.78 379.79 c 63.78 386.79 l 63.78 388.45 62.44 389.79 60.78 389.79 c 49 389.79 l 47.34 389.79 46 388.45 46 386.79 c 46 379.79 l 46 378.13 47.34 376.79 49 376.79 c h f
+BT /F2 7 Tf 0.576 0.216 0.051 rg 51 381.29 Td (67) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 71.78 381.29 Td (craigslist.org: 7 issues, 15 checks passed) Tj ET
+0.996 0.941 0.780 rg 49 359.79 m 60.78 359.79 l 62.44 359.79 63.78 361.13 63.78 362.79 c 63.78 369.79 l 63.78 371.45 62.44 372.79 60.78 372.79 c 49 372.79 l 47.34 372.79 46 371.45 46 369.79 c 46 362.79 l 46 361.13 47.34 359.79 49 359.79 c h f
+BT /F2 7 Tf 0.576 0.216 0.051 rg 51 364.29 Td (67) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 71.78 364.29 Td (stackoverflow.com: 8 issues, 14 checks passed) Tj ET
+0.996 0.941 0.780 rg 49 342.79 m 60.78 342.79 l 62.44 342.79 63.78 344.13 63.78 345.79 c 63.78 352.79 l 63.78 354.45 62.44 355.79 60.78 355.79 c 49 355.79 l 47.34 355.79 46 354.45 46 352.79 c 46 345.79 l 46 344.13 47.34 342.79 49 342.79 c h f
+BT /F2 7 Tf 0.576 0.216 0.051 rg 51 347.29 Td (67) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 71.78 347.29 Td (flipkart.com: 7 issues, 15 checks passed) Tj ET
+BT /F2 13 Tf 0.063 0.094 0.157 rg 46 320.79 Td (What went wrong most often) Tj ET
+0.918 0.925 0.941 RG 1.2 w 46 314.79 m 549.28 314.79 l S
+BT /F1 9.5 Tf 0.400 0.439 0.522 rg 47 299.68 Td (Х) Tj ET
+BT /F1 9.5 Tf 0.063 0.094 0.157 rg 57 299.68 Td (Text has enough colour contrast [high]: 18 of 31 sites) Tj ET
+BT /F1 9.5 Tf 0.400 0.439 0.522 rg 47 286.38 Td (Х) Tj ET
+BT /F1 9.5 Tf 0.063 0.094 0.157 rg 57 286.38 Td (Tap targets are large enough \(24px minimum\) [medium]: 13 of 31 sites) Tj ET
+BT /F1 9.5 Tf 0.400 0.439 0.522 rg 47 273.08 Td (Х) Tj ET
+BT /F1 9.5 Tf 0.063 0.094 0.157 rg 57 273.08 Td (Text is a comfortable size \(12px or larger\) [medium]: 11 of 31 sites) Tj ET
+BT /F1 9.5 Tf 0.400 0.439 0.522 rg 47 259.78 Td (Х) Tj ET
+BT /F1 9.5 Tf 0.063 0.094 0.157 rg 57 259.78 Td (Page has a meta description [low]: 11 of 31 sites) Tj ET
+BT /F1 9.5 Tf 0.400 0.439 0.522 rg 47 246.48 Td (Х) Tj ET
+BT /F1 9.5 Tf 0.063 0.094 0.157 rg 57 246.48 Td (Buttons and links have readable names [high]: 10 of 31 sites) Tj ET
+BT /F1 9.5 Tf 0.400 0.439 0.522 rg 47 233.18 Td (Х) Tj ET
+BT /F1 9.5 Tf 0.063 0.094 0.157 rg 57 233.18 Td (Page has exactly one main heading \(H1\) [medium]: 10 of 31 sites) Tj ET
+BT /F1 9.5 Tf 0.400 0.439 0.522 rg 47 219.88 Td (Х) Tj ET
+BT /F1 9.5 Tf 0.063 0.094 0.157 rg 57 219.88 Td (Link text describes where it goes [low]: 9 of 31 sites) Tj ET
+BT /F1 9.5 Tf 0.400 0.439 0.522 rg 47 206.58 Td (Х) Tj ET
+BT /F1 9.5 Tf 0.063 0.094 0.157 rg 57 206.58 Td (A clear call-to-action is visible without scrolling [medium]: 6 of 31 sites) Tj ET
+BT /F2 7.5 Tf 0.400 0.439 0.522 rg 46 186.75 Td (WHAT WENT RIGHT MOST OFTEN) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 46 173.68 Td (Page is served securely \(HTTPS\) \(31\); No sound plays automatically \(31\); Optional extras and consents aren't pre-ticked \(31\);) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 46 160.9 Td (Decline options use neutral wording \(no confirm-shaming\) \(31\); Form fields have labels \(30\); No pressure tactics found) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 46 148.12 Td (\(possible false urgency\) \(30\); Pinch-zoom is allowed \(29\); Page is set up for mobile screens \(28\).) Tj ET
+BT /F2 7.5 Tf 0.400 0.439 0.522 rg 46 129.41 Td (AVERAGE SCORE BY AREA) Tj ET
+BT /F1 9.5 Tf 0.063 0.094 0.157 rg 46 115.8 Td (Accessibility 78 | Conversion 94 | Discoverability 75 | Ethics & Trust 99 | Mobile 77 | Performance 87 | Readability 67 |) Tj ET
+BT /F1 9.5 Tf 0.063 0.094 0.157 rg 46 102.31 Td (Structure 73) Tj ET
+0.918 0.925 0.941 RG 0.6 w 46 36 m 549.28 36 l S
+BT /F1 7.5 Tf 0.400 0.439 0.522 rg 46 25 Td (UX Audit Buddy 50-site test report | 25 Nov 2026) Tj ET
+BT /F1 7.5 Tf 0.400 0.439 0.522 rg 510.92 25 Td (Page 1 of 9) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 6 0 R >>
+endobj
+8 0 obj
+<< /Length 6225 >>
+stream
+BT /F2 13 Tf 0.063 0.094 0.157 rg 46 776.89 Td (Changes made because of this test) Tj ET
+0.918 0.925 0.941 RG 1.2 w 46 770.89 m 549.28 770.89 l S
+BT /F1 9.5 Tf 0.400 0.439 0.522 rg 47 755.78 Td (Х) Tj ET
+BT /F1 9.5 Tf 0.063 0.094 0.157 rg 57 755.78 Td (Tap-target check now follows the WCAG 2.5.8 spacing rule. Sites failing it dropped from 31 to 13 of 46 \(for example) Tj ET
+BT /F1 9.5 Tf 0.063 0.094 0.157 rg 57 742.48 Td (Stripe 103 flags to 0, GOV.UK 71 to 0\). Craigslist and Hacker News still fail because they really are dense.) Tj ET
+BT /F1 9.5 Tf 0.400 0.439 0.522 rg 47 729.18 Td (Х) Tj ET
+BT /F1 9.5 Tf 0.063 0.094 0.157 rg 57 729.18 Td (New notice for bot-check, access-denied and nearly empty pages: 15 of the 50 sites triggered it, so users are told not) Tj ET
+BT /F1 9.5 Tf 0.063 0.094 0.157 rg 57 715.88 Td (to trust that score.) Tj ET
+BT /F2 13 Tf 0.063 0.094 0.157 rg 46 687.69 Td (All 31 rated sites, best to worst) Tj ET
+0.918 0.925 0.941 RG 1.2 w 46 681.69 m 549.28 681.69 l S
+0.918 0.925 0.941 RG 0.8 w 51 557.09 m 544.28 557.09 l 547.04 557.09 549.28 559.33 549.28 562.09 c 549.28 671.69 l 549.28 674.45 547.04 676.69 544.28 676.69 c 51 676.69 l 48.24 676.69 46 674.45 46 671.69 c 46 562.09 l 46 559.33 48.24 557.09 51 557.09 c h S
+0.863 0.980 0.902 rg 58 653.69 m 69.78 653.69 l 71.44 653.69 72.78 655.03 72.78 656.69 c 72.78 663.69 l 72.78 665.35 71.44 666.69 69.78 666.69 c 58 666.69 l 56.34 666.69 55 665.35 55 663.69 c 55 656.69 l 55 655.03 56.34 653.69 58 653.69 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 60 658.19 Td (96) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 656.77 Td (shopify.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 473.58 656.77 Td (1 issue, 21 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 642.33 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 630.42 Td (https://www.shopify.com/ | Shopify: The All-in-One Commerce Platform for Businesses - Shopify) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 614.13 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 602.22 Td (Tap targets are large enough \(24px minimum\) \(1\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 585.93 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 574.02 Td (6 followed, 2 partly, 2 not followed. Not followed: Hick's Law; Fitts's Law) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 429.49 m 544.28 429.49 l 547.04 429.49 549.28 431.73 549.28 434.49 c 549.28 544.09 l 549.28 546.85 547.04 549.09 544.28 549.09 c 51 549.09 l 48.24 549.09 46 546.85 46 544.09 c 46 434.49 l 46 431.73 48.24 429.49 51 429.49 c h S
+0.863 0.980 0.902 rg 58 526.09 m 69.78 526.09 l 71.44 526.09 72.78 527.43 72.78 529.09 c 72.78 536.09 l 72.78 537.75 71.44 539.09 69.78 539.09 c 58 539.09 l 56.34 539.09 55 537.75 55 536.09 c 55 529.09 l 55 527.43 56.34 526.09 58 526.09 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 60 530.59 Td (96) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 529.17 Td (usa.gov) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 473.58 529.17 Td (1 issue, 21 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 514.73 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 502.82 Td (https://www.usa.gov/ | Making government services easier to find | USAGov) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 486.53 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 474.62 Td (A clear call-to-action is visible without scrolling \(1\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 458.33 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 446.42 Td (10 followed, 3 partly, 0 not followed. Not followed: none) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 301.89 m 544.28 301.89 l 547.04 301.89 549.28 304.13 549.28 306.89 c 549.28 416.49 l 549.28 419.25 547.04 421.49 544.28 421.49 c 51 421.49 l 48.24 421.49 46 419.25 46 416.49 c 46 306.89 l 46 304.13 48.24 301.89 51 301.89 c h S
+0.863 0.980 0.902 rg 58 398.49 m 69.78 398.49 l 71.44 398.49 72.78 399.83 72.78 401.49 c 72.78 408.49 l 72.78 410.15 71.44 411.49 69.78 411.49 c 58 411.49 l 56.34 411.49 55 410.15 55 408.49 c 55 401.49 l 55 399.83 56.34 398.49 58 398.49 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 60 402.99 Td (93) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 401.57 Td (airbnb.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 473.58 401.57 Td (1 issue, 21 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 387.13 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 375.22 Td (https://www.airbnb.com/ | Airbnb | Vacation rentals, cabins, beach houses, & more) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 358.93 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 347.02 Td (Text has enough colour contrast \(2\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 330.73 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 318.82 Td (9 followed, 3 partly, 1 not followed. Not followed: Fitts's Law) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 174.29 m 544.28 174.29 l 547.04 174.29 549.28 176.53 549.28 179.29 c 549.28 288.89 l 549.28 291.65 547.04 293.89 544.28 293.89 c 51 293.89 l 48.24 293.89 46 291.65 46 288.89 c 46 179.29 l 46 176.53 48.24 174.29 51 174.29 c h S
+0.863 0.980 0.902 rg 58 270.89 m 69.78 270.89 l 71.44 270.89 72.78 272.23 72.78 273.89 c 72.78 280.89 l 72.78 282.55 71.44 283.89 69.78 283.89 c 58 283.89 l 56.34 283.89 55 282.55 55 280.89 c 55 273.89 l 55 272.23 56.34 270.89 58 270.89 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 60 275.39 Td (93) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 273.97 Td (notion.so) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 473.58 273.97 Td (1 issue, 21 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 259.53 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 247.62 Td (https://www.notion.so/ | A shared brain for your team and agents. | Notion) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 231.33 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 219.42 Td (Text has enough colour contrast \(5\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 203.13 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 191.22 Td (8 followed, 4 partly, 1 not followed. Not followed: Nielsen: Consistency and standards) Tj ET
+0.918 0.925 0.941 RG 0.6 w 46 36 m 549.28 36 l S
+BT /F1 7.5 Tf 0.400 0.439 0.522 rg 46 25 Td (UX Audit Buddy 50-site test report | 25 Nov 2026) Tj ET
+BT /F1 7.5 Tf 0.400 0.439 0.522 rg 510.92 25 Td (Page 2 of 9) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 8 0 R >>
+endobj
+10 0 obj
+<< /Length 6494 >>
+stream
+0.918 0.925 0.941 RG 0.8 w 51 676.29 m 544.28 676.29 l 547.04 676.29 549.28 678.53 549.28 681.29 c 549.28 790.89 l 549.28 793.65 547.04 795.89 544.28 795.89 c 51 795.89 l 48.24 795.89 46 793.65 46 790.89 c 46 681.29 l 46 678.53 48.24 676.29 51 676.29 c h S
+0.863 0.980 0.902 rg 58 772.89 m 69.78 772.89 l 71.44 772.89 72.78 774.23 72.78 775.89 c 72.78 782.89 l 72.78 784.55 71.44 785.89 69.78 785.89 c 58 785.89 l 56.34 785.89 55 784.55 55 782.89 c 55 775.89 l 55 774.23 56.34 772.89 58 772.89 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 60 777.39 Td (93) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 775.97 Td (figma.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 473.58 775.97 Td (1 issue, 21 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 761.53 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 749.62 Td (https://www.figma.com/ | Figma: The collaborative canvas for design, code, and AI) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 733.33 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 721.42 Td (Buttons and links have readable names \(1\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 705.13 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 693.22 Td (7 followed, 2 partly, 1 not followed. Not followed: Fitts's Law) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 548.69 m 544.28 548.69 l 547.04 548.69 549.28 550.93 549.28 553.69 c 549.28 663.29 l 549.28 666.05 547.04 668.29 544.28 668.29 c 51 668.29 l 48.24 668.29 46 666.05 46 663.29 c 46 553.69 l 46 550.93 48.24 548.69 51 548.69 c h S
+0.863 0.980 0.902 rg 58 645.29 m 69.78 645.29 l 71.44 645.29 72.78 646.63 72.78 648.29 c 72.78 655.29 l 72.78 656.95 71.44 658.29 69.78 658.29 c 58 658.29 l 56.34 658.29 55 656.95 55 655.29 c 55 648.29 l 55 646.63 56.34 645.29 58 645.29 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 60 649.79 Td (93) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 648.37 Td (gov.uk) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 473.58 648.37 Td (1 issue, 21 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 633.93 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 622.02 Td (https://www.gov.uk/ | Welcome to GOV.UK) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 605.73 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 593.82 Td (Text has enough colour contrast \(1\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 577.53 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 565.62 Td (10 followed, 2 partly, 1 not followed. Not followed: Fitts's Law) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 421.09 m 544.28 421.09 l 547.04 421.09 549.28 423.33 549.28 426.09 c 549.28 535.69 l 549.28 538.45 547.04 540.69 544.28 540.69 c 51 540.69 l 48.24 540.69 46 538.45 46 535.69 c 46 426.09 l 46 423.33 48.24 421.09 51 421.09 c h S
+0.863 0.980 0.902 rg 58 517.69 m 69.78 517.69 l 71.44 517.69 72.78 519.03 72.78 520.69 c 72.78 527.69 l 72.78 529.35 71.44 530.69 69.78 530.69 c 58 530.69 l 56.34 530.69 55 529.35 55 527.69 c 55 520.69 l 55 519.03 56.34 517.69 58 517.69 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 60 522.19 Td (91) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 520.77 Td (w3.org) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 520.77 Td (2 issues, 20 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 506.33 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 494.42 Td (https://www.w3.org/ | W3C) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 478.13 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 466.22 Td (Text is a comfortable size \(12px or larger\) \(1\); Page has a descriptive title \(1\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 449.93 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 438.02 Td (8 followed, 3 partly, 0 not followed. Not followed: none) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 293.49 m 544.28 293.49 l 547.04 293.49 549.28 295.73 549.28 298.49 c 549.28 408.09 l 549.28 410.85 547.04 413.09 544.28 413.09 c 51 413.09 l 48.24 413.09 46 410.85 46 408.09 c 46 298.49 l 46 295.73 48.24 293.49 51 293.49 c h S
+0.863 0.980 0.902 rg 58 390.09 m 69.78 390.09 l 71.44 390.09 72.78 391.43 72.78 393.09 c 72.78 400.09 l 72.78 401.75 71.44 403.09 69.78 403.09 c 58 403.09 l 56.34 403.09 55 401.75 55 400.09 c 55 393.09 l 55 391.43 56.34 390.09 58 390.09 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 60 394.59 Td (91) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 393.17 Td (example.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 393.17 Td (3 issues, 19 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 378.73 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 366.82 Td (https://example.com/ | Example Domain) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 350.53 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 338.62 Td (Page has exactly one main heading \(H1\) \(1\); Link text describes where it goes \(1\); Page has a meta description \(1\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 322.33 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 310.42 Td (4 followed, 0 partly, 0 not followed. Not followed: none) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 153.69 m 544.28 153.69 l 547.04 153.69 549.28 155.93 549.28 158.69 c 549.28 280.49 l 549.28 283.25 547.04 285.49 544.28 285.49 c 51 285.49 l 48.24 285.49 46 283.25 46 280.49 c 46 158.69 l 46 155.93 48.24 153.69 51 153.69 c h S
+0.863 0.980 0.902 rg 58 262.49 m 69.78 262.49 l 71.44 262.49 72.78 263.83 72.78 265.49 c 72.78 272.49 l 72.78 274.15 71.44 275.49 69.78 275.49 c 58 275.49 l 56.34 275.49 55 274.15 55 272.49 c 55 265.49 l 55 263.83 56.34 262.49 58 262.49 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 60 266.99 Td (89) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 265.57 Td (amazon.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 265.57 Td (3 issues, 19 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 251.13 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 239.22 Td (https://www.amazon.com/ | Amazon.com) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 222.93 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 211.02 Td (Page has exactly one main heading \(H1\) \(1\); Text is a comfortable size \(12px or larger\) \(3\); Page has a meta description) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 198.82 Td (\(1\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 182.53 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 170.62 Td (3 followed, 1 partly, 1 not followed. Not followed: Fitts's Law) Tj ET
+0.918 0.925 0.941 RG 0.6 w 46 36 m 549.28 36 l S
+BT /F1 7.5 Tf 0.400 0.439 0.522 rg 46 25 Td (UX Audit Buddy 50-site test report | 25 Nov 2026) Tj ET
+BT /F1 7.5 Tf 0.400 0.439 0.522 rg 510.92 25 Td (Page 3 of 9) Tj ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 10 0 R >>
+endobj
+12 0 obj
+<< /Length 6825 >>
+stream
+0.918 0.925 0.941 RG 0.8 w 51 676.29 m 544.28 676.29 l 547.04 676.29 549.28 678.53 549.28 681.29 c 549.28 790.89 l 549.28 793.65 547.04 795.89 544.28 795.89 c 51 795.89 l 48.24 795.89 46 793.65 46 790.89 c 46 681.29 l 46 678.53 48.24 676.29 51 676.29 c h S
+0.863 0.980 0.902 rg 58 772.89 m 69.78 772.89 l 71.44 772.89 72.78 774.23 72.78 775.89 c 72.78 782.89 l 72.78 784.55 71.44 785.89 69.78 785.89 c 58 785.89 l 56.34 785.89 55 784.55 55 782.89 c 55 775.89 l 55 774.23 56.34 772.89 58 772.89 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 60 777.39 Td (89) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 775.97 Td (walmart.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 775.97 Td (2 issues, 20 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 761.53 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 749.62 Td (https://www.walmart.com/ | Walmart | Save Money. Live better.) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 733.33 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 721.42 Td (Text has enough colour contrast \(68\); Tap targets are large enough \(24px minimum\) \(24\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 705.13 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 693.22 Td (7 followed, 3 partly, 2 not followed. Not followed: Hick's Law; Fitts's Law) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 536.49 m 544.28 536.49 l 547.04 536.49 549.28 538.73 549.28 541.49 c 549.28 663.29 l 549.28 666.05 547.04 668.29 544.28 668.29 c 51 668.29 l 48.24 668.29 46 666.05 46 663.29 c 46 541.49 l 46 538.73 48.24 536.49 51 536.49 c h S
+0.863 0.980 0.902 rg 58 645.29 m 69.78 645.29 l 71.44 645.29 72.78 646.63 72.78 648.29 c 72.78 655.29 l 72.78 656.95 71.44 658.29 69.78 658.29 c 58 658.29 l 56.34 658.29 55 656.95 55 655.29 c 55 648.29 l 55 646.63 56.34 645.29 58 645.29 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 60 649.79 Td (89) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 648.37 Td (github.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 648.37 Td (3 issues, 19 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 633.93 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 622.02 Td (https://github.com/ | GitHub ╖ Change is constant. GitHub keeps you ahead. ╖ GitHub ╖ GitHub) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 605.73 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 593.82 Td (Text is a comfortable size \(12px or larger\) \(1\); Tap targets are large enough \(24px minimum\) \(5\); Link text describes) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 581.62 Td (where it goes \(3\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 565.33 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 553.42 Td (10 followed, 2 partly, 1 not followed. Not followed: Fitts's Law) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 408.89 m 544.28 408.89 l 547.04 408.89 549.28 411.13 549.28 413.89 c 549.28 523.49 l 549.28 526.25 547.04 528.49 544.28 528.49 c 51 528.49 l 48.24 528.49 46 526.25 46 523.49 c 46 413.89 l 46 411.13 48.24 408.89 51 408.89 c h S
+0.863 0.980 0.902 rg 58 505.49 m 69.78 505.49 l 71.44 505.49 72.78 506.83 72.78 508.49 c 72.78 515.49 l 72.78 517.15 71.44 518.49 69.78 518.49 c 58 518.49 l 56.34 518.49 55 517.15 55 515.49 c 55 508.49 l 55 506.83 56.34 505.49 58 505.49 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 60 509.99 Td (89) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 508.57 Td (motherfuckingwebsite.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 508.57 Td (3 issues, 19 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 494.13 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 482.22 Td (https://motherfuckingwebsite.com/ | Motherfucking Website) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 465.93 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 454.02 Td (Page language is declared \(1\); A clear call-to-action is visible without scrolling \(1\); Page has a meta description \(1\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 437.73 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 425.82 Td (4 followed, 0 partly, 0 not followed. Not followed: none) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 269.09 m 544.28 269.09 l 547.04 269.09 549.28 271.33 549.28 274.09 c 549.28 395.89 l 549.28 398.65 547.04 400.89 544.28 400.89 c 51 400.89 l 48.24 400.89 46 398.65 46 395.89 c 46 274.09 l 46 271.33 48.24 269.09 51 269.09 c h S
+0.863 0.980 0.902 rg 58 377.89 m 69.78 377.89 l 71.44 377.89 72.78 379.23 72.78 380.89 c 72.78 387.89 l 72.78 389.55 71.44 390.89 69.78 390.89 c 58 390.89 l 56.34 390.89 55 389.55 55 387.89 c 55 380.89 l 55 379.23 56.34 377.89 58 377.89 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 60 382.39 Td (89) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 380.97 Td (sbi.co.in) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 380.97 Td (3 issues, 19 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 366.53 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 354.62 Td (https://www.sbi.co.in/ | State Bank of India) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 338.33 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 326.42 Td (A clear call-to-action is visible without scrolling \(1\); Page loads quickly \(under 3 seconds\) \(1\); Page has a meta) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 314.22 Td (description \(1\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 297.93 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 286.02 Td (2 followed, 0 partly, 1 not followed. Not followed: Doherty Threshold) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 141.49 m 544.28 141.49 l 547.04 141.49 549.28 143.73 549.28 146.49 c 549.28 256.09 l 549.28 258.85 547.04 261.09 544.28 261.09 c 51 261.09 l 48.24 261.09 46 258.85 46 256.09 c 46 146.49 l 46 143.73 48.24 141.49 51 141.49 c h S
+0.863 0.980 0.902 rg 58 238.09 m 69.78 238.09 l 71.44 238.09 72.78 239.43 72.78 241.09 c 72.78 248.09 l 72.78 249.75 71.44 251.09 69.78 251.09 c 58 251.09 l 56.34 251.09 55 249.75 55 248.09 c 55 241.09 l 55 239.43 56.34 238.09 58 238.09 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 60 242.59 Td (89) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 241.17 Td (pinterest.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 241.17 Td (2 issues, 20 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 226.73 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 214.82 Td (https://www.pinterest.com/ | Pinterest) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 198.53 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 186.62 Td (Text has enough colour contrast \(4\); Page has a descriptive title \(1\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 170.33 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 158.42 Td (11 followed, 1 partly, 1 not followed. Not followed: Fitts's Law) Tj ET
+0.918 0.925 0.941 RG 0.6 w 46 36 m 549.28 36 l S
+BT /F1 7.5 Tf 0.400 0.439 0.522 rg 46 25 Td (UX Audit Buddy 50-site test report | 25 Nov 2026) Tj ET
+BT /F1 7.5 Tf 0.400 0.439 0.522 rg 510.92 25 Td (Page 4 of 9) Tj ET
+endstream
+endobj
+13 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 12 0 R >>
+endobj
+14 0 obj
+<< /Length 7368 >>
+stream
+0.918 0.925 0.941 RG 0.8 w 51 664.09 m 544.28 664.09 l 547.04 664.09 549.28 666.33 549.28 669.09 c 549.28 790.89 l 549.28 793.65 547.04 795.89 544.28 795.89 c 51 795.89 l 48.24 795.89 46 793.65 46 790.89 c 46 669.09 l 46 666.33 48.24 664.09 51 664.09 c h S
+0.863 0.980 0.902 rg 58 772.89 m 69.78 772.89 l 71.44 772.89 72.78 774.23 72.78 775.89 c 72.78 782.89 l 72.78 784.55 71.44 785.89 69.78 785.89 c 58 785.89 l 56.34 785.89 55 784.55 55 782.89 c 55 775.89 l 55 774.23 56.34 772.89 58 772.89 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 60 777.39 Td (84) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 775.97 Td (microsoft.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 775.97 Td (3 issues, 19 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 761.53 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 749.62 Td (https://www.microsoft.com/ | Microsoft Ц AI, Cloud, Productivity, Computing, Gaming & Apps) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 733.33 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 721.42 Td (Text has enough colour contrast \(12\); Text is a comfortable size \(12px or larger\) \(61\); Page loads quickly \(under 3) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 709.22 Td (seconds\) \(1\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 692.93 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 681.02 Td (6 followed, 5 partly, 2 not followed. Not followed: Fitts's Law; Doherty Threshold) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 524.29 m 544.28 524.29 l 547.04 524.29 549.28 526.53 549.28 529.29 c 549.28 651.09 l 549.28 653.85 547.04 656.09 544.28 656.09 c 51 656.09 l 48.24 656.09 46 653.85 46 651.09 c 46 529.29 l 46 526.53 48.24 524.29 51 524.29 c h S
+0.863 0.980 0.902 rg 58 633.09 m 69.78 633.09 l 71.44 633.09 72.78 634.43 72.78 636.09 c 72.78 643.09 l 72.78 644.75 71.44 646.09 69.78 646.09 c 58 646.09 l 56.34 646.09 55 644.75 55 643.09 c 55 636.09 l 55 634.43 56.34 633.09 58 633.09 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 60 637.59 Td (84) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 636.17 Td (coursera.org) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 636.17 Td (3 issues, 19 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 621.73 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 609.82 Td (https://www.coursera.org/ | Coursera | Online Courses, Certificates, & Degrees) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 593.53 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 581.62 Td (Text has enough colour contrast \(19\); Tap targets are large enough \(24px minimum\) \(4\); No pressure tactics found) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 569.42 Td (\(possible false urgency\) \(2\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 553.13 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 541.22 Td (9 followed, 3 partly, 1 not followed. Not followed: Fitts's Law) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 384.49 m 544.28 384.49 l 547.04 384.49 549.28 386.73 549.28 389.49 c 549.28 511.29 l 549.28 514.05 547.04 516.29 544.28 516.29 c 51 516.29 l 48.24 516.29 46 514.05 46 511.29 c 46 389.49 l 46 386.73 48.24 384.49 51 384.49 c h S
+0.863 0.980 0.902 rg 58 493.29 m 69.78 493.29 l 71.44 493.29 72.78 494.63 72.78 496.29 c 72.78 503.29 l 72.78 504.95 71.44 506.29 69.78 506.29 c 58 506.29 l 56.34 506.29 55 504.95 55 503.29 c 55 496.29 l 55 494.63 56.34 493.29 58 493.29 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 60 497.79 Td (82) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 496.37 Td (wikipedia.org) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 496.37 Td (4 issues, 18 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 481.93 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 470.02 Td (https://www.wikipedia.org/ | Wikipedia) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 453.73 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 441.82 Td (Text has enough colour contrast \(1\); Tap targets are large enough \(24px minimum\) \(5\); Page has a descriptive title \(1\);) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 429.62 Td (Headings follow a logical order \(1\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 413.33 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 401.42 Td (5 followed, 7 partly, 1 not followed. Not followed: Nielsen: Error prevention) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 244.69 m 544.28 244.69 l 547.04 244.69 549.28 246.93 549.28 249.69 c 549.28 371.49 l 549.28 374.25 547.04 376.49 544.28 376.49 c 51 376.49 l 48.24 376.49 46 374.25 46 371.49 c 46 249.69 l 46 246.93 48.24 244.69 51 244.69 c h S
+0.863 0.980 0.902 rg 58 353.49 m 69.78 353.49 l 71.44 353.49 72.78 354.83 72.78 356.49 c 72.78 363.49 l 72.78 365.15 71.44 366.49 69.78 366.49 c 58 366.49 l 56.34 366.49 55 365.15 55 363.49 c 55 356.49 l 55 354.83 56.34 353.49 58 353.49 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 60 357.99 Td (82) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 356.57 Td (bbc.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 356.57 Td (4 issues, 18 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 342.13 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 330.22 Td (https://www.bbc.com/ | BBC Home | Breaking News, World News, US News, Sports, Business, Innovation, Cli) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 313.93 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 302.02 Td (Images have alt text \(64\); Page has exactly one main heading \(H1\) \(1\); Text is a comfortable size \(12px or larger\) \(1\);) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 289.82 Td (Headings follow a logical order \(1\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 273.53 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 261.62 Td (6 followed, 2 partly, 3 not followed. Not followed: Hick's Law; Fitts's Law; Nielsen: User control and freedom) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 104.89 m 544.28 104.89 l 547.04 104.89 549.28 107.13 549.28 109.89 c 549.28 231.69 l 549.28 234.45 547.04 236.69 544.28 236.69 c 51 236.69 l 48.24 236.69 46 234.45 46 231.69 c 46 109.89 l 46 107.13 48.24 104.89 51 104.89 c h S
+0.863 0.980 0.902 rg 58 213.69 m 69.78 213.69 l 71.44 213.69 72.78 215.03 72.78 216.69 c 72.78 223.69 l 72.78 225.35 71.44 226.69 69.78 226.69 c 58 226.69 l 56.34 226.69 55 225.35 55 223.69 c 55 216.69 l 55 215.03 56.34 213.69 58 213.69 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 60 218.19 Td (82) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 216.77 Td (booking.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 216.77 Td (4 issues, 18 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 202.33 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 190.42 Td (https://www.booking.com/ | Booking.com | Official site | The best hotels, flights, car rentals & accommodat) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 174.13 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 162.22 Td (Images have alt text \(4\); Text has enough colour contrast \(5\); Link text describes where it goes \(1\); Page structure isn't) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 150.02 Td (excessively large \(1\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 133.73 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 121.82 Td (11 followed, 2 partly, 1 not followed. Not followed: Fitts's Law) Tj ET
+0.918 0.925 0.941 RG 0.6 w 46 36 m 549.28 36 l S
+BT /F1 7.5 Tf 0.400 0.439 0.522 rg 46 25 Td (UX Audit Buddy 50-site test report | 25 Nov 2026) Tj ET
+BT /F1 7.5 Tf 0.400 0.439 0.522 rg 510.92 25 Td (Page 5 of 9) Tj ET
+endstream
+endobj
+15 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 14 0 R >>
+endobj
+16 0 obj
+<< /Length 7421 >>
+stream
+0.918 0.925 0.941 RG 0.8 w 51 664.09 m 544.28 664.09 l 547.04 664.09 549.28 666.33 549.28 669.09 c 549.28 790.89 l 549.28 793.65 547.04 795.89 544.28 795.89 c 51 795.89 l 48.24 795.89 46 793.65 46 790.89 c 46 669.09 l 46 666.33 48.24 664.09 51 664.09 c h S
+0.863 0.980 0.902 rg 58 772.89 m 69.78 772.89 l 71.44 772.89 72.78 774.23 72.78 775.89 c 72.78 782.89 l 72.78 784.55 71.44 785.89 69.78 785.89 c 58 785.89 l 56.34 785.89 55 784.55 55 782.89 c 55 775.89 l 55 774.23 56.34 772.89 58 772.89 c h f
+BT /F2 7 Tf 0.024 0.463 0.278 rg 60 777.39 Td (82) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 775.97 Td (google.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 775.97 Td (4 issues, 18 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 761.53 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 749.62 Td (https://www.google.com/ | Google) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 733.33 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 721.42 Td (Page is set up for mobile screens \(1\); Page has exactly one main heading \(H1\) \(1\); Page has a descriptive title \(1\); Page) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 709.22 Td (has a meta description \(1\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 692.93 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 681.02 Td (7 followed, 3 partly, 1 not followed. Not followed: Nielsen: Flexibility and efficiency of use) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 524.29 m 544.28 524.29 l 547.04 524.29 549.28 526.53 549.28 529.29 c 549.28 651.09 l 549.28 653.85 547.04 656.09 544.28 656.09 c 51 656.09 l 48.24 656.09 46 653.85 46 651.09 c 46 529.29 l 46 526.53 48.24 524.29 51 524.29 c h S
+0.996 0.941 0.780 rg 58 633.09 m 69.78 633.09 l 71.44 633.09 72.78 634.43 72.78 636.09 c 72.78 643.09 l 72.78 644.75 71.44 646.09 69.78 646.09 c 58 646.09 l 56.34 646.09 55 644.75 55 643.09 c 55 636.09 l 55 634.43 56.34 633.09 58 633.09 c h f
+BT /F2 7 Tf 0.576 0.216 0.051 rg 60 637.59 Td (78) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 636.17 Td (nike.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 636.17 Td (5 issues, 17 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 621.73 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 609.82 Td (https://www.nike.com/ | Nike. Just Do It. Nike.com) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 593.53 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 581.62 Td (Text has enough colour contrast \(20\); Buttons and links have readable names \(10\); Tap targets are large enough \(24px) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 569.42 Td (minimum\) \(51\); Headings follow a logical order \(1\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 553.13 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 541.22 Td (8 followed, 3 partly, 2 not followed. Not followed: Hick's Law; Fitts's Law) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 384.49 m 544.28 384.49 l 547.04 384.49 549.28 386.73 549.28 389.49 c 549.28 511.29 l 549.28 514.05 547.04 516.29 544.28 516.29 c 51 516.29 l 48.24 516.29 46 514.05 46 511.29 c 46 389.49 l 46 386.73 48.24 384.49 51 384.49 c h S
+0.996 0.941 0.780 rg 58 493.29 m 69.78 493.29 l 71.44 493.29 72.78 494.63 72.78 496.29 c 72.78 503.29 l 72.78 504.95 71.44 506.29 69.78 506.29 c 58 506.29 l 56.34 506.29 55 504.95 55 503.29 c 55 496.29 l 55 494.63 56.34 493.29 58 493.29 c h f
+BT /F2 7 Tf 0.576 0.216 0.051 rg 60 497.79 Td (73) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 496.37 Td (theguardian.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 496.37 Td (6 issues, 16 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 481.93 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 470.02 Td (https://www.theguardian.com/ | Latest news, sport and opinion from the Guardian) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 453.73 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 441.82 Td (Text has enough colour contrast \(27\); Buttons and links have readable names \(1\); Page has exactly one main heading) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 429.62 Td (\(H1\) \(1\); Tap targets are large enough \(24px minimum\) \(16\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 413.33 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 401.42 Td (7 followed, 4 partly, 3 not followed. Not followed: Hick's Law; Jakob's Law; Nielsen: User control and freedom) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 244.69 m 544.28 244.69 l 547.04 244.69 549.28 246.93 549.28 249.69 c 549.28 371.49 l 549.28 374.25 547.04 376.49 544.28 376.49 c 51 376.49 l 48.24 376.49 46 374.25 46 371.49 c 46 249.69 l 46 246.93 48.24 244.69 51 244.69 c h S
+0.996 0.941 0.780 rg 58 353.49 m 69.78 353.49 l 71.44 353.49 72.78 354.83 72.78 356.49 c 72.78 363.49 l 72.78 365.15 71.44 366.49 69.78 366.49 c 58 366.49 l 56.34 366.49 55 365.15 55 363.49 c 55 356.49 l 55 354.83 56.34 353.49 58 353.49 c h f
+BT /F2 7 Tf 0.576 0.216 0.051 rg 60 357.99 Td (73) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 356.57 Td (stripe.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 356.57 Td (6 issues, 16 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 342.13 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 330.22 Td (https://www.stripe.com/ | Stripe | Financial Infrastructure to Grow Your Revenue) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 313.93 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 302.02 Td (Text has enough colour contrast \(19\); Buttons and links have readable names \(30\); Page has exactly one main heading) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 289.82 Td (\(H1\) \(1\); Text is a comfortable size \(12px or larger\) \(140\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 273.53 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 261.62 Td (9 followed, 2 partly, 2 not followed. Not followed: Fitts's Law; Nielsen: Flexibility and efficiency of use) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 104.89 m 544.28 104.89 l 547.04 104.89 549.28 107.13 549.28 109.89 c 549.28 231.69 l 549.28 234.45 547.04 236.69 544.28 236.69 c 51 236.69 l 48.24 236.69 46 234.45 46 231.69 c 46 109.89 l 46 107.13 48.24 104.89 51 104.89 c h S
+0.996 0.941 0.780 rg 58 213.69 m 69.78 213.69 l 71.44 213.69 72.78 215.03 72.78 216.69 c 72.78 223.69 l 72.78 225.35 71.44 226.69 69.78 226.69 c 58 226.69 l 56.34 226.69 55 225.35 55 223.69 c 55 216.69 l 55 215.03 56.34 213.69 58 213.69 c h f
+BT /F2 7 Tf 0.576 0.216 0.051 rg 60 218.19 Td (73) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 216.77 Td (apple.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 216.77 Td (6 issues, 16 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 202.33 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 190.42 Td (https://www.apple.com/ | Apple) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 174.13 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 162.22 Td (Text has enough colour contrast \(1\); Buttons and links have readable names \(9\); Tap targets are large enough \(24px) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 150.02 Td (minimum\) \(13\); Page has a descriptive title \(1\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 133.73 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 121.82 Td (5 followed, 3 partly, 2 not followed. Not followed: Hick's Law; Nielsen: Flexibility and efficiency of use) Tj ET
+0.918 0.925 0.941 RG 0.6 w 46 36 m 549.28 36 l S
+BT /F1 7.5 Tf 0.400 0.439 0.522 rg 46 25 Td (UX Audit Buddy 50-site test report | 25 Nov 2026) Tj ET
+BT /F1 7.5 Tf 0.400 0.439 0.522 rg 510.92 25 Td (Page 6 of 9) Tj ET
+endstream
+endobj
+17 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 16 0 R >>
+endobj
+18 0 obj
+<< /Length 7561 >>
+stream
+0.918 0.925 0.941 RG 0.8 w 51 664.09 m 544.28 664.09 l 547.04 664.09 549.28 666.33 549.28 669.09 c 549.28 790.89 l 549.28 793.65 547.04 795.89 544.28 795.89 c 51 795.89 l 48.24 795.89 46 793.65 46 790.89 c 46 669.09 l 46 666.33 48.24 664.09 51 664.09 c h S
+0.996 0.941 0.780 rg 58 772.89 m 69.78 772.89 l 71.44 772.89 72.78 774.23 72.78 775.89 c 72.78 782.89 l 72.78 784.55 71.44 785.89 69.78 785.89 c 58 785.89 l 56.34 785.89 55 784.55 55 782.89 c 55 775.89 l 55 774.23 56.34 772.89 58 772.89 c h f
+BT /F2 7 Tf 0.576 0.216 0.051 rg 60 777.39 Td (73) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 775.97 Td (berkshirehathaway.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 775.97 Td (6 issues, 16 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 761.53 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 749.62 Td (https://www.berkshirehathaway.com/ | BERKSHIRE HATHAWAY INC.) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 733.33 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 721.42 Td (Page is set up for mobile screens \(1\); Page language is declared \(1\); Page has exactly one main heading \(H1\) \(1\); Text is) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 709.22 Td (a comfortable size \(12px or larger\) \(7\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 692.93 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 681.02 Td (4 followed, 1 partly, 3 not followed. Not followed: Fitts's Law; Jakob's Law; Nielsen: Flexibility and efficiency of use) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 524.29 m 544.28 524.29 l 547.04 524.29 549.28 526.53 549.28 529.29 c 549.28 651.09 l 549.28 653.85 547.04 656.09 544.28 656.09 c 51 656.09 l 48.24 656.09 46 653.85 46 651.09 c 46 529.29 l 46 526.53 48.24 524.29 51 524.29 c h S
+0.996 0.941 0.780 rg 58 633.09 m 69.78 633.09 l 71.44 633.09 72.78 634.43 72.78 636.09 c 72.78 643.09 l 72.78 644.75 71.44 646.09 69.78 646.09 c 58 646.09 l 56.34 646.09 55 644.75 55 643.09 c 55 636.09 l 55 634.43 56.34 633.09 58 633.09 c h f
+BT /F2 7 Tf 0.576 0.216 0.051 rg 60 637.59 Td (73) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 636.17 Td (spacejam.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 636.17 Td (6 issues, 16 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 621.73 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 609.82 Td (https://www.spacejam.com/1996/ | Space Jam) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 593.53 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 581.62 Td (Page is set up for mobile screens \(1\); Page language is declared \(1\); Page has exactly one main heading \(H1\) \(1\); A) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 569.42 Td (clear call-to-action is visible without scrolling \(1\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 553.13 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 541.22 Td (3 followed, 1 partly, 3 not followed. Not followed: Fitts's Law; Jakob's Law; Nielsen: Flexibility and efficiency of use) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 384.49 m 544.28 384.49 l 547.04 384.49 549.28 386.73 549.28 389.49 c 549.28 511.29 l 549.28 514.05 547.04 516.29 544.28 516.29 c 51 516.29 l 48.24 516.29 46 514.05 46 511.29 c 46 389.49 l 46 386.73 48.24 384.49 51 384.49 c h S
+0.996 0.941 0.780 rg 58 493.29 m 69.78 493.29 l 71.44 493.29 72.78 494.63 72.78 496.29 c 72.78 503.29 l 72.78 504.95 71.44 506.29 69.78 506.29 c 58 506.29 l 56.34 506.29 55 504.95 55 503.29 c 55 496.29 l 55 494.63 56.34 493.29 58 493.29 c h f
+BT /F2 7 Tf 0.576 0.216 0.051 rg 60 497.79 Td (67) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 496.37 Td (flipkart.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 496.37 Td (7 issues, 15 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 481.93 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 470.02 Td (https://www.flipkart.com/ | Online Shopping Site for Mobiles, Electronics, Furniture, Grocery, Lifestyle, Bo) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 453.73 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 441.82 Td (Images have alt text \(15\); Text has enough colour contrast \(14\); Buttons and links have readable names \(3\); Pinch-zoom) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 429.62 Td (is allowed \(1\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 413.33 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 401.42 Td (7 followed, 4 partly, 2 not followed. Not followed: Fitts's Law; Nielsen: Consistency and standards) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 244.69 m 544.28 244.69 l 547.04 244.69 549.28 246.93 549.28 249.69 c 549.28 371.49 l 549.28 374.25 547.04 376.49 544.28 376.49 c 51 376.49 l 48.24 376.49 46 374.25 46 371.49 c 46 249.69 l 46 246.93 48.24 244.69 51 244.69 c h S
+0.996 0.941 0.780 rg 58 353.49 m 69.78 353.49 l 71.44 353.49 72.78 354.83 72.78 356.49 c 72.78 363.49 l 72.78 365.15 71.44 366.49 69.78 366.49 c 58 366.49 l 56.34 366.49 55 365.15 55 363.49 c 55 356.49 l 55 354.83 56.34 353.49 58 353.49 c h f
+BT /F2 7 Tf 0.576 0.216 0.051 rg 60 357.99 Td (67) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 356.57 Td (stackoverflow.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 356.57 Td (8 issues, 14 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 342.13 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 330.22 Td (https://stackoverflow.com/ | Newest Questions - Stack Overflow) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 313.93 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 302.02 Td (Text has enough colour contrast \(2\); Buttons and links have readable names \(2\); Page has exactly one main heading) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 289.82 Td (\(H1\) \(1\); Text is a comfortable size \(12px or larger\) \(17\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 273.53 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 261.62 Td (12 followed, 0 partly, 2 not followed. Not followed: Hick's Law; Fitts's Law) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 92.69 m 544.28 92.69 l 547.04 92.69 549.28 94.93 549.28 97.69 c 549.28 231.69 l 549.28 234.45 547.04 236.69 544.28 236.69 c 51 236.69 l 48.24 236.69 46 234.45 46 231.69 c 46 97.69 l 46 94.93 48.24 92.69 51 92.69 c h S
+0.996 0.941 0.780 rg 58 213.69 m 69.78 213.69 l 71.44 213.69 72.78 215.03 72.78 216.69 c 72.78 223.69 l 72.78 225.35 71.44 226.69 69.78 226.69 c 58 226.69 l 56.34 226.69 55 225.35 55 223.69 c 55 216.69 l 55 215.03 56.34 213.69 58 213.69 c h f
+BT /F2 7 Tf 0.576 0.216 0.051 rg 60 218.19 Td (67) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 216.77 Td (craigslist.org) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 216.77 Td (7 issues, 15 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 202.33 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 190.42 Td (https://www.craigslist.org/ | craigslist > sites) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 174.13 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 162.22 Td (Text has enough colour contrast \(2\); Buttons and links have readable names \(19\); Page language is declared \(1\); Text is) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 150.02 Td (a comfortable size \(12px or larger\) \(4\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 133.73 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 121.82 Td (4 followed, 1 partly, 4 not followed. Not followed: Hick's Law; Fitts's Law; Jakob's Law; Nielsen: Flexibility and efficiency of) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 109.62 Td (use) Tj ET
+0.918 0.925 0.941 RG 0.6 w 46 36 m 549.28 36 l S
+BT /F1 7.5 Tf 0.400 0.439 0.522 rg 46 25 Td (UX Audit Buddy 50-site test report | 25 Nov 2026) Tj ET
+BT /F1 7.5 Tf 0.400 0.439 0.522 rg 510.92 25 Td (Page 7 of 9) Tj ET
+endstream
+endobj
+19 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 18 0 R >>
+endobj
+20 0 obj
+<< /Length 11626 >>
+stream
+0.918 0.925 0.941 RG 0.8 w 51 639.69 m 544.28 639.69 l 547.04 639.69 549.28 641.93 549.28 644.69 c 549.28 790.89 l 549.28 793.65 547.04 795.89 544.28 795.89 c 51 795.89 l 48.24 795.89 46 793.65 46 790.89 c 46 644.69 l 46 641.93 48.24 639.69 51 639.69 c h S
+0.996 0.941 0.780 rg 58 772.89 m 69.78 772.89 l 71.44 772.89 72.78 774.23 72.78 775.89 c 72.78 782.89 l 72.78 784.55 71.44 785.89 69.78 785.89 c 58 785.89 l 56.34 785.89 55 784.55 55 782.89 c 55 775.89 l 55 774.23 56.34 772.89 58 772.89 c h f
+BT /F2 7 Tf 0.576 0.216 0.051 rg 60 777.39 Td (64) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 775.97 Td (timesofindia.indiatimes.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 775.97 Td (8 issues, 14 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 761.53 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 749.62 Td (https://www.timesofindia.indiatimes.com/ | US News: US News, Top News in India, US election news, Business news,) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 737.42 Td (Sports & I) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 721.13 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 709.22 Td (Text has enough colour contrast \(27\); Buttons and links have readable names \(13\); Pinch-zoom is allowed \(1\); Text is a) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 697.02 Td (comfortable size \(12px or larger\) \(11\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 680.73 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 668.82 Td (4 followed, 1 partly, 5 not followed. Not followed: Hick's Law; Fitts's Law; Jakob's Law; Doherty Threshold; Nielsen:) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 656.62 Td (Flexibility and efficiency of use) Tj ET
+0.918 0.925 0.941 RG 0.8 w 51 487.69 m 544.28 487.69 l 547.04 487.69 549.28 489.93 549.28 492.69 c 549.28 626.69 l 549.28 629.45 547.04 631.69 544.28 631.69 c 51 631.69 l 48.24 631.69 46 629.45 46 626.69 c 46 492.69 l 46 489.93 48.24 487.69 51 487.69 c h S
+0.996 0.894 0.886 rg 58 608.69 m 69.78 608.69 l 71.44 608.69 72.78 610.03 72.78 611.69 c 72.78 618.69 l 72.78 620.35 71.44 621.69 69.78 621.69 c 58 621.69 l 56.34 621.69 55 620.35 55 618.69 c 55 611.69 l 55 610.03 56.34 608.69 58 608.69 c h f
+BT /F2 7 Tf 0.706 0.137 0.094 rg 60 613.19 Td (56) Tj ET
+BT /F2 10 Tf 0.063 0.094 0.157 rg 80.78 611.77 Td (news.ycombinator.com) Tj ET
+BT /F1 8 Tf 0.400 0.439 0.522 rg 469.58 611.77 Td (9 issues, 13 passed) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 597.33 Td (PAGE) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 585.42 Td (https://news.ycombinator.com/ | Hacker News) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 569.13 Td (MAIN PROBLEMS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 557.22 Td (Images have alt text \(2\); Text has enough colour contrast \(270\); Form fields have labels \(1\); Buttons and links have) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 545.02 Td (readable names \(31\)) Tj ET
+BT /F2 7 Tf 0.400 0.439 0.522 rg 55 528.73 Td (UX LAWS) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 516.82 Td (3 followed, 6 partly, 4 not followed. Not followed: Hick's Law; Fitts's Law; Miller's Law \(and chunking\); Nielsen:) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 55 504.62 Td (Recognition rather than recall) Tj ET
+BT /F2 13 Tf 0.063 0.094 0.157 rg 46 460.69 Td (Not rated) Tj ET
+0.918 0.925 0.941 RG 1.2 w 46 454.69 m 549.28 454.69 l S
+BT /F1 9 Tf 0.063 0.094 0.157 rg 46 439.98 Td (These could not be given a fair score. Real visitors using their own Chrome will usually not hit these walls, but an automated) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 46 427.2 Td (server visit does.) Tj ET
+0.949 0.957 0.969 rg 49 405.13 m 87.61 405.13 l 89.26 405.13 90.61 406.47 90.61 408.13 c 90.61 415.13 l 90.61 416.79 89.26 418.13 87.61 418.13 c 49 418.13 l 47.34 418.13 46 416.79 46 415.13 c 46 408.13 l 46 406.47 47.34 405.13 49 405.13 c h f
+BT /F2 7 Tf 0.278 0.329 0.404 rg 51 409.63 Td (BLOCKED) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 98.61 409.63 Td (nytimes.com \(page title: "nytimes.com"\)) Tj ET
+0.949 0.957 0.969 rg 49 388.13 m 77.11 388.13 l 78.77 388.13 80.11 389.47 80.11 391.13 c 80.11 398.13 l 80.11 399.79 78.77 401.13 77.11 401.13 c 49 401.13 l 47.34 401.13 46 399.79 46 398.13 c 46 391.13 l 46 389.47 47.34 388.13 49 388.13 c h f
+BT /F2 7 Tf 0.278 0.329 0.404 rg 51 392.63 Td (EMPTY) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 88.12 392.63 Td (cnn.com \(page title: "\(no title\)"\)) Tj ET
+0.949 0.957 0.969 rg 49 371.13 m 87.61 371.13 l 89.26 371.13 90.61 372.47 90.61 374.13 c 90.61 381.13 l 90.61 382.79 89.26 384.13 87.61 384.13 c 49 384.13 l 47.34 384.13 46 382.79 46 381.13 c 46 374.13 l 46 372.47 47.34 371.13 49 371.13 c h f
+BT /F2 7 Tf 0.278 0.329 0.404 rg 51 375.63 Td (BLOCKED) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 98.61 375.63 Td (reuters.com \(page title: "reuters.com"\)) Tj ET
+0.949 0.957 0.969 rg 49 354.13 m 87.61 354.13 l 89.26 354.13 90.61 355.47 90.61 357.13 c 90.61 364.13 l 90.61 365.79 89.26 367.13 87.61 367.13 c 49 367.13 l 47.34 367.13 46 365.79 46 364.13 c 46 357.13 l 46 355.47 47.34 354.13 49 354.13 c h f
+BT /F2 7 Tf 0.278 0.329 0.404 rg 51 358.63 Td (BLOCKED) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 98.61 358.63 Td (ebay.com \(page title: "Error Page | eBay"\)) Tj ET
+0.949 0.957 0.969 rg 49 337.13 m 87.61 337.13 l 89.26 337.13 90.61 338.47 90.61 340.13 c 90.61 347.13 l 90.61 348.79 89.26 350.13 87.61 350.13 c 49 350.13 l 47.34 350.13 46 348.79 46 347.13 c 46 340.13 l 46 338.47 47.34 337.13 49 337.13 c h f
+BT /F2 7 Tf 0.278 0.329 0.404 rg 51 341.63 Td (BLOCKED) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 98.61 341.63 Td (etsy.com \(page title: "etsy.com"\)) Tj ET
+0.949 0.957 0.969 rg 49 320.13 m 87.61 320.13 l 89.26 320.13 90.61 321.47 90.61 323.13 c 90.61 330.13 l 90.61 331.79 89.26 333.13 87.61 333.13 c 49 333.13 l 47.34 333.13 46 331.79 46 330.13 c 46 323.13 l 46 321.47 47.34 320.13 49 320.13 c h f
+BT /F2 7 Tf 0.278 0.329 0.404 rg 51 324.63 Td (BLOCKED) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 98.61 324.63 Td (tripadvisor.com \(page title: "tripadvisor.com"\)) Tj ET
+0.949 0.957 0.969 rg 49 303.13 m 87.61 303.13 l 89.26 303.13 90.61 304.47 90.61 306.13 c 90.61 313.13 l 90.61 314.79 89.26 316.13 87.61 316.13 c 49 316.13 l 47.34 316.13 46 314.79 46 313.13 c 46 306.13 l 46 304.47 47.34 303.13 49 303.13 c h f
+BT /F2 7 Tf 0.278 0.329 0.404 rg 51 307.63 Td (BLOCKED) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 98.61 307.63 Td (irctc.co.in \(page title: "Access Denied"\)) Tj ET
+0.949 0.957 0.969 rg 49 286.13 m 87.61 286.13 l 89.26 286.13 90.61 287.47 90.61 289.13 c 90.61 296.13 l 90.61 297.79 89.26 299.13 87.61 299.13 c 49 299.13 l 47.34 299.13 46 297.79 46 296.13 c 46 289.13 l 46 287.47 47.34 286.13 49 286.13 c h f
+BT /F2 7 Tf 0.278 0.329 0.404 rg 51 290.63 Td (BLOCKED) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 98.61 290.63 Td (canva.com \(page title: "Just a moment..."\)) Tj ET
+0.949 0.957 0.969 rg 49 269.13 m 87.61 269.13 l 89.26 269.13 90.61 270.47 90.61 272.13 c 90.61 279.13 l 90.61 280.79 89.26 282.13 87.61 282.13 c 49 282.13 l 47.34 282.13 46 280.79 46 279.13 c 46 272.13 l 46 270.47 47.34 269.13 49 269.13 c h f
+BT /F2 7 Tf 0.278 0.329 0.404 rg 51 273.63 Td (BLOCKED) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 98.61 273.63 Td (linkedin.com \(page title: "Just a moment..."\)) Tj ET
+0.949 0.957 0.969 rg 49 252.13 m 77.11 252.13 l 78.77 252.13 80.11 253.47 80.11 255.13 c 80.11 262.13 l 80.11 263.79 78.77 265.13 77.11 265.13 c 49 265.13 l 47.34 265.13 46 263.79 46 262.13 c 46 255.13 l 46 253.47 47.34 252.13 49 252.13 c h f
+BT /F2 7 Tf 0.278 0.329 0.404 rg 51 256.63 Td (EMPTY) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 88.12 256.63 Td (reddit.com \(page title: "\(no title\)"\)) Tj ET
+0.949 0.957 0.969 rg 49 235.13 m 87.61 235.13 l 89.26 235.13 90.61 236.47 90.61 238.13 c 90.61 245.13 l 90.61 246.79 89.26 248.13 87.61 248.13 c 49 248.13 l 47.34 248.13 46 246.79 46 245.13 c 46 238.13 l 46 236.47 47.34 235.13 49 235.13 c h f
+BT /F2 7 Tf 0.278 0.329 0.404 rg 51 239.63 Td (BLOCKED) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 98.61 239.63 Td (india.gov.in \(page title: "Access Denied"\)) Tj ET
+0.949 0.957 0.969 rg 49 218.13 m 87.61 218.13 l 89.26 218.13 90.61 219.47 90.61 221.13 c 90.61 228.13 l 90.61 229.79 89.26 231.13 87.61 231.13 c 49 231.13 l 47.34 231.13 46 229.79 46 228.13 c 46 221.13 l 46 219.47 47.34 218.13 49 218.13 c h f
+BT /F2 7 Tf 0.278 0.329 0.404 rg 51 222.63 Td (BLOCKED) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 98.61 222.63 Td (bankofamerica.com \(page title: "Access Denied"\)) Tj ET
+0.949 0.957 0.969 rg 49 201.13 m 87.61 201.13 l 89.26 201.13 90.61 202.47 90.61 204.13 c 90.61 211.13 l 90.61 212.79 89.26 214.13 87.61 214.13 c 49 214.13 l 47.34 214.13 46 212.79 46 211.13 c 46 204.13 l 46 202.47 47.34 201.13 49 201.13 c h f
+BT /F2 7 Tf 0.278 0.329 0.404 rg 51 205.63 Td (BLOCKED) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 98.61 205.63 Td (hdfcbank.com \(page title: "ERROR: The request could not be satisfied"\)) Tj ET
+0.949 0.957 0.969 rg 49 184.13 m 87.61 184.13 l 89.26 184.13 90.61 185.47 90.61 187.13 c 90.61 194.13 l 90.61 195.79 89.26 197.13 87.61 197.13 c 49 197.13 l 47.34 197.13 46 195.79 46 194.13 c 46 187.13 l 46 185.47 47.34 184.13 49 184.13 c h f
+BT /F2 7 Tf 0.278 0.329 0.404 rg 51 188.63 Td (BLOCKED) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 98.61 188.63 Td (imdb.com \(page title: "403 Forbidden"\)) Tj ET
+0.949 0.957 0.969 rg 49 167.13 m 87.61 167.13 l 89.26 167.13 90.61 168.47 90.61 170.13 c 90.61 177.13 l 90.61 178.79 89.26 180.13 87.61 180.13 c 49 180.13 l 47.34 180.13 46 178.79 46 177.13 c 46 170.13 l 46 168.47 47.34 167.13 49 167.13 c h f
+BT /F2 7 Tf 0.278 0.329 0.404 rg 51 171.63 Td (BLOCKED) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 98.61 171.63 Td (udemy.com \(page title: "Just a moment..."\)) Tj ET
+0.949 0.957 0.969 rg 49 150.13 m 85.28 150.13 l 86.93 150.13 88.28 151.47 88.28 153.13 c 88.28 160.13 l 88.28 161.79 86.93 163.13 85.28 163.13 c 49 163.13 l 47.34 163.13 46 161.79 46 160.13 c 46 153.13 l 46 151.47 47.34 150.13 49 150.13 c h f
+BT /F2 7 Tf 0.278 0.329 0.404 rg 51 154.63 Td (NO LOAD) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 96.28 154.63 Td (makemytrip.com: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.makemytrip.com/) Tj ET
+0.949 0.957 0.969 rg 49 133.13 m 85.28 133.13 l 86.93 133.13 88.28 134.47 88.28 136.13 c 88.28 143.13 l 88.28 144.79 86.93 146.13 85.28 146.13 c 49 146.13 l 47.34 146.13 46 144.79 46 143.13 c 46 136.13 l 46 134.47 47.34 133.13 49 133.13 c h f
+BT /F2 7 Tf 0.278 0.329 0.404 rg 51 137.63 Td (NO LOAD) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 96.28 137.63 Td (zomato.com: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.zomato.com/) Tj ET
+0.949 0.957 0.969 rg 49 116.13 m 85.28 116.13 l 86.93 116.13 88.28 117.47 88.28 119.13 c 88.28 126.13 l 88.28 127.79 86.93 129.13 85.28 129.13 c 49 129.13 l 47.34 129.13 46 127.79 46 126.13 c 46 119.13 l 46 117.47 47.34 116.13 49 116.13 c h f
+BT /F2 7 Tf 0.278 0.329 0.404 rg 51 120.63 Td (NO LOAD) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 96.28 120.63 Td (swiggy.com: net::ERR_HTTP_RESPONSE_CODE_FAILURE at https://www.swiggy.co) Tj ET
+0.949 0.957 0.969 rg 49 99.13 m 85.28 99.13 l 86.93 99.13 88.28 100.47 88.28 102.13 c 88.28 109.13 l 88.28 110.79 86.93 112.13 85.28 112.13 c 49 112.13 l 47.34 112.13 46 110.79 46 109.13 c 46 102.13 l 46 100.47 47.34 99.13 49 99.13 c h f
+BT /F2 7 Tf 0.278 0.329 0.404 rg 51 103.63 Td (NO LOAD) Tj ET
+BT /F1 9 Tf 0.063 0.094 0.157 rg 96.28 103.63 Td (lingscars.com: net::ERR_NAME_NOT_RESOLVED at http://www.lingscars.com/) Tj ET
+0.918 0.925 0.941 RG 0.6 w 46 36 m 549.28 36 l S
+BT /F1 7.5 Tf 0.400 0.439 0.522 rg 46 25 Td (UX Audit Buddy 50-site test report | 25 Nov 2026) Tj ET
+BT /F1 7.5 Tf 0.400 0.439 0.522 rg 510.92 25 Td (Page 8 of 9) Tj ET
+endstream
+endobj
+21 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 20 0 R >>
+endobj
+22 0 obj
+<< /Length 1001 >>
+stream
+BT /F2 13 Tf 0.063 0.094 0.157 rg 46 776.89 Td (Limits of this test) Tj ET
+0.918 0.925 0.941 RG 1.2 w 46 770.89 m 549.28 770.89 l S
+BT /F1 9.5 Tf 0.400 0.439 0.522 rg 47 755.78 Td (Х) Tj ET
+BT /F1 9.5 Tf 0.063 0.094 0.157 rg 57 755.78 Td (Home pages only, one visit, desktop size. Content behind logins, pop-ups and scrolling was not seen.) Tj ET
+BT /F1 9.5 Tf 0.400 0.439 0.522 rg 47 742.48 Td (Х) Tj ET
+BT /F1 9.5 Tf 0.063 0.094 0.157 rg 57 742.48 Td (The test ran from a cloud server outside India, so some sites showed different content or blocked it.) Tj ET
+BT /F1 9.5 Tf 0.400 0.439 0.522 rg 47 729.18 Td (Х) Tj ET
+BT /F1 9.5 Tf 0.063 0.094 0.157 rg 57 729.18 Td (Automatic checks cannot judge things like how clear a message is or whether the design suits its audience.) Tj ET
+0.918 0.925 0.941 RG 0.6 w 46 36 m 549.28 36 l S
+BT /F1 7.5 Tf 0.400 0.439 0.522 rg 46 25 Td (UX Audit Buddy 50-site test report | 25 Nov 2026) Tj ET
+BT /F1 7.5 Tf 0.400 0.439 0.522 rg 510.92 25 Td (Page 9 of 9) Tj ET
+endstream
+endobj
+23 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 22 0 R >>
+endobj
+xref
+0 24
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000176 00000 n 
+0000000273 00000 n 
+0000000375 00000 n 
+0000000555 00000 n 
+0000009723 00000 n 
+0000009865 00000 n 
+0000016142 00000 n 
+0000016284 00000 n 
+0000022831 00000 n 
+0000022975 00000 n 
+0000029853 00000 n 
+0000029997 00000 n 
+0000037418 00000 n 
+0000037562 00000 n 
+0000045036 00000 n 
+0000045180 00000 n 
+0000052794 00000 n 
+0000052938 00000 n 
+0000064618 00000 n 
+0000064762 00000 n 
+0000065816 00000 n 
+trailer
+<< /Size 24 /Root 1 0 R /Info 5 0 R >>
+startxref
+65960
+%%EOF
