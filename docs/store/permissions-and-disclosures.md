@@ -6,7 +6,7 @@ You will be asked to justify each permission and to fill in the **Privacy practi
 
 | Permission | Plain-language justification to paste |
 |---|---|
-| `activeTab` | "The extension audits the page the user is viewing. It needs temporary access to that single tab, granted when the user opens the extension on it, to read the page's structure and (optionally) capture a screenshot of it for the AI review. It does not access any other tab or any site in the background." |
+| `activeTab` | "The extension audits the page the user is viewing. It needs temporary access to that single tab, granted when the user opens the extension on it, to read the page's structure and, when the user downloads a PDF report, take screenshots of the problem areas on that page for the report. It does not access any other tab or any site in the background." |
 | `scripting` | "Used to run the extension's own analysis script (`content/scanner.js`, shipped inside the package) in the tab the user chose to audit. No remote code is loaded." |
 | `storage` | "Saves the user's audit history, report preferences and settings locally in the browser. Nothing is synced or uploaded." |
 | `sidePanel` | "The extension's interface is a side panel. This permission lets the toolbar icon open it, only on the tab where the user clicked the icon; switching to another tab hides it." |
@@ -19,7 +19,7 @@ You will be asked to justify each permission and to fill in the **Privacy practi
 
 ## Single purpose
 
-"Audit the web page the user is viewing for usability, accessibility and manipulative-design issues, show the findings in a side panel (including highlighting the affected elements on the page), and save them as a printable report."
+"Audit the web page the user is viewing for usability, accessibility and manipulative-design issues, show the findings in a side panel (including highlighting the affected elements on the page), and let the user download them as a PDF report."
 
 ## Remote code
 
